@@ -3,6 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class CharacterMovement : MonoBehaviour
 {
+    public float SpeedBlend {  get; private set; }
+    public float PosXBlend { get; private set; }
+    public float PosYBlend { get; private set; }
+
     [field: SerializeField, ReadOnly]
     public bool IsGrounded { get; private set; } = true;
 
@@ -137,6 +141,16 @@ public class CharacterMovement : MonoBehaviour
         else
         {
             _speed = targetSpeed;
+        }
+
+        SpeedBlend = Mathf.Lerp(SpeedBlend, targetSpeed, currentSpeedChangeRate);
+        PosXBlend = Mathf.Lerp(PosXBlend, direction.x, currentSpeedChangeRate);
+        PosYBlend = Mathf.Lerp(PosYBlend, direction.z, currentSpeedChangeRate);
+        if (SpeedBlend < 0.01f)
+        {
+            SpeedBlend = 0f;
+            PosXBlend = 0f;
+            PosYBlend = 0f;
         }
 
         if (direction != Vector3.zero)
