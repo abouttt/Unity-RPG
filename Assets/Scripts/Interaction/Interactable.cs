@@ -9,7 +9,7 @@ public abstract class Interactable : MonoBehaviour
     public bool IsInteracted { get; private set; }  // 상호작용 중인지
 
     [field: SerializeField]
-    public string InteractionName { get; protected set; }
+    public string InteractionObjectName { get; protected set; }
 
     [field: SerializeField]
     public string InteractionMessage { get; protected set; }

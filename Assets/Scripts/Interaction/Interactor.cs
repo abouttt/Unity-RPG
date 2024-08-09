@@ -44,7 +44,7 @@ public class Interactor : MonoBehaviour
 
         if (Interact)
         {
-            if (_isReadyToInteract)
+            if (_isReadyToInteract && Target.CanInteract)
             {
                 if (InteractLoadingTime < Target.MaxLoadingTime)
                 {

@@ -1556,9 +1556,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <IsDetected>k__BackingField: 0
   <IsInteracted>k__BackingField: 0
-  <InteractionName>k__BackingField: "\uD14C\uC2A4\uD2B8 \uC624\uBE0C\uC81D\uD2B8"
-  <InteractionMessage>k__BackingField: "\uC0C1\uD638\uC791\uC6A9"
-  <UIOffset>k__BackingField: {x: 0, y: 1.3, z: 0}
+  <InteractionObjectName>k__BackingField: Person
+  <InteractionMessage>k__BackingField: Interaction
+  <UIOffset>k__BackingField: {x: 0, y: 1.4, z: 0}
   <MaxLoadingTime>k__BackingField: 1
   <CanInteract>k__BackingField: 1
 --- !u!1 &1947517774
