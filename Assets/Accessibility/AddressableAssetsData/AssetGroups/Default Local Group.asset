@@ -21,6 +21,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Default
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b66eb1dd2fdaad14fac974112fa23c28
+    m_Address: DDDSoundPlayer
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Default
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1e4ff4edb256dd445974e24d11d2f68f, type: 2}
   m_SchemaSet:
