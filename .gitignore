@@ -74,3 +74,7 @@ crashlytics-build.properties
 
 /[Aa]ssets/[Tt]hirdParty
 /[Aa]ssets/[Tt]hirdParty.meta
+
+# DOTween Pro
+*DOTweenPro
+*DOTweenPro.*
