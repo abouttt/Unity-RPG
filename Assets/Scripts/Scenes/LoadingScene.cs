@@ -19,19 +19,17 @@ public class LoadingScene : BaseScene
             Managers.Scene.ReadyToLoad(_defaultSceneName);
         }
 
-        Managers.Scene.ReadyToLoadComplete += () =>
-        {
-            StartCoroutine(LoadComplete());
-        };
+        Managers.Scene.ReadyToLoadCompleted += () => StartCoroutine(LoadComplete());
     }
 
     private void Start()
     {
-        LoadResourcesByLabels(() => Managers.Scene.StartLoad());
+        LoadResourcesByLabels(Managers.Scene.StartLoad);
     }
 
     private IEnumerator LoadComplete()
     {
+        Managers.UI.Get<UI_GlobalCanvas>().Fade(0f, 1f, SceneSettings.Instance.FadeOutDuration);
         yield return YieldCache.WaitForSeconds(SceneSettings.Instance.FadeOutDuration);
         Managers.Scene.CompleteLoad();
     }

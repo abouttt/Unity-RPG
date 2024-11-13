@@ -26,5 +26,10 @@ public abstract class BaseScene : MonoBehaviour
         {
             Managers.Resource.InstantiateAsync("EventSystem");
         }
+
+        if (!Managers.UI.Contains<UI_GlobalCanvas>())
+        {
+            Managers.Resource.InstantiateAsync("UI_GlobalCanvas");
+        }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public sealed class SceneManagerEx : MonoBehaviourSingleton<SceneManagerEx>
 {
-    public event Action ReadyToLoadComplete;
+    public event Action ReadyToLoadCompleted;
 
     public string CurrentSceneName => SceneManager.GetActiveScene().name;
     public string NextSceneName => _nextSceneName;
@@ -35,7 +35,7 @@ public sealed class SceneManagerEx : MonoBehaviourSingleton<SceneManagerEx>
     {
         base.Dispose();
         ClearStatus();
-        ReadyToLoadComplete = null;
+        ReadyToLoadCompleted = null;
     }
 
     public void ReadyToLoad(string sceneName)
@@ -116,8 +116,8 @@ public sealed class SceneManagerEx : MonoBehaviourSingleton<SceneManagerEx>
                 {
                     _isLoading = false;
                     _isReadyToLoadComplete = true;
-                    ReadyToLoadComplete?.Invoke();
-                    ReadyToLoadComplete = null;
+                    ReadyToLoadCompleted?.Invoke();
+                    ReadyToLoadCompleted = null;
                     yield break;
                 }
             }

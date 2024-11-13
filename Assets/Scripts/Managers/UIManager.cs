@@ -188,12 +188,22 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
 
     public void Clear()
     {
+        var removals = new List<Type>();
+
         foreach (var ui in _objects.Values)
         {
-            Destroy(ui.gameObject);
+            if (ui.UIType != UIType.Global)
+            {
+                removals.Add(ui.GetType());
+                Destroy(ui.gameObject);
+            }
         }
 
-        _objects.Clear();
+        foreach (var ui in removals)
+        {
+            _objects.Remove(ui);
+        }
+
         _activePopups.Clear();
         _helperPopup = null;
         _selfishPopup = null;

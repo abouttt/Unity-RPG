@@ -23,10 +23,8 @@ public class UI_Popup : UI_View, IPointerDownHandler
     [field: SerializeField]
     public Vector3 DefaultPosition { get; private set; }
 
-    protected override void Awake()
+    protected override void Init()
     {
-        base.Awake();
-
         UIType = UIType.Popup;
 
         if (Body == null)

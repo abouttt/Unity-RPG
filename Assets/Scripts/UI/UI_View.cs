@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class UI_View : MonoBehaviour
+public abstract class UI_View : MonoBehaviour
 {
     [field: SerializeField]
     public UIType UIType { get; protected set; }
@@ -9,7 +9,7 @@ public class UI_View : MonoBehaviour
 
     private Canvas _canvas;
 
-    protected virtual void Awake()
+    private void Awake()
     {
         if (TryGetComponent(out _canvas))
         {
@@ -19,5 +19,9 @@ public class UI_View : MonoBehaviour
         {
             Debug.LogWarning($"{name} ui view object does not have a Canvas component.");
         }
+
+        Init();
     }
+
+    protected abstract void Init();
 }

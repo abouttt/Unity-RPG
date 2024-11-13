@@ -12,4 +12,5 @@ public enum UIType
     Fixed,
     Popup,
     Top = 999,
+    Global,
 }
