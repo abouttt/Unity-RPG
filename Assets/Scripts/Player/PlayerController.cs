@@ -15,9 +15,11 @@ public class PlayerController : MonoBehaviour
     private GameObject _mainCamera;
     private Animator _animator;
     private CharacterMovement _movement;
+    private CameraController _cameraController;
 
     // Input Value
     private Vector2 _move;
+    private Vector2 _look;
     private bool _isPressedSprint;
 
     private void Awake()
@@ -25,11 +27,17 @@ public class PlayerController : MonoBehaviour
         _mainCamera = Camera.main.gameObject;
         _animator = GetComponent<Animator>();
         _movement = GetComponent<CharacterMovement>();
+        _cameraController = GetComponent<CameraController>();
     }
 
     private void Update()
     {
         MoveAndRotate();
+    }
+
+    private void LateUpdate()
+    {
+        RotateCamera();
     }
 
     private void MoveAndRotate()
@@ -48,11 +56,21 @@ public class PlayerController : MonoBehaviour
         _movement.Rotate(inputDirection, cameraYaw);
     }
 
+    private void RotateCamera()
+    {
+        _cameraController.Rotate(_look.y, _look.x);
+    }
+
     // Input
 
     private void OnMove(InputValue inputValue)
     {
         _move = inputValue.Get<Vector2>();
+    }
+
+    private void OnLook(InputValue inputValue)
+    {
+        _look = inputValue.Get<Vector2>();
     }
 
     private void OnSprint(InputValue inputValue)
