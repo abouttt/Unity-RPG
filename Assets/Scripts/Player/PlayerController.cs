@@ -12,10 +12,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _landingSpeed;
 
+    [SerializeField]
+    private float _lockOnRotationSpeed;
+
     private GameObject _mainCamera;
     private Animator _animator;
     private CharacterMovement _movement;
     private CameraController _cameraController;
+    private FieldOfView _lockOnFov;
 
     // Input Value
     private Vector2 _move;
@@ -28,6 +32,7 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponent<Animator>();
         _movement = GetComponent<CharacterMovement>();
         _cameraController = GetComponent<CameraController>();
+        _lockOnFov = _mainCamera.GetComponent<FieldOfView>();
     }
 
     private void Update()
@@ -53,12 +58,37 @@ public class PlayerController : MonoBehaviour
         }
 
         _movement.Move(inputDirection, cameraYaw);
-        _movement.Rotate(inputDirection, cameraYaw);
+
+        if (_lockOnFov.HasTarget && IsOnlyRun())
+        {
+            var rotationDirection = inputDirection == Vector3.zero
+                                  ? Vector3.zero
+                                  : (_lockOnFov.Target.position - transform.position).normalized;
+
+            _movement.Rotate(rotationDirection);
+        }
+        else
+        {
+            _movement.Rotate(inputDirection, cameraYaw);
+        }
     }
 
     private void RotateCamera()
     {
-        _cameraController.Rotate(_look.y, _look.x);
+        if (_lockOnFov.HasTarget)
+        {
+            var lookPosition = (_lockOnFov.Target.position + transform.position) * 0.5f;
+            _cameraController.LookRotate(lookPosition, _lockOnRotationSpeed);
+        }
+        else
+        {
+            _cameraController.Rotate(_look.y, _look.x);
+        }
+    }
+
+    private bool IsOnlyRun()
+    {
+        return !(_isPressedSprint || _movement.IsJumping || _movement.IsFalling || _movement.IsLanding);
     }
 
     // Input
@@ -70,7 +100,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnLook(InputValue inputValue)
     {
-        _look = inputValue.Get<Vector2>();
+        _look = Managers.Input.CursorLocked ? inputValue.Get<Vector2>() : Vector2.zero;
     }
 
     private void OnSprint(InputValue inputValue)
@@ -81,5 +111,22 @@ public class PlayerController : MonoBehaviour
     private void OnJump(InputValue inputValue)
     {
         _movement.Jump();
+    }
+
+    private void OnLockOn(InputValue inputValue)
+    {
+        if (_lockOnFov.HasTarget)
+        {
+            _lockOnFov.Target = null;
+        }
+        else
+        {
+            _lockOnFov.FindTarget();
+        }
+    }
+
+    public void OnCursorToggle(InputValue inputValue)
+    {
+        Managers.Input.CursorLocked = !Managers.Input.CursorLocked;
     }
 }
