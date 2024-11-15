@@ -1219,8 +1219,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1686703049}
-  - component: {fileID: 1686703050}
   - component: {fileID: 1686703051}
+  - component: {fileID: 1686703050}
   m_Layer: 8
   m_Name: Interactable
   m_TagString: Untagged
@@ -1257,10 +1257,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <IsDetected>k__BackingField: 0
   <IsInteracted>k__BackingField: 0
-  <InteractionObjectName>k__BackingField: "\uBB3C\uCCB4"
-  <InteractionMessage>k__BackingField: "\uC0C1\uD638\uC791\uC6A9"
-  <InteractionHoldTime>k__BackingField: 1
+  <ObjectName>k__BackingField: "\uBB3C\uCCB4"
+  <ActionName>k__BackingField: "\uC0C1\uD638\uC791\uC6A9"
+  <HoldTime>k__BackingField: 1
   <CanInteract>k__BackingField: 1
+  <UIOffset>k__BackingField: {x: 0, y: 1.25, z: 0}
 --- !u!135 &1686703051
 SphereCollider:
   m_ObjectHideFlags: 0

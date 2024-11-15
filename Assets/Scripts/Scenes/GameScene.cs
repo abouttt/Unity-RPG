@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class GameScene : BaseScene
 {
@@ -30,14 +31,16 @@ public class GameScene : BaseScene
     private void ConnectUI()
     {
         var player = GameObject.FindWithTag("Player");
+        var interactor = player.GetComponentInChildren<Interactor>();
         var lockOnFov = Camera.main.GetComponent<FieldOfView>();
 
+        Managers.UI.Get<UI_AutoCanvas>().InteractorUI.Connect(interactor);
         Managers.UI.Get<UI_AutoCanvas>().LockOnUI.Connect(lockOnFov);
     }
 
     private void DeconnectUI()
     {
-        if (!Application.isPlaying)
+        if (Managers.UI == null)
         {
             return;
         }

@@ -30,7 +30,16 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
     protected override void Dispose()
     {
         base.Dispose();
-        Clear();
+
+        foreach (var kvp in _roots)
+        {
+            foreach (Transform child in kvp.Value)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        _objects.Clear();
     }
 
     public void Register<T>(T ui) where T : UI_View

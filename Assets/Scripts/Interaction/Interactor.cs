@@ -81,7 +81,7 @@ public class Interactor : MonoBehaviour
         {
             if (_isReadyToInteract && _target.CanInteract)
             {
-                if (_holdingTime < _target.InteractionHoldTime)
+                if (_holdingTime < _target.HoldTime)
                 {
                     _holdingTime += Time.deltaTime;
                 }

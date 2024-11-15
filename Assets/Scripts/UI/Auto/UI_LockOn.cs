@@ -1,8 +1,9 @@
 using UnityEngine;
 
+[RequireComponent(typeof(UI_FollowWorldObject))]
 public class UI_LockOn : MonoBehaviour, IConnectable<FieldOfView>
 {
-    private FieldOfView _lockOnFovRef;
+    private FieldOfView _lockOnFov;
     private UI_FollowWorldObject _followTarget;
 
     private void Awake()
@@ -15,16 +16,16 @@ public class UI_LockOn : MonoBehaviour, IConnectable<FieldOfView>
     {
         Disconnect();
 
-        _lockOnFovRef = lockOnFov;
+        _lockOnFov = lockOnFov;
         lockOnFov.TargetChanged += SetTarget;
     }
 
     public void Disconnect()
     {
-        if (_lockOnFovRef != null)
+        if (_lockOnFov != null)
         {
-            _lockOnFovRef.TargetChanged -= SetTarget;
-            _lockOnFovRef = null;
+            _lockOnFov.TargetChanged -= SetTarget;
+            _lockOnFov = null;
         }
     }
 
