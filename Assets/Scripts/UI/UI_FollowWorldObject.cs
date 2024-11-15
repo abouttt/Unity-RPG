@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class UI_FollowWorldObject : MonoBehaviour
 {
-    [SerializeField]
+    [field: SerializeField]
     public Transform Target { get; set; }
 
     private Camera _mainCamera;

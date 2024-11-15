@@ -32,4 +32,13 @@ public abstract class BaseScene : MonoBehaviour
             Managers.Resource.InstantiateAsync("UI_GlobalCanvas");
         }
     }
+
+    protected void InstantiatePackage(string packageAddress)
+    {
+        Managers.Resource.InstantiateAsync(packageAddress, package =>
+        {
+            package.transform.DetachChildren();
+            Destroy(package);
+        });
+    }
 }
