@@ -18,6 +18,12 @@ public class CharacterMovement : MonoBehaviour
         set => _moveSpeed = value;
     }
 
+    public float SpeedChangeRate
+    {
+        get => _speedChangeRate;
+        set => _speedChangeRate = value;
+    }
+
     [Space(10)]
     [SerializeField, ReadOnly]
     private bool _isGrounded;

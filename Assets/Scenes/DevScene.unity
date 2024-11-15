@@ -205,7 +205,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 2
-  m_Radius: 0.3
+  m_Radius: 0.2
   m_SlopeLimit: 50
   m_StepOffset: 0.25
   m_SkinWidth: 0.0001
@@ -278,7 +278,7 @@ MonoBehaviour:
   _useGravity: 1
   _gravityMultiplier: 2
   _groundedOffset: -0.14
-  _groundedRadius: 0.28
+  _groundedRadius: 0.2
   _groundLayers:
     serializedVersion: 2
     m_Bits: 64
