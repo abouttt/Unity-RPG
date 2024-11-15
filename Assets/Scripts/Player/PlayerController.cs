@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private CharacterMovement _movement;
     private CameraController _cameraController;
     private FieldOfView _lockOnFov;
+    private Interactor _interactor;
 
     // 애니메이션 아이디
     private readonly int _animIDSpeed = Animator.StringToHash("Speed");
@@ -46,6 +47,7 @@ public class PlayerController : MonoBehaviour
         _movement = GetComponent<CharacterMovement>();
         _cameraController = GetComponent<CameraController>();
         _lockOnFov = _mainCamera.GetComponent<FieldOfView>();
+        _interactor = GetComponentInChildren<Interactor>();
     }
 
     private void Update()
@@ -164,7 +166,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnCursorToggle(InputValue inputValue)
+    private void OnInteract(InputValue inputValue)
+    {
+        _interactor.Interact = inputValue.isPressed;
+    }
+
+    private void OnCursorToggle(InputValue inputValue)
     {
         Managers.Input.CursorLocked = !Managers.Input.CursorLocked;
     }

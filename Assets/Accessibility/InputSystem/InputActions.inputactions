@@ -51,6 +51,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "65e5b0ae-b5a8-4916-a38b-45fc426b5d80",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "CursorToggle",
                     "type": "Button",
                     "id": "09000062-28a2-4ded-8988-02534b3d0343",
@@ -168,6 +177,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "CursorToggle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2319e5b6-8494-4e5f-9c8d-3010cd2f2ee3",
+                    "path": "<Keyboard>/e",
+                    "interactions": "Press(behavior=2)",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

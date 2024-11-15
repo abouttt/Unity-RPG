@@ -73,6 +73,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""65e5b0ae-b5a8-4916-a38b-45fc426b5d80"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""CursorToggle"",
                     ""type"": ""Button"",
                     ""id"": ""09000062-28a2-4ded-8988-02534b3d0343"",
@@ -190,6 +199,17 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""CursorToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2319e5b6-8494-4e5f-9c8d-3010cd2f2ee3"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -738,6 +758,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_LockOn = m_Player.FindAction("LockOn", throwIfNotFound: true);
+        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_CursorToggle = m_Player.FindAction("CursorToggle", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -823,6 +844,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_LockOn;
+    private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_CursorToggle;
     public struct PlayerActions
     {
@@ -833,6 +855,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @LockOn => m_Wrapper.m_Player_LockOn;
+        public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @CursorToggle => m_Wrapper.m_Player_CursorToggle;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -858,6 +881,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @LockOn.started += instance.OnLockOn;
             @LockOn.performed += instance.OnLockOn;
             @LockOn.canceled += instance.OnLockOn;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
             @CursorToggle.started += instance.OnCursorToggle;
             @CursorToggle.performed += instance.OnCursorToggle;
             @CursorToggle.canceled += instance.OnCursorToggle;
@@ -880,6 +906,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @LockOn.started -= instance.OnLockOn;
             @LockOn.performed -= instance.OnLockOn;
             @LockOn.canceled -= instance.OnLockOn;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
             @CursorToggle.started -= instance.OnCursorToggle;
             @CursorToggle.performed -= instance.OnCursorToggle;
             @CursorToggle.canceled -= instance.OnCursorToggle;
@@ -1034,6 +1063,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnLockOn(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
         void OnCursorToggle(InputAction.CallbackContext context);
     }
     public interface IUIActions
