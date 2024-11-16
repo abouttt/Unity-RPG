@@ -1,6 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 using static UnityEditor.Experimental.GraphView.GraphView;
+using UnityEngine.SceneManagement;
 
 public class GameScene : BaseScene
 {
@@ -40,11 +41,6 @@ public class GameScene : BaseScene
 
     private void DeconnectUI()
     {
-        if (Managers.UI == null)
-        {
-            return;
-        }
-
         if (Managers.UI.Count == 0)
         {
             return;
