@@ -22,12 +22,12 @@ public class ItemDataEditor : Editor
         string newItemId = originalItemId.ToSnake().ToUpper();
         if (!originalItemId.Equals(newItemId))
         {
-            //_itemIdProp.stringValue = newItemId;
-            //var itemData = ItemDatabase.Instance.FindItemById(newItemId);
-            //if (itemData != null)
-            //{
-            //    Debug.LogWarning($"{newItemId} id already exist : {AssetDatabase.GetAssetPath(itemData)}");
-            //}
+            _itemIdProp.stringValue = newItemId;
+            var itemData = ItemDatabase.GetInstance("Database").FindItemById(newItemId);
+            if (itemData != null)
+            {
+                Debug.LogWarning($"{newItemId} id already exist : {AssetDatabase.GetAssetPath(itemData)}");
+            }
         }
 
         serializedObject.ApplyModifiedProperties();
