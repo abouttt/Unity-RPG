@@ -3,11 +3,17 @@ using UnityEngine;
 public class MonoBehaviourSingleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T _instance;
+    private static bool _isApplicationQuitted;
 
     public static T Instance
     {
         get
         {
+            if (_isApplicationQuitted)
+            {
+                return null;
+            }
+
             if (_instance == null)
             {
                 _instance = FindAnyObjectByType<T>();
@@ -29,6 +35,11 @@ public class MonoBehaviourSingleton<T> : MonoBehaviour where T : MonoBehaviour
     private void OnDestroy()
     {
         Dispose();
+    }
+
+    private void OnApplicationQuit()
+    {
+        _isApplicationQuitted = true;
     }
 
     protected virtual void Init()
