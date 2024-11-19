@@ -2,6 +2,11 @@ using UnityEngine;
 
 public static class Managers
 {
+    #region Contents
+    public static CooldownManager Cooldown => GetInstance(CooldownManager.Instance);
+    #endregion
+
+    #region Core
     public static DataManager Data => GetInstance(DataManager.Instance);
     public static InputManager Input => GetInstance(InputManager.Instance);
     public static PoolManager Pool => GetInstance(PoolManager.Instance);
@@ -9,6 +14,7 @@ public static class Managers
     public static SceneManagerEx Scene => GetInstance(SceneManagerEx.Instance);
     public static SoundManager Sound => GetInstance(SoundManager.Instance);
     public static UIManager UI => GetInstance(UIManager.Instance);
+    #endregion
 
     private static bool _initialized;
 
@@ -24,6 +30,8 @@ public static class Managers
         var root = new GameObject("Managers").transform;
         Object.DontDestroyOnLoad(root);
 
+        Cooldown.transform.SetParent(root);
+
         Data.transform.SetParent(root);
         Input.transform.SetParent(root);
         Pool.transform.SetParent(root);
@@ -35,6 +43,8 @@ public static class Managers
 
     public static void Clear()
     {
+        Cooldown.Clear();
+
         Input.Clear();
         Pool.Clear();
         Resource.Clear();

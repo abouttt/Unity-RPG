@@ -16,4 +16,9 @@ public static class Extension
     {
         return Util.IsInLayerMask(go, layerMask);
     }
+
+    public static string ToSnake(this string str)
+    {
+        return Util.ToSnake(str);
+    }
 }
