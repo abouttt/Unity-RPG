@@ -7,7 +7,7 @@ public class Cooldown
     public event Action CooldownStarted;
 
     [field: SerializeField]
-    public float MaxTime { get; private set; }
+    public float MaxTime { get; }
 
     [field: SerializeField]
     public float RemainingTime { get; private set; }
@@ -19,13 +19,9 @@ public class Cooldown
         CooldownStarted?.Invoke();
     }
 
-    public void Update()
+    public void Update(float deltaTime)
     {
-        RemainingTime -= Time.deltaTime;
-        if (RemainingTime <= 0f)
-        {
-            RemainingTime = 0f;
-        }
+        RemainingTime = Mathf.Max(RemainingTime - deltaTime, 0);
     }
 
     public void Clear()

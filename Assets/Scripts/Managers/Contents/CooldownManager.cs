@@ -6,22 +6,18 @@ public class CooldownManager : MonoBehaviourSingleton<CooldownManager>
     private readonly HashSet<Cooldown> _cooldowns = new();
     private readonly Queue<Cooldown> _completedCooldownQueue = new();
 
-    public void Clear()
+    private void LateUpdate()
     {
-        foreach (var cooldown in _cooldowns)
-        {
-            cooldown.Clear();
-        }
-
-        _cooldowns.Clear();
-        _completedCooldownQueue.Clear();
+        UpdateCooldowns();
     }
 
     public void UpdateCooldowns()
     {
+        float deltaTime = Time.deltaTime;
+
         foreach (var cooldown in _cooldowns)
         {
-            cooldown.Update();
+            cooldown.Update(deltaTime);
             if (cooldown.RemainingTime <= 0f)
             {
                 _completedCooldownQueue.Enqueue(cooldown);
@@ -48,5 +44,16 @@ public class CooldownManager : MonoBehaviourSingleton<CooldownManager>
         }
 
         _cooldowns.Add(cooldown);
+    }
+
+    public void Clear()
+    {
+        foreach (var cooldown in _cooldowns)
+        {
+            cooldown.Clear();
+        }
+
+        _cooldowns.Clear();
+        _completedCooldownQueue.Clear();
     }
 }
