@@ -1,7 +1,5 @@
 using UnityEngine;
 using DG.Tweening;
-using static UnityEditor.Experimental.GraphView.GraphView;
-using UnityEngine.SceneManagement;
 
 public class GameScene : BaseScene
 {
@@ -18,15 +16,10 @@ public class GameScene : BaseScene
 
     private void Start()
     {
-        Managers.Input.Enabled = true;
-        Managers.Input.CursorLocked = true;
-        Managers.Sound.Play2D(_bgm, SoundType.BGM);
-        Managers.UI.Get<UI_GlobalCanvas>().Fade(1f, 0f, SceneSettings.Instance.FadeInDuration);
-    }
-
-    private void OnDestroy()
-    {
-        DeconnectUI();
+        InputManager.Enabled = true;
+        InputManager.CursorLocked = true;
+        SoundManager.Play2D(_bgm, SoundType.BGM);
+        UIManager.Get<UI_GlobalCanvas>().Fade(1f, 0f, SceneSettings.Instance.FadeInDuration);
     }
 
     private void ConnectUI()
@@ -35,22 +28,7 @@ public class GameScene : BaseScene
         var interactor = player.GetComponentInChildren<Interactor>();
         var lockOnFov = Camera.main.GetComponent<FieldOfView>();
 
-        Managers.UI.Get<UI_AutoCanvas>().InteractorUI.Connect(interactor);
-        Managers.UI.Get<UI_AutoCanvas>().LockOnUI.Connect(lockOnFov);
-    }
-
-    private void DeconnectUI()
-    {
-        if (Managers.UI == null)
-        {
-            return;
-        }
-
-        if (Managers.UI.Count == 0)
-        {
-            return;
-        }
-
-        Managers.UI.Get<UI_AutoCanvas>().LockOnUI.Disconnect();
+        UIManager.Get<UI_AutoCanvas>().InteractorUI.Connect(interactor);
+        UIManager.Get<UI_AutoCanvas>().LockOnUI.Connect(lockOnFov);
     }
 }

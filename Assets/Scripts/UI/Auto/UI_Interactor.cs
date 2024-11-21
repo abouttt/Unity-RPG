@@ -54,6 +54,11 @@ public class UI_Interactor : MonoBehaviour, IConnectable<Interactor>
         }
     }
 
+    private void OnDestroy()
+    {
+        Disconnect();
+    }
+
     public void Connect(Interactor interactor)
     {
         Disconnect();

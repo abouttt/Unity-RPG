@@ -13,6 +13,6 @@ public class UI_AutoCanvas : UI_View
 
     protected override void Init()
     {
-        Managers.UI.Register(this);
+        UIManager.Register(this);
     }
 }

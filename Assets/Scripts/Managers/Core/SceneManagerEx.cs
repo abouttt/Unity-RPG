@@ -6,14 +6,14 @@ using UnityEngine.SceneManagement;
 
 public sealed class SceneManagerEx : MonoBehaviourSingleton<SceneManagerEx>
 {
-    public event Action ReadyToLoadCompleted;
+    public static event Action ReadyToLoadCompleted;
 
-    public string CurrentSceneName => SceneManager.GetActiveScene().name;
-    public string NextSceneName => _nextSceneName;
-    public bool IsReadyToLoad => _isReadyToLoad;
-    public bool IsLoading => _isLoading;
-    public bool IsReadyToLoadComplete => _isReadyToLoadComplete;
-    public float LoadingProgress => _loadingProgress;
+    public static string CurrentSceneName => SceneManager.GetActiveScene().name;
+    public static string NextSceneName => Instance._nextSceneName;
+    public static bool IsReadyToLoad => Instance._isReadyToLoad;
+    public static bool IsLoading => Instance._isLoading;
+    public static bool IsReadyToLoadComplete => Instance._isReadyToLoadComplete;
+    public static float LoadingProgress => Instance._loadingProgress;
 
     [SerializeField]
     private string _loadingSceneName = "LoadingScene";
@@ -38,37 +38,41 @@ public sealed class SceneManagerEx : MonoBehaviourSingleton<SceneManagerEx>
         ReadyToLoadCompleted = null;
     }
 
-    public void ReadyToLoad(string sceneName)
+    public static void ReadyToLoad(string sceneName)
     {
-        if (IsLoading || _isReadyToLoadComplete)
+        var instance = Instance;
+
+        if (instance._isLoading || instance._isReadyToLoadComplete)
         {
-            Debug.LogWarning($"[SceneManagerEx.ReadyToLoad] Already in loading or ready to complete: {_nextSceneName}");
+            Debug.LogWarning($"[SceneManagerEx.ReadyToLoad] Already in loading or ready to complete: {instance._nextSceneName}");
             return;
         }
 
-        _nextSceneName = sceneName;
-        _isReadyToLoad = true;
+        instance._nextSceneName = sceneName;
+        instance._isReadyToLoad = true;
 
-        if (!CurrentSceneName.Equals(_loadingSceneName))
+        if (!CurrentSceneName.Equals(instance._loadingSceneName))
         {
-            SceneManager.LoadScene(_loadingSceneName);
+            SceneManager.LoadScene(instance._loadingSceneName);
         }
     }
 
-    public void StartLoad()
+    public static void StartLoad()
     {
+        var instance = Instance;
+
         if (IsLoading)
         {
-            Debug.LogWarning($"[SceneManagerEx.StartLoad] Already loading : {_nextSceneName}");
+            Debug.LogWarning($"[SceneManagerEx.StartLoad] Already loading : {instance._nextSceneName}");
             return;
         }
 
-        if (_isReadyToLoad)
+        if (instance._isReadyToLoad)
         {
-            _isLoading = true;
-            _loadSceneOp = SceneManager.LoadSceneAsync(_nextSceneName);
-            _loadSceneOp.allowSceneActivation = false;
-            StartCoroutine(LoadSceneAsync(_loadSceneOp));
+            instance._isLoading = true;
+            instance._loadSceneOp = SceneManager.LoadSceneAsync(instance._nextSceneName);
+            instance._loadSceneOp.allowSceneActivation = false;
+            instance.StartCoroutine(LoadSceneAsync(instance._loadSceneOp));
         }
         else
         {
@@ -76,12 +80,14 @@ public sealed class SceneManagerEx : MonoBehaviourSingleton<SceneManagerEx>
         }
     }
 
-    public void CompleteLoad()
+    public static void CompleteLoad()
     {
-        if (_isReadyToLoadComplete)
+        var instance = Instance;
+
+        if (instance._isReadyToLoadComplete)
         {
-            ClearStatus();
-            _loadSceneOp.allowSceneActivation = true;
+            instance.ClearStatus();
+            instance._loadSceneOp.allowSceneActivation = true;
         }
         else
         {
@@ -89,10 +95,11 @@ public sealed class SceneManagerEx : MonoBehaviourSingleton<SceneManagerEx>
         }
     }
 
-    private IEnumerator LoadSceneAsync(AsyncOperation op)
+    private static IEnumerator LoadSceneAsync(AsyncOperation op)
     {
         yield return null;
 
+        var instance = Instance;
         float timer = 0f;
 
         while (!op.isDone)
@@ -103,19 +110,19 @@ public sealed class SceneManagerEx : MonoBehaviourSingleton<SceneManagerEx>
 
             if (op.progress < 0.9f)
             {
-                _loadingProgress = Mathf.Lerp(_loadingProgress, op.progress, timer);
-                if (_loadingProgress >= op.progress)
+                instance._loadingProgress = Mathf.Lerp(instance._loadingProgress, op.progress, timer);
+                if (instance._loadingProgress >= op.progress)
                 {
                     timer = 0f;
                 }
             }
             else
             {
-                _loadingProgress = Mathf.Lerp(_loadingProgress, 1f, timer);
-                if (_loadingProgress >= 1f)
+                instance._loadingProgress = Mathf.Lerp(instance._loadingProgress, 1f, timer);
+                if (instance._loadingProgress >= 1f)
                 {
-                    _isLoading = false;
-                    _isReadyToLoadComplete = true;
+                    instance._isLoading = false;
+                    instance._isReadyToLoadComplete = true;
                     ReadyToLoadCompleted?.Invoke();
                     ReadyToLoadCompleted = null;
                     yield break;

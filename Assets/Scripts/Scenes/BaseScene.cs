@@ -3,14 +3,16 @@ using UnityEngine.EventSystems;
 
 public abstract class BaseScene : MonoBehaviour
 {
+    private static bool _initializedManagers;
+
     private void Awake()
     {
-        string sceneName = Managers.Scene.CurrentSceneName;
+        string sceneName = SceneManagerEx.CurrentSceneName;
 
-        if (Managers.Resource.Count == 0 &&
+        if (ResourceManager.Count == 0 &&
             SceneSettings.Instance[sceneName].ReloadSceneWhenNoResources)
         {
-            Managers.Scene.ReadyToLoad(sceneName);
+            SceneManagerEx.ReadyToLoad(sceneName);
         }
         else
         {
@@ -20,22 +22,20 @@ public abstract class BaseScene : MonoBehaviour
 
     protected virtual void Init()
     {
-        Managers.Init();
-
         if (FindAnyObjectByType<EventSystem>() == null)
         {
-            Managers.Resource.InstantiateAsync("EventSystem");
+            ResourceManager.InstantiateAsync("EventSystem");
         }
 
-        if (!Managers.UI.Contains<UI_GlobalCanvas>())
+        if (!UIManager.Contains<UI_GlobalCanvas>())
         {
-            Managers.Resource.InstantiateAsync("UI_GlobalCanvas");
+            ResourceManager.InstantiateAsync("UI_GlobalCanvas");
         }
     }
 
     protected void InstantiatePackage(string packageAddress)
     {
-        Managers.Resource.InstantiateAsync(packageAddress, package =>
+        ResourceManager.InstantiateAsync(packageAddress, package =>
         {
             package.transform.DetachChildren();
             Destroy(package);

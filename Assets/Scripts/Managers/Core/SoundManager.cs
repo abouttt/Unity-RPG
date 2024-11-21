@@ -5,15 +5,15 @@ using UnityEngine.Audio;
 
 public sealed class SoundManager : MonoBehaviourSingleton<SoundManager>
 {
-    public float MasterVolume
+    public static float MasterVolume
     {
         get
         {
-            return GetVolume("Master");
+            return Instance.GetVolume("Master");
         }
         set
         {
-            SetVolume("Master", value);
+            Instance.SetVolume("Master", value);
         }
     }
 
@@ -58,22 +58,22 @@ public sealed class SoundManager : MonoBehaviourSingleton<SoundManager>
 
         _audioSources[(int)SoundType.BGM].loop = true;
 
-        ResourceManager.Instance.LoadAsync<GameObject>("DDDSoundPlayer", prefab => _dddSoundPlayerPrefab = prefab);
+        ResourceManager.LoadAsync<GameObject>("DDDSoundPlayer", prefab => _dddSoundPlayerPrefab = prefab);
     }
 
-    public void Play2D(string key, SoundType type)
+    public static void Play2D(string key, SoundType type)
     {
-        ResourceManager.Instance.LoadAsync<AudioClip>(key, clip => Play2D(clip, type));
+        ResourceManager.LoadAsync<AudioClip>(key, clip => Play2D(clip, type));
     }
 
-    public void Play2D(AudioClip clip, SoundType type)
+    public static void Play2D(AudioClip clip, SoundType type)
     {
         if (clip == null)
         {
             return;
         }
 
-        var audioSource = _audioSources[(int)type];
+        var audioSource = Instance._audioSources[(int)type];
 
         if (type == SoundType.BGM)
         {
@@ -91,32 +91,32 @@ public sealed class SoundManager : MonoBehaviourSingleton<SoundManager>
         }
     }
 
-    public void Stop2D(SoundType type)
+    public static void Stop2D(SoundType type)
     {
-        var audioSource = _audioSources[(int)type];
+        var audioSource = Instance._audioSources[(int)type];
         if (audioSource.isPlaying)
         {
             audioSource.Stop();
         }
     }
 
-    public void Play3D(string key, Vector3 position, Transform parent = null, float minDistance = 0f, float maxDistance = 15f)
+    public static void Play3D(string key, Vector3 position, Transform parent = null, float minDistance = 0f, float maxDistance = 15f)
     {
-        ResourceManager.Instance.LoadAsync<AudioClip>(key, clip => Play3D(clip, position, parent, minDistance, maxDistance));
+        ResourceManager.LoadAsync<AudioClip>(key, clip => Play3D(clip, position, parent, minDistance, maxDistance));
     }
 
-    public void Play3D(AudioClip clip, Vector3 position, Transform parent = null, float minDistance = 0f, float maxDistance = 15f)
+    public static void Play3D(AudioClip clip, Vector3 position, Transform parent = null, float minDistance = 0f, float maxDistance = 15f)
     {
         if (clip == null)
         {
             return;
         }
 
-        var go = PoolManager.Instance.Get("DDDSoundPlayer");
+        var go = PoolManager.Get("DDDSoundPlayer");
         if (go == null)
         {
-            PoolManager.Instance.CreatePool(_dddSoundPlayerPrefab);
-            go = PoolManager.Instance.Get("DDDSoundPlayer");
+            PoolManager.CreatePool(Instance._dddSoundPlayerPrefab);
+            go = PoolManager.Get("DDDSoundPlayer");
         }
 
         go.transform.SetParent(parent);
@@ -126,25 +126,29 @@ public sealed class SoundManager : MonoBehaviourSingleton<SoundManager>
         soundPlayer.Play(clip, minDistance, maxDistance);
     }
 
-    public float GetVolume(SoundType type)
+    public static float GetVolume(SoundType type)
     {
-        return GetVolume(_typeNames[type]);
+        var instance = Instance;
+        return instance.GetVolume(instance._typeNames[type]);
     }
 
-    public void SetVolume(SoundType type, float volume)
+    public static void SetVolume(SoundType type, float volume)
     {
-        SetVolume(_typeNames[type], volume);
+        var instance = Instance;
+        instance.SetVolume(instance._typeNames[type], volume);
     }
 
-    public void Clear()
+    public static void Clear()
     {
-        foreach (var audioSource in _audioSources)
+        var instance = Instance;
+
+        foreach (var audioSource in instance._audioSources)
         {
             audioSource.Stop();
             audioSource.clip = null;
         }
 
-        PoolManager.Instance.ClearPool("DDDSoundPlayer");
+        PoolManager.ClearPool("DDDSoundPlayer");
     }
 
     private float GetVolume(string name)

@@ -11,7 +11,7 @@ public class UI_LoadingFixed : UI_View
 
     protected override void Init()
     {
-        _bg.sprite = SceneSettings.Instance[Managers.Scene.NextSceneName].LoadingBackground;
+        _bg.sprite = SceneSettings.Instance[SceneManagerEx.NextSceneName].LoadingBackground;
         _bg.color = _bg.sprite != null ? Color.white : Color.black;
 
         _bar.fillAmount = 0f;
@@ -19,6 +19,6 @@ public class UI_LoadingFixed : UI_View
 
     private void Update()
     {
-        _bar.fillAmount = Managers.Scene.LoadingProgress;
+        _bar.fillAmount = SceneManagerEx.LoadingProgress;
     }
 }

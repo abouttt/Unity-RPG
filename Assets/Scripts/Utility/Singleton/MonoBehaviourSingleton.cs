@@ -34,6 +34,11 @@ public class MonoBehaviourSingleton<T> : MonoBehaviour where T : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (_isApplicationQuitted)
+        {
+            return;
+        }
+
         Dispose();
     }
 

@@ -141,7 +141,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnLook(InputValue inputValue)
     {
-        _look = Managers.Input.CursorLocked ? inputValue.Get<Vector2>() : Vector2.zero;
+        _look = InputManager.CursorLocked ? inputValue.Get<Vector2>() : Vector2.zero;
     }
 
     private void OnSprint(InputValue inputValue)
@@ -173,6 +173,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnCursorToggle(InputValue inputValue)
     {
-        Managers.Input.CursorLocked = !Managers.Input.CursorLocked;
+        InputManager.CursorLocked = !InputManager.CursorLocked;
     }
 }

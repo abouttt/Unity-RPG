@@ -10,7 +10,7 @@ public class UI_GlobalCanvas : UI_View
     protected override void Init()
     {
         ChangeImageAlpha(_fadeImage, 0f);
-        Managers.UI.Register(this);
+        UIManager.Register(this);
     }
 
     public void Fade(float start, float end, float duration)

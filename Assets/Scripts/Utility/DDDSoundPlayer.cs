@@ -26,6 +26,6 @@ public class DDDSoundPlayer : MonoBehaviour
         yield return YieldCache.WaitForSeconds(time);
 
         _audioSource.clip = null;
-        PoolManager.Instance.Release(gameObject);
+        PoolManager.Release(gameObject);
     }
 }

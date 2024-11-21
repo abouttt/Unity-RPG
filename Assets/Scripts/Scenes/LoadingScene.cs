@@ -10,33 +10,34 @@ public class LoadingScene : BaseScene
     protected override void Init()
     {
         base.Init();
-        Managers.Clear();
+
+        ClearManagers();
         Resources.UnloadUnusedAssets();
         GC.Collect();
 
-        if (!Managers.Scene.IsReadyToLoad)
+        if (!SceneManagerEx.IsReadyToLoad)
         {
-            Managers.Scene.ReadyToLoad(_defaultSceneName);
+            SceneManagerEx.ReadyToLoad(_defaultSceneName);
         }
 
-        Managers.Scene.ReadyToLoadCompleted += () => StartCoroutine(LoadComplete());
+        SceneManagerEx.ReadyToLoadCompleted += () => StartCoroutine(LoadComplete());
     }
 
     private void Start()
     {
-        LoadResourcesByLabels(Managers.Scene.StartLoad);
+        LoadResourcesByLabels(SceneManagerEx.StartLoad);
     }
 
     private IEnumerator LoadComplete()
     {
-        Managers.UI.Get<UI_GlobalCanvas>().Fade(0f, 1f, SceneSettings.Instance.FadeOutDuration);
+        UIManager.Get<UI_GlobalCanvas>().Fade(0f, 1f, SceneSettings.Instance.FadeOutDuration);
         yield return YieldCache.WaitForSeconds(SceneSettings.Instance.FadeOutDuration);
-        Managers.Scene.CompleteLoad();
+        SceneManagerEx.CompleteLoad();
     }
 
     private void LoadResourcesByLabels(Action callback = null)
     {
-        var loadResourceLabels = SceneSettings.Instance[Managers.Scene.NextSceneName].AddressableLabels;
+        var loadResourceLabels = SceneSettings.Instance[SceneManagerEx.NextSceneName].AddressableLabels;
         if (loadResourceLabels == null || loadResourceLabels.Length == 0)
         {
             callback?.Invoke();
@@ -48,7 +49,7 @@ public class LoadingScene : BaseScene
 
         foreach (var label in loadResourceLabels)
         {
-            Managers.Resource.LoadAllAsync(label.labelString, _ =>
+            ResourceManager.LoadAllAsync(label.labelString, _ =>
             {
                 if (++loadedCount == totalCount)
                 {
@@ -56,5 +57,16 @@ public class LoadingScene : BaseScene
                 }
             });
         }
+    }
+
+    private void ClearManagers()
+    {
+        CooldownManager.Clear();
+
+        InputManager.Clear();
+        PoolManager.Clear();
+        ResourceManager.Clear();
+        SoundManager.Clear();
+        UIManager.Clear();
     }
 }

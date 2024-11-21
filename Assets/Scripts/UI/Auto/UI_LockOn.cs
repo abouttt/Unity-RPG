@@ -12,6 +12,11 @@ public class UI_LockOn : MonoBehaviour, IConnectable<FieldOfView>
         gameObject.SetActive(false);
     }
 
+    private void OnDestroy()
+    {
+        Disconnect();
+    }
+
     public void Connect(FieldOfView lockOnFov)
     {
         Disconnect();

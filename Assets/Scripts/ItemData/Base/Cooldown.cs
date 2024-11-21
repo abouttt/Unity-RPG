@@ -15,7 +15,7 @@ public class Cooldown
     public void Start()
     {
         RemainingTime = MaxTime;
-        Managers.Cooldown.AddCooldown(this);
+        CooldownManager.AddCooldown(this);
         CooldownStarted?.Invoke();
     }
 

@@ -11,27 +11,28 @@ public class CooldownManager : MonoBehaviourSingleton<CooldownManager>
         UpdateCooldowns();
     }
 
-    public void UpdateCooldowns()
+    public static void UpdateCooldowns()
     {
+        var instance = Instance;
         float deltaTime = Time.deltaTime;
 
-        foreach (var cooldown in _cooldowns)
+        foreach (var cooldown in instance._cooldowns)
         {
             cooldown.Update(deltaTime);
             if (cooldown.RemainingTime <= 0f)
             {
-                _completedCooldownQueue.Enqueue(cooldown);
+                instance._completedCooldownQueue.Enqueue(cooldown);
             }
         }
 
-        while (_completedCooldownQueue.Count > 0)
+        while (instance._completedCooldownQueue.Count > 0)
         {
-            var cooldown = _completedCooldownQueue.Dequeue();
-            _cooldowns.Remove(cooldown);
+            var cooldown = instance._completedCooldownQueue.Dequeue();
+            instance._cooldowns.Remove(cooldown);
         }
     }
 
-    public void AddCooldown(Cooldown cooldown)
+    public static void AddCooldown(Cooldown cooldown)
     {
         if (cooldown == null)
         {
@@ -43,17 +44,19 @@ public class CooldownManager : MonoBehaviourSingleton<CooldownManager>
             return;
         }
 
-        _cooldowns.Add(cooldown);
+        Instance._cooldowns.Add(cooldown);
     }
 
-    public void Clear()
+    public static void Clear()
     {
-        foreach (var cooldown in _cooldowns)
+        var instance = Instance;
+
+        foreach (var cooldown in instance._cooldowns)
         {
             cooldown.Clear();
         }
 
-        _cooldowns.Clear();
-        _completedCooldownQueue.Clear();
+        instance._cooldowns.Clear();
+        instance._completedCooldownQueue.Clear();
     }
 }
