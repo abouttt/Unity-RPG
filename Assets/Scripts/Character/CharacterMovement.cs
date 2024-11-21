@@ -24,6 +24,18 @@ public class CharacterMovement : MonoBehaviour
         set => _speedChangeRate = value;
     }
 
+    public float JumpHeight
+    {
+        get => _jumpHeight;
+        set => _jumpHeight = value;
+    }
+
+    public bool UseGravity
+    {
+        get => _useGravity;
+        set => _useGravity = value;
+    }
+
     [Space(10)]
     [SerializeField, ReadOnly]
     private bool _isGrounded;

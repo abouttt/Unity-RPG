@@ -11,26 +11,25 @@ public class FieldOfView : MonoBehaviour
         set
         {
             _target = value;
+            HasTarget = _target != null;
             TargetChanged?.Invoke(_target);
         }
     }
 
-    public bool HasTarget => _target != null;
-    public float ViewRadius => _viewRadius;
-    public float ViewAngle => _viewAngle;
+    public bool HasTarget { get; private set; }
 
-    [Header("Find")]
-    [SerializeField]
-    private float _viewRadius;
+    [field: Header("Find")]
+    [field: SerializeField]
+    public float ViewRadius { get; set; }
 
-    [SerializeField, Range(0f, 360f)]
-    private float _viewAngle;
+    [field: SerializeField, Range(0f, 360f)]
+    public float ViewAngle { get; set; }
 
-    [SerializeField]
-    private LayerMask _targetLayers;
+    [field: SerializeField]
+    public LayerMask TargetLayers { get; set; }
 
-    [SerializeField]
-    private LayerMask _obstacleLayers;
+    [field: SerializeField]
+    public LayerMask ObstacleLayers { get; set; }
 
     [Header("Tracking")]
     [SerializeField]
@@ -63,13 +62,13 @@ public class FieldOfView : MonoBehaviour
         Transform finalTarget = null;
         float shortestAngle = Mathf.Infinity;
 
-        var targets = Physics.OverlapSphere(transform.position, _viewRadius, _targetLayers);
+        var targets = Physics.OverlapSphere(transform.position, ViewRadius, TargetLayers);
         foreach (var target in targets)
         {
             var directionToTarget = (target.transform.position - transform.position).normalized;
             var angle = Vector3.Angle(transform.forward, directionToTarget);
 
-            if (angle > _viewAngle * 0.5f)
+            if (angle > ViewAngle * 0.5f)
             {
                 continue;
             }
@@ -79,7 +78,7 @@ public class FieldOfView : MonoBehaviour
                 continue;
             }
 
-            if (Physics.Linecast(transform.position, target.transform.position, _obstacleLayers))
+            if (Physics.Linecast(transform.position, target.transform.position, ObstacleLayers))
             {
                 continue;
             }
@@ -98,13 +97,13 @@ public class FieldOfView : MonoBehaviour
             return;
         }
 
-        if (_distance && Vector3.Distance(transform.position, _target.position) > _viewRadius)
+        if (_distance && Vector3.Distance(transform.position, _target.position) > ViewRadius)
         {
             Target = null;
             return;
         }
 
-        if (_obstacle && Physics.Linecast(transform.position, _target.position, _obstacleLayers))
+        if (_obstacle && Physics.Linecast(transform.position, _target.position, ObstacleLayers))
         {
             Target = null;
             return;

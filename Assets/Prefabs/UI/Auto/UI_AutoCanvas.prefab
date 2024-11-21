@@ -99,8 +99,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <UIType>k__BackingField: 1
-  _lockOnUI: {fileID: 4079874971979291485}
-  _interactorUI: {fileID: 6938819354350047876}
+  <LockOnUI>k__BackingField: {fileID: 4079874971979291485}
+  <InteractorUI>k__BackingField: {fileID: 6938819354350047876}
 --- !u!1001 &738714014070932771
 PrefabInstance:
   m_ObjectHideFlags: 0

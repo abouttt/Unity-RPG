@@ -31,9 +31,7 @@ public class Interactor : MonoBehaviour
     }
 
     public bool HasTarget => _hasTarget;
-
     public float HoldingTime => _holdingTime;
-
     public bool Interact { get; set; }
 
     [SerializeField]

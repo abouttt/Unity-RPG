@@ -10,7 +10,7 @@ public sealed class DataManager : MonoBehaviourSingleton<DataManager>
     public static readonly string SaveMetaFilePath = $"{SavePath}/Saves.meta";
     public static readonly string SettingsSavePath = $"{SavePath}/Settings.json";
 
-    public bool HasSaveData => File.Exists(SaveFilePath);
+    public static bool HasSaveData => File.Exists(SaveFilePath);
 
     private JObject _saveData = new();
     private readonly BinaryFormatter _binaryFormatter = new();

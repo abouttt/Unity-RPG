@@ -13,7 +13,6 @@ public class UI_LoadingFixed : UI_View
     {
         _bg.sprite = SceneSettings.Instance[SceneManagerEx.NextSceneName].LoadingBackground;
         _bg.color = _bg.sprite != null ? Color.white : Color.black;
-
         _bar.fillAmount = 0f;
     }
 

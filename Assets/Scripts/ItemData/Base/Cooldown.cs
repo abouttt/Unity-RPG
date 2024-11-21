@@ -7,7 +7,7 @@ public class Cooldown
     public event Action CooldownStarted;
 
     [field: SerializeField]
-    public float MaxTime { get; }
+    public float MaxTime { get; private set; }
 
     [field: SerializeField]
     public float RemainingTime { get; private set; }

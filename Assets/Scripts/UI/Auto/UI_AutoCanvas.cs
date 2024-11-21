@@ -2,14 +2,11 @@ using UnityEngine;
 
 public class UI_AutoCanvas : UI_View
 {
-    public UI_LockOn LockOnUI => _lockOnUI;
-    public UI_Interactor InteractorUI => _interactorUI;
+    [field: SerializeField]
+    public UI_LockOn LockOnUI { get; private set; }
 
-    [SerializeField]
-    private UI_LockOn _lockOnUI;
-
-    [SerializeField]
-    private UI_Interactor _interactorUI;
+    [field: SerializeField]
+    public UI_Interactor InteractorUI { get; private set; }
 
     protected override void Init()
     {

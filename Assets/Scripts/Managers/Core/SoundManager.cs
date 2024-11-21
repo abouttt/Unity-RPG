@@ -140,9 +140,7 @@ public sealed class SoundManager : MonoBehaviourSingleton<SoundManager>
 
     public static void Clear()
     {
-        var instance = Instance;
-
-        foreach (var audioSource in instance._audioSources)
+        foreach (var audioSource in Instance._audioSources)
         {
             audioSource.Stop();
             audioSource.clip = null;

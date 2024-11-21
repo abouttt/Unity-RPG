@@ -133,12 +133,10 @@ public class ItemInventory : MonoBehaviour
             return;
         }
 
-        if (!HasItem(index))
-        {
-            _count++;
-        }
+        RemoveItem(index);
 
         _items[index] = newItem;
+        _count++;
         InventoryChanged?.Invoke(newItem, index);
     }
 

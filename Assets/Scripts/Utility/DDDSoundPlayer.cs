@@ -22,7 +22,8 @@ public class DDDSoundPlayer : MonoBehaviour
 
     private IEnumerator AutoRelease()
     {
-        float time = _audioSource.clip.length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale);
+        float timeScale = Time.timeScale;
+        float time = _audioSource.clip.length * ((timeScale < 0.01f) ? 0.01f : timeScale);
         yield return YieldCache.WaitForSeconds(time);
 
         _audioSource.clip = null;

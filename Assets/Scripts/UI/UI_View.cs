@@ -5,15 +5,14 @@ public abstract class UI_View : MonoBehaviour
     [field: SerializeField]
     public UIType UIType { get; protected set; }
 
-    public Canvas Canvas => _canvas;
-
-    private Canvas _canvas;
+    public Canvas Canvas { get; private set; }
 
     private void Awake()
     {
-        if (TryGetComponent(out _canvas))
+        if (TryGetComponent(out Canvas canvas))
         {
-            _canvas.sortingOrder = (int)UIType;
+            Canvas = canvas;
+            Canvas.sortingOrder = (int)UIType;
         }
         else
         {

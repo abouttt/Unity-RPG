@@ -596,12 +596,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 407fb716faaddd24fa962bd291b66500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _viewRadius: 25
-  _viewAngle: 60
-  _targetLayers:
+  <ViewRadius>k__BackingField: 25
+  <ViewAngle>k__BackingField: 75
+  <TargetLayers>k__BackingField:
     serializedVersion: 2
     m_Bits: 128
-  _obstacleLayers:
+  <ObstacleLayers>k__BackingField:
     serializedVersion: 2
     m_Bits: 64
   _distance: 1
