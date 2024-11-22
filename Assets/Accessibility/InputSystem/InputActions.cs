@@ -89,6 +89,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ItemInventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""19ca86c0-8e70-4a89-84bf-c914a4715d6d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -210,6 +219,17 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3babbb56-cdd0-47d5-a243-380c2c8b16fe"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ItemInventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -760,6 +780,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Player_LockOn = m_Player.FindAction("LockOn", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_CursorToggle = m_Player.FindAction("CursorToggle", throwIfNotFound: true);
+        m_Player_ItemInventory = m_Player.FindAction("ItemInventory", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -846,6 +867,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_LockOn;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_CursorToggle;
+    private readonly InputAction m_Player_ItemInventory;
     public struct PlayerActions
     {
         private @InputActions m_Wrapper;
@@ -857,6 +879,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         public InputAction @LockOn => m_Wrapper.m_Player_LockOn;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @CursorToggle => m_Wrapper.m_Player_CursorToggle;
+        public InputAction @ItemInventory => m_Wrapper.m_Player_ItemInventory;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -887,6 +910,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @CursorToggle.started += instance.OnCursorToggle;
             @CursorToggle.performed += instance.OnCursorToggle;
             @CursorToggle.canceled += instance.OnCursorToggle;
+            @ItemInventory.started += instance.OnItemInventory;
+            @ItemInventory.performed += instance.OnItemInventory;
+            @ItemInventory.canceled += instance.OnItemInventory;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -912,6 +938,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @CursorToggle.started -= instance.OnCursorToggle;
             @CursorToggle.performed -= instance.OnCursorToggle;
             @CursorToggle.canceled -= instance.OnCursorToggle;
+            @ItemInventory.started -= instance.OnItemInventory;
+            @ItemInventory.performed -= instance.OnItemInventory;
+            @ItemInventory.canceled -= instance.OnItemInventory;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1065,6 +1094,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         void OnLockOn(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnCursorToggle(InputAction.CallbackContext context);
+        void OnItemInventory(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

@@ -50,6 +50,18 @@ public class UI_Popup : UI_View, IPointerDownHandler
         Closed?.Invoke();
     }
 
+    private void OnApplicationQuit()
+    {
+        ClearCallbacks();
+    }
+
+    public void ClearCallbacks()
+    {
+        Showed = null;
+        Closed = null;
+        Focused = null;
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         Focused?.Invoke();

@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bgm: {fileID: 0}
+  _itemData: {fileID: 11400000, guid: 1227acc23ca6bac418f31c2f00eb20a9, type: 2}
 --- !u!4 &22815641
 Transform:
   m_ObjectHideFlags: 0
@@ -177,6 +178,7 @@ GameObject:
   - component: {fileID: 216068228}
   - component: {fileID: 216068233}
   - component: {fileID: 216068232}
+  - component: {fileID: 216068236}
   - component: {fileID: 216068231}
   - component: {fileID: 216068234}
   - component: {fileID: 216068235}
@@ -360,6 +362,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _capacity: 30
   _count: 0
+--- !u!114 &216068236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216068227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 339a978a1106b724ca76417d4b413244, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &235178059
 GameObject:
   m_ObjectHideFlags: 0

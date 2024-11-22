@@ -62,7 +62,7 @@ public sealed class UIManager : MonoBehaviourSingleton<UIManager>
         }
     }
 
-    public static void Unregister<T>(bool destory = false) where T : UI_View
+    public static void Unregister<T>(bool destory = true) where T : UI_View
     {
         var instance = Instance;
 
@@ -260,6 +260,8 @@ public sealed class UIManager : MonoBehaviourSingleton<UIManager>
 
     private void UnregisterPopup(UI_Popup popup)
     {
+        popup.ClearCallbacks();
+
         if (popup.IsHelper && _helperPopup == popup)
         {
             _helperPopup = null;

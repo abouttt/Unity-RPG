@@ -170,9 +170,4 @@ public class PlayerController : MonoBehaviour
     {
         _interactor.Interact = inputValue.isPressed;
     }
-
-    private void OnCursorToggle(InputValue inputValue)
-    {
-        InputManager.CursorLocked = !InputManager.CursorLocked;
-    }
 }
