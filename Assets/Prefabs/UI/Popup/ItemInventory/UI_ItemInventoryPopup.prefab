@@ -1024,6 +1024,7 @@ MonoBehaviour:
   <DefaultPosition>k__BackingField: {x: 400, y: 0, z: 0}
   _itemSlots: {fileID: 1873672672546350352}
   _goldText: {fileID: 8503726118796863568}
+  _closeButton: {fileID: 8847356342703156027}
 --- !u!1 &6464976903585611418
 GameObject:
   m_ObjectHideFlags: 0

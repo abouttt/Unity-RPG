@@ -149,7 +149,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bgm: {fileID: 0}
-  _itemData: {fileID: 11400000, guid: 1227acc23ca6bac418f31c2f00eb20a9, type: 2}
 --- !u!4 &22815641
 Transform:
   m_ObjectHideFlags: 0

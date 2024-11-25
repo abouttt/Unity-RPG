@@ -128,7 +128,19 @@ public class UI_ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         if (eventData.pointerDrag.TryGetComponent<UI_ItemSlot>(out var otherSlot))
         {
-            UIManager.Get<UI_ItemInventoryPopup>().ItemInventory.MoveItem(otherSlot.Index, Index);
+            if (_item == null && otherSlot._item is IStackable otherStackable)
+            {
+                var splitPopup = UIManager.Show<UI_ItemSplitPopup>();
+                splitPopup.SetEvent(() =>
+                {
+                    UIManager.Get<UI_ItemInventoryPopup>().ItemInventory.SplitItem(otherSlot.Index, Index, splitPopup.Quantity);
+                },
+                $"[{otherSlot._item.Data.ItemName}] {GuideSettings.Instance.ItemSpliteText}", 1, otherStackable.Quantity);
+            }
+            else
+            {
+                UIManager.Get<UI_ItemInventoryPopup>().ItemInventory.MoveItem(otherSlot.Index, Index);
+            }
         }
     }
 }

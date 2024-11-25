@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class UI_ItemInventoryPopup : UI_Popup, IConnectable<ItemInventory>
@@ -11,11 +12,15 @@ public class UI_ItemInventoryPopup : UI_Popup, IConnectable<ItemInventory>
     [SerializeField]
     private TextMeshProUGUI _goldText;
 
+    [SerializeField]
+    private Button _closeButton;
+
     private UI_ItemSlot[] _slots;
 
     protected override void Init()
     {
         base.Init();
+        _closeButton.onClick.AddListener(UIManager.Close<UI_ItemInventoryPopup>);
         UIManager.Register(this);
     }
 
@@ -64,10 +69,5 @@ public class UI_ItemInventoryPopup : UI_Popup, IConnectable<ItemInventory>
         }
 
         _slots = parent.GetComponentsInChildren<UI_ItemSlot>();
-    }
-
-    public void OnClickCloseButton()
-    {
-        UIManager.Close<UI_ItemInventoryPopup>();
     }
 }
