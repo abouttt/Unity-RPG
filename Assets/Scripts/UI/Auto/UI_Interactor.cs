@@ -32,6 +32,7 @@ public class UI_Interactor : MonoBehaviour, IConnectable<Interactor>
     private void Awake()
     {
         _followTarget = GetComponent<UI_FollowWorldObject>();
+        _keyText.text = InputManager.GetBindingPath("Interact");
         gameObject.SetActive(false);
     }
 

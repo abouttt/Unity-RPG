@@ -122,6 +122,21 @@ public sealed class ResourceManager : MonoBehaviourSingleton<ResourceManager>
         }
     }
 
+    public static void Destroy(GameObject go)
+    {
+        if (go == null)
+        {
+            return;
+        }
+
+        if (PoolManager.Release(go))
+        {
+            return;
+        }
+
+        Object.Destroy(go);
+    }
+
     public static void Clear()
     {
         var instance = Instance;

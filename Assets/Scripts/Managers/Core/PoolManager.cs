@@ -171,11 +171,11 @@ public sealed class PoolManager : MonoBehaviourSingleton<PoolManager>
         }
     }
 
-    public static void Release(GameObject go, string tag = null)
+    public static bool Release(GameObject go, string tag = null)
     {
         if (!go.activeSelf)
         {
-            return;
+            return false;
         }
 
         if (string.IsNullOrEmpty(tag))
@@ -187,11 +187,11 @@ public sealed class PoolManager : MonoBehaviourSingleton<PoolManager>
         {
             if (pool.Release(go))
             {
-                return;
+                return true;
             }
         }
 
-        Destroy(go);
+        return false;
     }
 
     public static void ReleaseAll(string tag)

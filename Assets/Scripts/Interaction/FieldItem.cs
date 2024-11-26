@@ -16,13 +16,14 @@ public class FieldItem : Interactable
     {
         if ((_items == null || _items.Count == 0) && _destroyWhenEmpty)
         {
-            PoolManager.Release(gameObject);
+            ResourceManager.Destroy(gameObject);
         }
     }
 
     protected override void OnInteract()
     {
         base.OnInteract();
+        UIManager.Show<UI_LootPopup>().SetFieldItem(this);
     }
 
     public void AddItem(ItemData itemData, int quantity)
@@ -59,7 +60,7 @@ public class FieldItem : Interactable
 
         if (_items.Count == 0 && _destroyWhenEmpty)
         {
-            PoolManager.Release(gameObject);
+            ResourceManager.Destroy(gameObject);
         }
     }
 }

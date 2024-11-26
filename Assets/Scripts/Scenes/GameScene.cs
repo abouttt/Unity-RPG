@@ -30,6 +30,7 @@ public class GameScene : BaseScene
         var lockOnFov = Camera.main.GetComponent<FieldOfView>();
 
         UIManager.Get<UI_ItemInventoryPopup>().Connect(itemInventory);
+        UIManager.Get<UI_LootPopup>().Connect(itemInventory);
         UIManager.Get<UI_AutoCanvas>().InteractorUI.Connect(interactor);
         UIManager.Get<UI_AutoCanvas>().LockOnUI.Connect(lockOnFov);
     }
