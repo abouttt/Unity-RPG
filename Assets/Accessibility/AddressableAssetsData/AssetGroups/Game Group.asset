@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Game Group
   m_GUID: 67595bed9de663e47b6b45c53bf21862
   m_SerializeEntries:
+  - m_GUID: 333831b2c877bc34893892dd3a07b14b
+    m_Address: FieldItem
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8674f13c5a272334daecd9388d70452c
     m_Address: GameUIPackage
     m_ReadOnly: 0
