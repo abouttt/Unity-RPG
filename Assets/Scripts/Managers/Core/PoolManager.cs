@@ -140,6 +140,25 @@ public sealed class PoolManager : MonoBehaviourSingleton<PoolManager>
         instance._pools.Add(tag, pool);
     }
 
+    public static GameObject Get(GameObject go, Transform parent = null)
+    {
+        if (go == null)
+        {
+            Debug.LogWarning($"[PoolManager.Get] GameObject is null.");
+            return null;
+        }
+
+        var instance = Instance;
+
+        if (!instance._pools.TryGetValue(go.name, out var pool))
+        {
+            CreatePool(go);
+            pool = instance._pools[go.name];
+        }
+
+        return pool.Get(parent);
+    }
+
     public static GameObject Get(string tag, Transform parent = null)
     {
         if (Instance._pools.TryGetValue(tag, out var pool))

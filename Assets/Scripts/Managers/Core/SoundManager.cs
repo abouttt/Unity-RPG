@@ -112,18 +112,12 @@ public sealed class SoundManager : MonoBehaviourSingleton<SoundManager>
             return;
         }
 
-        var go = PoolManager.Get("DDDSoundPlayer");
-        if (go == null)
+        ResourceManager.InstantiateAsync<DDDSoundPlayer>("DDDSoundPlayer", soundPlayer =>
         {
-            PoolManager.CreatePool(Instance._dddSoundPlayerPrefab);
-            go = PoolManager.Get("DDDSoundPlayer");
-        }
-
-        go.transform.SetParent(parent);
-        go.transform.localPosition = position;
-
-        var soundPlayer = go.GetComponent<DDDSoundPlayer>();
-        soundPlayer.Play(clip, minDistance, maxDistance);
+            soundPlayer.transform.SetParent(parent);
+            soundPlayer.transform.localPosition = position;
+            soundPlayer.Play(clip, minDistance, maxDistance);
+        });
     }
 
     public static float GetVolume(SoundType type)

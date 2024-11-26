@@ -88,23 +88,23 @@ public sealed class ResourceManager : MonoBehaviourSingleton<ResourceManager>
         };
     }
 
-    public static void InstantiateAsync(string key, Action<GameObject> callback = null, Transform parent = null)
+    public static void InstantiateAsync(string key, Action<GameObject> callback = null, Transform parent = null, bool pooling = false)
     {
         LoadAsync<GameObject>(key, prefab =>
         {
-            var go = Instantiate(prefab, parent);
+            var go = pooling ? PoolManager.Get(prefab, parent) : Instantiate(prefab, parent);
             callback?.Invoke(go);
         });
     }
 
-    public static void InstantiateAsync<T>(string key, Action<T> callback = null, Transform parent = null) where T : Component
+    public static void InstantiateAsync<T>(string key, Action<T> callback = null, Transform parent = null, bool pooling = false) where T : Component
     {
         InstantiateAsync(key, go =>
         {
             var component = go.GetComponent<T>();
             callback?.Invoke(component);
         },
-        parent);
+        parent, pooling);
     }
 
     public static void Release(string key)
