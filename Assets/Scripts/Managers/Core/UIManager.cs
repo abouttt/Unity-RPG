@@ -144,6 +144,7 @@ public sealed class UIManager : MonoBehaviourSingleton<UIManager>
     public static void CloseTopPopup()
     {
         var instance = Instance;
+
         if (ActivePopupCount > 0)
         {
             instance.ClosePopup(instance._activePopups.First.Value);

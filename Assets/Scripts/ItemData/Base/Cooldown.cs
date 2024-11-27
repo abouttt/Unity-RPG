@@ -12,14 +12,14 @@ public class Cooldown
     [field: SerializeField]
     public float RemainingTime { get; private set; }
 
-    public void Start()
+    public void StartCooldown()
     {
         RemainingTime = MaxTime;
         CooldownManager.AddCooldown(this);
         CooldownStarted?.Invoke();
     }
 
-    public void Update(float deltaTime)
+    public void UpdateCooldown(float deltaTime)
     {
         RemainingTime = Mathf.Max(RemainingTime - deltaTime, 0);
     }

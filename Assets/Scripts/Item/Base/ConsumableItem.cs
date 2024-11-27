@@ -17,7 +17,7 @@ public abstract class ConsumableItem : StackableItem, IUsable, IQuickable
 
         OnUse();
         Quantity -= ConsumableData.ConsumptionQuantity;
-        ConsumableData.Cooldown.Start();
+        ConsumableData.Cooldown.StartCooldown();
 
         return true;
     }

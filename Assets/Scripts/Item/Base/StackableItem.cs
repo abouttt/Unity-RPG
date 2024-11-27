@@ -12,12 +12,14 @@ public abstract class StackableItem : Item, IStackable
         get => _quantity;
         set
         {
-            int prevQuantity = _quantity;
-            _quantity = Mathf.Clamp(value, 0, MaxQuantity);
-            if (_quantity != prevQuantity)
+            int clampedValue = Mathf.Clamp(value, 0, MaxQuantity);
+            if (_quantity == clampedValue)
             {
-                StackChanged?.Invoke(this);
+                return;
             }
+
+            _quantity = clampedValue;
+            StackChanged?.Invoke(this);
         }
     }
 
@@ -36,7 +38,7 @@ public abstract class StackableItem : Item, IStackable
     public int StackAndGetExcess(int quantity)
     {
         int nextQuantity = _quantity + quantity;
-        Quantity += quantity;
+        Quantity = nextQuantity;
         return nextQuantity > MaxQuantity ? nextQuantity - MaxQuantity : 0;
     }
 }

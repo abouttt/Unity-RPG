@@ -18,7 +18,7 @@ public class CooldownManager : MonoBehaviourSingleton<CooldownManager>
 
         foreach (var cooldown in instance._cooldowns)
         {
-            cooldown.Update(deltaTime);
+            cooldown.UpdateCooldown(deltaTime);
             if (cooldown.RemainingTime <= 0f)
             {
                 instance._completedCooldownQueue.Enqueue(cooldown);

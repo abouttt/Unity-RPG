@@ -128,10 +128,12 @@ public class CharacterMovement : MonoBehaviour
 
     private void Update()
     {
+        float deltaTime = Time.deltaTime;
+
         CheckGrounded();
-        UpdateTimeouts();
-        ApplyGravity();
-        ApplyMovement();
+        UpdateTimeouts(deltaTime);
+        ApplyGravity(deltaTime);
+        ApplyMovement(deltaTime);
     }
 
     public void Move(Vector3 direction, float overrideYaw = 0f)
@@ -188,7 +190,7 @@ public class CharacterMovement : MonoBehaviour
         _verticalVelocity = Mathf.Sqrt(_jumpHeight * -2f * _gravity * _gravityMultiplier);
     }
 
-    private void UpdateTimeouts()
+    private void UpdateTimeouts(float deltaTime)
     {
         if (_isGrounded)
         {
@@ -207,12 +209,12 @@ public class CharacterMovement : MonoBehaviour
             {
                 if (_jumpTimeoutDelta >= 0f)
                 {
-                    _jumpTimeoutDelta -= Time.deltaTime;
+                    _jumpTimeoutDelta -= deltaTime;
                 }
 
                 if (_landTimeoutDelta >= 0f)
                 {
-                    _landTimeoutDelta -= Time.deltaTime;
+                    _landTimeoutDelta -= deltaTime;
                 }
                 else
                 {
@@ -226,7 +228,7 @@ public class CharacterMovement : MonoBehaviour
 
             if (_fallTimeoutDelta >= 0f)
             {
-                _fallTimeoutDelta -= Time.deltaTime;
+                _fallTimeoutDelta -= deltaTime;
             }
             else
             {
@@ -237,7 +239,7 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
-    private void ApplyGravity()
+    private void ApplyGravity(float deltaTime)
     {
         if (_useGravity)
         {
@@ -255,7 +257,7 @@ public class CharacterMovement : MonoBehaviour
 
             if (_verticalVelocity < _terminalVelocity)
             {
-                _verticalVelocity += _gravity * _gravityMultiplier * Time.deltaTime;
+                _verticalVelocity += _gravity * _gravityMultiplier * deltaTime;
             }
         }
         else
@@ -270,10 +272,10 @@ public class CharacterMovement : MonoBehaviour
         _isGrounded = Physics.CheckSphere(spherePosition, _groundedRadius, _groundLayers, QueryTriggerInteraction.Ignore);
     }
 
-    private void ApplyMovement()
+    private void ApplyMovement(float deltaTime)
     {
-        var move = _targetDirection.normalized * (_speed * Time.deltaTime);
-        var height = new Vector3(0f, _verticalVelocity * Time.deltaTime, 0f);
+        var move = _targetDirection.normalized * (_speed * deltaTime);
+        var height = new Vector3(0f, _verticalVelocity * deltaTime, 0f);
         _controller.Move(move + height);
     }
 

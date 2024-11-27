@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e7516ae5e21f9c44b7cdbc4f1608c3e, type: 3}
-  m_Name: ItemDatabase
+  m_Script: {fileID: 11500000, guid: 6bbb56b6a194be34f92e5cffc2973f95, type: 3}
+  m_Name: GuideSettings
   m_EditorClassIdentifier: 
-  _items:
-  - {fileID: 11400000, guid: 0eedb4199faf1eb4e809dc03ad9effea, type: 2}
-  - {fileID: 11400000, guid: 1227acc23ca6bac418f31c2f00eb20a9, type: 2}
+  <ItemSpliteText>k__BackingField: "\uC544\uC774\uD15C \uB098\uB204\uAE30"
+  <DestroyText>k__BackingField: "\uC544\uC774\uD15C\uC744 \uD30C\uAD34\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"

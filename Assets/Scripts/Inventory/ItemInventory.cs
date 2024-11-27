@@ -47,14 +47,11 @@ public class ItemInventory : MonoBehaviour
                     break;
                 }
 
-                int sameItemIndex = _items.FindIndex(index, item => item != null && item.Data.Equals(stackableData));
+                int sameItemIndex = _items.FindIndex(index, item => item is StackableItem && item.Data.Equals(itemData));
                 if (sameItemIndex != -1)
                 {
                     var sameItem = GetItem<StackableItem>(sameItemIndex);
-                    if (!sameItem.IsMax)
-                    {
-                        quantity = sameItem.StackAndGetExcess(quantity);
-                    }
+                    quantity = sameItem.StackAndGetExcess(quantity);
                     index = sameItemIndex;
                 }
                 else

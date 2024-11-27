@@ -24,7 +24,7 @@ public sealed class ResourceManager : MonoBehaviourSingleton<ResourceManager>
         Clear();
     }
 
-    public static void LoadAsync<T>(string key, Action<T> callback = null) where T : Object
+    public static void LoadAsync<T>(string key, Action<T> callback) where T : Object
     {
         var instance = Instance;
 

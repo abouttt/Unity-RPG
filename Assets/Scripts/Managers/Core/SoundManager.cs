@@ -22,7 +22,6 @@ public sealed class SoundManager : MonoBehaviourSingleton<SoundManager>
 
     private readonly List<AudioSource> _audioSources = new();
     private readonly Dictionary<SoundType, string> _typeNames = new();
-    private GameObject _dddSoundPlayerPrefab;
 
     protected override void Init()
     {
@@ -57,8 +56,6 @@ public sealed class SoundManager : MonoBehaviourSingleton<SoundManager>
         }
 
         _audioSources[(int)SoundType.BGM].loop = true;
-
-        ResourceManager.LoadAsync<GameObject>("DDDSoundPlayer", prefab => _dddSoundPlayerPrefab = prefab);
     }
 
     public static void Play2D(string key, SoundType type)
