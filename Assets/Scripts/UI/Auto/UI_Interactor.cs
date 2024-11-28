@@ -1,38 +1,42 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 [RequireComponent(typeof(UI_FollowWorldObject))]
 public class UI_Interactor : MonoBehaviour, IConnectable<Interactor>
 {
-    [SerializeField]
-    private GameObject _body;
+    enum Objects
+    {
+        Body,
+    }
 
-    [SerializeField]
-    private Image _loadingTimeImage;
+    enum Images
+    {
+        LoadingTimeImage,
+        BG,
+        Frame,
+    }
 
-    [SerializeField]
-    private Image _bg;
-
-    [SerializeField]
-    private Image _frame;
-
-    [SerializeField]
-    private TextMeshProUGUI _keyText;
-
-    [SerializeField]
-    private TextMeshProUGUI _interactionText;
-
-    [SerializeField]
-    private TextMeshProUGUI _nameText;
+    enum Texts
+    {
+        KeyText,
+        InteractionText,
+        NameText,
+    }
 
     private Interactor _interactor;
     private UI_FollowWorldObject _followTarget;
 
+    private UIBinder _binder;
+
     private void Awake()
     {
+        _binder = new(gameObject);
+        _binder.BindObject(typeof(Objects));
+        _binder.BindImage(typeof(Images));
+        _binder.BindText(typeof(Texts));
+
         _followTarget = GetComponent<UI_FollowWorldObject>();
-        _keyText.text = InputManager.GetBindingPath("Interact");
+        _binder.GetText((int)Texts.KeyText).text = InputManager.GetBindingPath("Interact");
+
         gameObject.SetActive(false);
     }
 
@@ -40,18 +44,18 @@ public class UI_Interactor : MonoBehaviour, IConnectable<Interactor>
     {
         if (_interactor.Target.IsInteracted)
         {
-            _body.SetActive(false);
+            _binder.GetObject((int)Objects.Body).SetActive(false);
             return;
         }
 
-        if (!_body.activeSelf)
+        if (!_binder.GetObject((int)Objects.Body).activeSelf)
         {
-            _body.SetActive(true);
+            _binder.GetObject((int)Objects.Body).SetActive(true);
         }
 
-        if (_loadingTimeImage.IsActive())
+        if (_binder.GetImage((int)Images.LoadingTimeImage).IsActive())
         {
-            _loadingTimeImage.fillAmount = _interactor.HoldingTime / _interactor.Target.HoldTime;
+            _binder.GetImage((int)Images.LoadingTimeImage).fillAmount = _interactor.HoldingTime / _interactor.Target.HoldTime;
         }
     }
 
@@ -84,18 +88,20 @@ public class UI_Interactor : MonoBehaviour, IConnectable<Interactor>
         if (isNotNull)
         {
             bool canInteract = target.CanInteract;
-            _bg.gameObject.SetActive(canInteract);
-            _keyText.gameObject.SetActive(canInteract);
+            _binder.GetImage((int)Images.BG).gameObject.SetActive(canInteract);
+            _binder.GetText((int)Texts.KeyText).gameObject.SetActive(canInteract);
 
             bool hasHoldTime = canInteract && target.HoldTime > 0f;
-            _loadingTimeImage.gameObject.SetActive(hasHoldTime);
-            _frame.gameObject.SetActive(hasHoldTime);
+            _binder.GetImage((int)Images.LoadingTimeImage).gameObject.SetActive(hasHoldTime);
+            _binder.GetImage((int)Images.Frame).gameObject.SetActive(hasHoldTime);
 
-            _interactionText.text = target.ActionName;
-            _interactionText.gameObject.SetActive(canInteract);
+            var interactionText = _binder.GetText((int)Texts.InteractionText);
+            interactionText.text = target.ActionName;
+            interactionText.gameObject.SetActive(canInteract);
 
-            _nameText.text = target.ObjectName;
-            _nameText.gameObject.SetActive(!string.IsNullOrEmpty(target.ObjectName));
+            var name = _binder.GetText((int)Texts.NameText);
+            name.text = target.ObjectName;
+            name.gameObject.SetActive(!string.IsNullOrEmpty(target.ObjectName));
 
             _followTarget.SetTargetAndOffset(target.transform, target.UIOffset);
         }

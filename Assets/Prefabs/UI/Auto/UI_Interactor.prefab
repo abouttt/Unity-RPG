@@ -543,7 +543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d6023d3360adb4b9440a09bcc50c83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _body: {fileID: 4353220376059457194}
+  _body: {fileID: 0}
   _loadingTimeImage: {fileID: 8687805925668146139}
   _bg: {fileID: 8716963854897931232}
   _frame: {fileID: 3000450727147717596}

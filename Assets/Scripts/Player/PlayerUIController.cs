@@ -13,6 +13,14 @@ public class PlayerUIController : MonoBehaviour
         ShowOrClosePopup<UI_ItemInventoryPopup>();
     }
 
+    private void OnCancel(InputValue inputValue)
+    {
+        if (UIManager.ActivePopupCount > 0)
+        {
+            UIManager.CloseTopPopup();
+        }
+    }
+
     private void ShowOrClosePopup<T>() where T : UI_Popup
     {
         if (UIManager.IsActiveHelperPopup)

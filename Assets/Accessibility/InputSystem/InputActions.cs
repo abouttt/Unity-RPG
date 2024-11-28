@@ -98,6 +98,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""14df716a-8550-4815-9bfa-6ddfb772ede6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -230,6 +239,17 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ItemInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3df9e570-673b-4e42-83d1-2801f4e4d540"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -781,6 +801,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_CursorToggle = m_Player.FindAction("CursorToggle", throwIfNotFound: true);
         m_Player_ItemInventory = m_Player.FindAction("ItemInventory", throwIfNotFound: true);
+        m_Player_Cancel = m_Player.FindAction("Cancel", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -868,6 +889,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_CursorToggle;
     private readonly InputAction m_Player_ItemInventory;
+    private readonly InputAction m_Player_Cancel;
     public struct PlayerActions
     {
         private @InputActions m_Wrapper;
@@ -880,6 +902,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @CursorToggle => m_Wrapper.m_Player_CursorToggle;
         public InputAction @ItemInventory => m_Wrapper.m_Player_ItemInventory;
+        public InputAction @Cancel => m_Wrapper.m_Player_Cancel;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -913,6 +936,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @ItemInventory.started += instance.OnItemInventory;
             @ItemInventory.performed += instance.OnItemInventory;
             @ItemInventory.canceled += instance.OnItemInventory;
+            @Cancel.started += instance.OnCancel;
+            @Cancel.performed += instance.OnCancel;
+            @Cancel.canceled += instance.OnCancel;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -941,6 +967,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @ItemInventory.started -= instance.OnItemInventory;
             @ItemInventory.performed -= instance.OnItemInventory;
             @ItemInventory.canceled -= instance.OnItemInventory;
+            @Cancel.started -= instance.OnCancel;
+            @Cancel.performed -= instance.OnCancel;
+            @Cancel.canceled -= instance.OnCancel;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1095,6 +1124,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnCursorToggle(InputAction.CallbackContext context);
         void OnItemInventory(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
