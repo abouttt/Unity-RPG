@@ -1,27 +1,16 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 public class UI_LootSubitem : MonoBehaviour
 {
     public ItemData ItemData { get; private set; }
     public int Quantity { get; private set; }
 
-    [SerializeField]
-    private Image _itemImage;
-
-    [SerializeField]
-    private TextMeshProUGUI _itemNameText;
-
-    [SerializeField]
-    private TextMeshProUGUI _quantityText;
-
-    [SerializeField]
-    private Button _lootButton;
+    private DataBinder _binder;
 
     private void Awake()
     {
-        _lootButton.onClick.AddListener(() =>
+        _binder = new(gameObject);
+        _binder.GetButton("LootButton").onClick.AddListener(() =>
         {
             var lootPopup = UIManager.Get<UI_LootPopup>();
             lootPopup.AddItemToItemInventory(this);
@@ -33,8 +22,8 @@ public class UI_LootSubitem : MonoBehaviour
         if (ItemData == null || !ItemData.Equals(itemData))
         {
             ItemData = itemData;
-            _itemImage.sprite = itemData.ItemImage;
-            _itemNameText.text = itemData.ItemName;
+            _binder.GetImage("ItemImage").sprite = itemData.ItemImage;
+            _binder.GetText("ItemNameText").text = itemData.ItemName;
         }
 
         Quantity = quantity;
@@ -43,7 +32,8 @@ public class UI_LootSubitem : MonoBehaviour
 
     private void RefreshCountText()
     {
-        _quantityText.gameObject.SetActive(Quantity > 1);
-        _quantityText.text = Quantity.ToString();
+        var quantityText = _binder.GetText("QuantityText");
+        quantityText.gameObject.SetActive(Quantity > 1);
+        quantityText.text = Quantity.ToString();
     }
 }

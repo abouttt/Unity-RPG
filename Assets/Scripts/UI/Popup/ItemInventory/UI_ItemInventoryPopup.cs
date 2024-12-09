@@ -1,26 +1,19 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 public class UI_ItemInventoryPopup : UI_Popup, IConnectable<ItemInventory>
 {
     public ItemInventory ItemInventory { get; private set; }
 
-    [SerializeField]
-    private Transform _itemSlots;
-
-    [SerializeField]
-    private TextMeshProUGUI _goldText;
-
-    [SerializeField]
-    private Button _closeButton;
-
+    private DataBinder _binder;
     private UI_ItemSlot[] _slots;
 
     protected override void Init()
     {
         base.Init();
-        _closeButton.onClick.AddListener(UIManager.Close<UI_ItemInventoryPopup>);
+
+        _binder = new(gameObject);
+        _binder.GetButton("CloseButton").onClick.AddListener(UIManager.Close<UI_ItemInventoryPopup>);
+
         UIManager.Register(this);
     }
 
@@ -40,7 +33,7 @@ public class UI_ItemInventoryPopup : UI_Popup, IConnectable<ItemInventory>
 
         ItemInventory = itemInventory;
         itemInventory.InventoryChanged += RefreshSlot;
-        CreateSlots(itemInventory.Capacity, _itemSlots);
+        CreateSlots(itemInventory.Capacity, _binder.GetRectTransform("ItemSlots"));
     }
 
     public void Disconnect()

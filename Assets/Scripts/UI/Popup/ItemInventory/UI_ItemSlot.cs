@@ -1,28 +1,16 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using TMPro;
 
 public class UI_ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     public int Index { get; set; }
 
-    [SerializeField]
-    private Image _itemImage;
-
-    [SerializeField]
-    private Image _tempImage;
-
-    [SerializeField]
-    private UI_CooldownImage _cooldownImage;
-
-    [SerializeField]
-    private TextMeshProUGUI _quantityText;
-
+    private DataBinder _binder;
     private Item _item;
 
     private void Awake()
     {
+        _binder = new(gameObject);
         Clear();
     }
 
@@ -40,13 +28,13 @@ public class UI_ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         if (item is IStackable stackable)
         {
             stackable.StackChanged += RefreshQuantityText;
-            _quantityText.gameObject.SetActive(true);
+            _binder.GetText("QuantityText").gameObject.SetActive(true);
             RefreshQuantityText(stackable);
         }
 
         if (item.Data is ICooldownable cooldownable)
         {
-            _cooldownImage.Connect(cooldownable.Cooldown);
+            _binder.Get<UI_CooldownImage>("CooldownImage").Connect(cooldownable.Cooldown);
         }
 
         _item = item;
@@ -63,27 +51,29 @@ public class UI_ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
             if (_item.Data is ICooldownable)
             {
-                _cooldownImage.Disconnect();
+                _binder.Get<UI_CooldownImage>("CooldownImage").Disconnect();
             }
 
             _item = null;
         }
 
         SetItemImage(null);
-        _quantityText.gameObject.SetActive(false);
+        _binder.GetText("QuantityText").gameObject.SetActive(false);
     }
 
     private void SetItemImage(Sprite image)
     {
-        _itemImage.sprite = image;
-        _tempImage.sprite = image;
-        _itemImage.gameObject.SetActive(image != null);
-        _tempImage.gameObject.SetActive(false);
+        var itemImage = _binder.GetImage("ItemImage");
+        var tempImage = _binder.GetImage("TempImage");
+        itemImage.sprite = image;
+        tempImage.sprite = image;
+        itemImage.gameObject.SetActive(image != null);
+        tempImage.gameObject.SetActive(false);
     }
 
     private void RefreshQuantityText(IStackable stackable)
     {
-        _quantityText.text = stackable.Quantity.ToString();
+        _binder.GetText("QuantityText").text = stackable.Quantity.ToString();
     }
 
     public virtual void OnBeginDrag(PointerEventData eventData)
@@ -94,29 +84,35 @@ public class UI_ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             return;
         }
 
-        if (!_itemImage.isActiveAndEnabled)
+        var itemImage = _binder.GetImage("ItemImage");
+
+        if (!itemImage.isActiveAndEnabled)
         {
             eventData.pointerDrag = null;
             return;
         }
 
-        _itemImage.color = new Color(1f, 1f, 1f, 0.3f);
-        _tempImage.gameObject.SetActive(true);
-        _tempImage.transform.SetParent(UIManager.Get<UI_TopCanvas>().transform);
-        _tempImage.transform.SetAsLastSibling();
+        var tempImage = _binder.GetImage("TempImage");
+
+        itemImage.color = new Color(1f, 1f, 1f, 0.3f);
+        tempImage.gameObject.SetActive(true);
+        tempImage.transform.SetParent(UIManager.Get<UI_TopCanvas>().transform);
+        tempImage.transform.SetAsLastSibling();
     }
 
     public virtual void OnDrag(PointerEventData eventData)
     {
-        _tempImage.rectTransform.position = eventData.position;
+        _binder.GetImage("TempImage").rectTransform.position = eventData.position;
     }
 
     public virtual void OnEndDrag(PointerEventData eventData)
     {
-        _itemImage.color = Color.white;
-        _tempImage.gameObject.SetActive(false);
-        _tempImage.transform.SetParent(transform);
-        _tempImage.rectTransform.position = transform.position;
+        var itemImage = _binder.GetImage("ItemImage");
+        var tempImage = _binder.GetImage("TempImage");
+        itemImage.color = Color.white;
+        tempImage.gameObject.SetActive(false);
+        tempImage.transform.SetParent(transform);
+        tempImage.rectTransform.position = transform.position;
     }
 
     public void OnDrop(PointerEventData eventData)

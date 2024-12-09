@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1845765513992930215}
   - component: {fileID: 4323532215960223661}
   - component: {fileID: 4748099025845009224}
+  - component: {fileID: 2783250871627641328}
   m_Layer: 5
   m_Name: NoButton
   m_TagString: Untagged
@@ -121,6 +122,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2783250871627641328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2305674869474030082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42d4449b40946d6489081982b152c904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 4748099025845009224}
+  DataID: NoButton
+  AutoRefreshDataID: 1
 --- !u!1 &2447798668164908357
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,6 +149,7 @@ GameObject:
   - component: {fileID: 5920787847722542272}
   - component: {fileID: 7938991849001819212}
   - component: {fileID: 3332364226369129272}
+  - component: {fileID: 9178478208105359864}
   m_Layer: 5
   m_Name: YesButton
   m_TagString: Untagged
@@ -242,6 +259,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &9178478208105359864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2447798668164908357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42d4449b40946d6489081982b152c904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 3332364226369129272}
+  DataID: YesButton
+  AutoRefreshDataID: 1
 --- !u!1 &3594893377748138511
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,11 +396,6 @@ MonoBehaviour:
   <IgnoreSelfish>k__BackingField: 0
   <Body>k__BackingField: {fileID: 2290188779516033984}
   <DefaultPosition>k__BackingField: {x: 0, y: 0, z: 0}
-  _guideText: {fileID: 4854836733497264934}
-  _yesText: {fileID: 7003999028868066739}
-  _noText: {fileID: 7056951349023924947}
-  _yesButton: {fileID: 3332364226369129272}
-  _noButton: {fileID: 4748099025845009224}
 --- !u!1 &4463838232438701198
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,6 +407,7 @@ GameObject:
   - component: {fileID: 6399941393221576434}
   - component: {fileID: 5078122484299546035}
   - component: {fileID: 4854836733497264934}
+  - component: {fileID: 2282361641566980742}
   m_Layer: 5
   m_Name: GuideText
   m_TagString: Untagged
@@ -505,6 +533,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2282361641566980742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4463838232438701198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32a0aa71875b0504b9c49ab2ea928278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 4854836733497264934}
+  DataID: GuideText
+  AutoRefreshDataID: 1
 --- !u!1 &4570817340221144698
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,6 +559,7 @@ GameObject:
   - component: {fileID: 2463954731803014}
   - component: {fileID: 7160385883881496441}
   - component: {fileID: 7003999028868066739}
+  - component: {fileID: 6055225703471195370}
   m_Layer: 5
   m_Name: YesText
   m_TagString: Untagged
@@ -641,6 +685,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6055225703471195370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4570817340221144698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32a0aa71875b0504b9c49ab2ea928278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 7003999028868066739}
+  DataID: YesText
+  AutoRefreshDataID: 1
 --- !u!1 &5387898760509309341
 GameObject:
   m_ObjectHideFlags: 0
@@ -924,6 +983,7 @@ GameObject:
   - component: {fileID: 1869297343809054858}
   - component: {fileID: 4418337978601906418}
   - component: {fileID: 7056951349023924947}
+  - component: {fileID: 7476008538840097496}
   m_Layer: 5
   m_Name: NoText
   m_TagString: Untagged
@@ -1049,6 +1109,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7476008538840097496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8020341056420055713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32a0aa71875b0504b9c49ab2ea928278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 7056951349023924947}
+  DataID: NoText
+  AutoRefreshDataID: 1
 --- !u!1 &8071360267175126128
 GameObject:
   m_ObjectHideFlags: 0

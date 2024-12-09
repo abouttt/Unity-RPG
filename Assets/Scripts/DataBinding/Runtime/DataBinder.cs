@@ -5,12 +5,14 @@ using UnityEngine.UI;
 using TMPro;
 using Object = UnityEngine.Object;
 
-public class DataBinder : MonoBehaviour
+public class DataBinder
 {
     private readonly Dictionary<Type, Dictionary<string, Object>> _bindings = new();
+    private readonly GameObject _gameObject;
 
-    private void Awake()
+    public DataBinder(GameObject gameObject)
     {
+        _gameObject = gameObject;
         FindDataBindings();
     }
 
@@ -42,7 +44,7 @@ public class DataBinder : MonoBehaviour
 
     private void FindDataBindings()
     {
-        foreach (var binding in gameObject.GetComponentsInChildren<DataBinding>(true))
+        foreach (var binding in _gameObject.GetComponentsInChildren<DataBinding>(true))
         {
             if (IsNullBinding(binding))
             {
@@ -78,6 +80,6 @@ public class DataBinder : MonoBehaviour
 
     private void LogWarning(string message, DataBinding binding)
     {
-        Debug.LogWarning($"[DataBinder] {gameObject.name} - {message} (ID : {binding.DataID}, Target : {binding.Target})");
+        Debug.LogWarning($"[DataBinder] {_gameObject.name} - {message} (ID : {binding.DataID}, Target : {binding.Target})");
     }
 }

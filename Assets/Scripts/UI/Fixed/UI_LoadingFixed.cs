@@ -3,21 +3,20 @@ using UnityEngine.UI;
 
 public class UI_LoadingFixed : UI_View
 {
-    [SerializeField]
-    private Image _bg;
-
-    [SerializeField]
-    private Image _bar;
+    private DataBinder _binder;
 
     protected override void Init()
     {
-        _bg.sprite = SceneSettings.Instance[SceneManagerEx.NextSceneName].LoadingBackground;
-        _bg.color = _bg.sprite != null ? Color.white : Color.black;
-        _bar.fillAmount = 0f;
+        _binder = new(gameObject);
+
+        var bg = _binder.Get<Image>("BG");
+        bg.sprite = SceneSettings.Instance[SceneManagerEx.NextSceneName].LoadingBackground;
+        bg.color = bg.sprite != null ? Color.white : Color.black;
+        _binder.Get<Image>("Bar").fillAmount = 0f;
     }
 
     private void Update()
     {
-        _bar.fillAmount = SceneManagerEx.LoadingProgress;
+        _binder.Get<Image>("Bar").fillAmount = SceneManagerEx.LoadingProgress;
     }
 }

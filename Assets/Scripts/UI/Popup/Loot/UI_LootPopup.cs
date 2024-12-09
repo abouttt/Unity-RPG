@@ -1,27 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
-using TMPro;
 
 public class UI_LootPopup : UI_Popup, IConnectable<ItemInventory>
 {
     [SerializeField]
-    private RectTransform _lootSubitems;
-
-    [SerializeField]
-    private TextMeshProUGUI _lootAllText;
-
-    [SerializeField]
-    private Button _lootAllButton;
-
-    [SerializeField]
-    private Button _closeButton;
-
-    [SerializeField]
     private float _trackingDistance;
 
+    private DataBinder _binder;
     private ItemInventory _itemInventory;
     private FieldItem _fieldItem;
     private InputAction _interact;
@@ -33,9 +20,10 @@ public class UI_LootPopup : UI_Popup, IConnectable<ItemInventory>
 
         _interact = InputManager.GetAction("Interact");
 
-        _lootAllText.text = $"[{InputManager.GetBindingPath("Interact")}] ¸ðµÎ È¹µæ";
-        _lootAllButton.onClick.AddListener(AddAllItemToItemInventory);
-        _closeButton.onClick.AddListener(UIManager.Close<UI_LootPopup>);
+        _binder = new(gameObject);
+        _binder.GetText("LootAllText").text = $"[{InputManager.GetBindingPath("Interact")}] ¸ðµÎ È¹µæ";
+        _binder.GetButton("LootAllButton").onClick.AddListener(AddAllItemToItemInventory);
+        _binder.GetButton("CloseButton").onClick.AddListener(UIManager.Close<UI_LootPopup>);
 
         Showed += () => _interact.performed += AddAllItemToItemInventoryInputAction;
 
@@ -129,7 +117,7 @@ public class UI_LootPopup : UI_Popup, IConnectable<ItemInventory>
             subitem.SetItemData(itemData, count);
             _subitems.Add(subitem, itemData);
         }
-        , _lootSubitems, true);
+        , _binder.GetRectTransform("LootSubitems"), true);
     }
 
     private void RemoveSubitem(UI_LootSubitem subitem)

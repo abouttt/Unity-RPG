@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1433399066511338506}
   - component: {fileID: 8716963854897931232}
   - component: {fileID: 8623175083166363906}
+  - component: {fileID: 4830426745931258002}
   m_Layer: 5
   m_Name: BG
   m_TagString: Untagged
@@ -96,6 +97,21 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &4830426745931258002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243413952011520083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d898d0e61025d3d44b2e2a64004ab2fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 8716963854897931232}
+  DataID: BG
+  AutoRefreshDataID: 1
 --- !u!1 &1811608925185142441
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,6 +124,7 @@ GameObject:
   - component: {fileID: 8243199890309672013}
   - component: {fileID: 3587055213234455033}
   - component: {fileID: 2887074411173948707}
+  - component: {fileID: 4883317735739704831}
   m_Layer: 5
   m_Name: InteractionText
   m_TagString: Untagged
@@ -253,6 +270,21 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &4883317735739704831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811608925185142441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32a0aa71875b0504b9c49ab2ea928278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 3587055213234455033}
+  DataID: InteractionText
+  AutoRefreshDataID: 1
 --- !u!1 &4353220376059457194
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,6 +296,7 @@ GameObject:
   - component: {fileID: 5760443577706350610}
   - component: {fileID: 1252700367914951774}
   - component: {fileID: 2008553598278579782}
+  - component: {fileID: 3593956799884910500}
   m_Layer: 5
   m_Name: Body
   m_TagString: Untagged
@@ -336,6 +369,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!114 &3593956799884910500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4353220376059457194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 478cbc56efbecd54ca93b56e55fa3fa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 4353220376059457194}
+  DataID: Body
+  AutoRefreshDataID: 1
 --- !u!1 &7571460211402399545
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,6 +396,7 @@ GameObject:
   - component: {fileID: 2867441703789617392}
   - component: {fileID: 3994095852322316666}
   - component: {fileID: 4531289708870575897}
+  - component: {fileID: 2696619901966579087}
   m_Layer: 5
   m_Name: NameText
   m_TagString: Untagged
@@ -493,6 +542,21 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &2696619901966579087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7571460211402399545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32a0aa71875b0504b9c49ab2ea928278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 3994095852322316666}
+  DataID: NameText
+  AutoRefreshDataID: 1
 --- !u!1 &8230138382000593301
 GameObject:
   m_ObjectHideFlags: 0
@@ -543,13 +607,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d6023d3360adb4b9440a09bcc50c83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _body: {fileID: 0}
-  _loadingTimeImage: {fileID: 8687805925668146139}
-  _bg: {fileID: 8716963854897931232}
-  _frame: {fileID: 3000450727147717596}
-  _keyText: {fileID: 830609951309173474}
-  _interactionText: {fileID: 3587055213234455033}
-  _nameText: {fileID: 3994095852322316666}
 --- !u!114 &8639280772169762496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -576,6 +633,7 @@ GameObject:
   - component: {fileID: 5590976215546079301}
   - component: {fileID: 3000450727147717596}
   - component: {fileID: 5357766164163406815}
+  - component: {fileID: 2494986926611619162}
   m_Layer: 5
   m_Name: Frame
   m_TagString: Untagged
@@ -660,6 +718,21 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &2494986926611619162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8363628273800848045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d898d0e61025d3d44b2e2a64004ab2fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 3000450727147717596}
+  DataID: Frame
+  AutoRefreshDataID: 1
 --- !u!1 &8368239693638570625
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,6 +744,7 @@ GameObject:
   - component: {fileID: 2058298927442941364}
   - component: {fileID: 4394926786257569802}
   - component: {fileID: 830609951309173474}
+  - component: {fileID: 6753689004889513829}
   m_Layer: 5
   m_Name: KeyText
   m_TagString: Untagged
@@ -796,6 +870,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6753689004889513829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8368239693638570625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32a0aa71875b0504b9c49ab2ea928278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 830609951309173474}
+  DataID: KeyText
+  AutoRefreshDataID: 1
 --- !u!1 &8653224992085342893
 GameObject:
   m_ObjectHideFlags: 0
@@ -808,6 +897,7 @@ GameObject:
   - component: {fileID: 2904674703860724440}
   - component: {fileID: 8687805925668146139}
   - component: {fileID: 4515622117716914375}
+  - component: {fileID: 2134525639179695335}
   m_Layer: 5
   m_Name: LoadingTimeImage
   m_TagString: Untagged
@@ -892,3 +982,18 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &2134525639179695335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8653224992085342893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d898d0e61025d3d44b2e2a64004ab2fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 8687805925668146139}
+  DataID: LoadingTimeImage
+  AutoRefreshDataID: 1

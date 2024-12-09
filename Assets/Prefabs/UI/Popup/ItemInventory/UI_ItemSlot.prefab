@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 4494863549993577543}
   - component: {fileID: 7005426255065792795}
   - component: {fileID: 4368067806794865898}
+  - component: {fileID: 4119682805139706057}
   m_Layer: 5
   m_Name: ItemImage
   m_TagString: Untagged
@@ -150,6 +151,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4119682805139706057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3743827559319006597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d898d0e61025d3d44b2e2a64004ab2fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 4368067806794865898}
+  DataID: ItemImage
+  AutoRefreshDataID: 1
 --- !u!1 &7012100521518355948
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,10 +220,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f4c7cbd4675a4448b6aca027d356300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemImage: {fileID: 4368067806794865898}
-  _tempImage: {fileID: 1495835941603325879}
-  _cooldownImage: {fileID: 3467213027341195126}
-  _quantityText: {fileID: 4941919932579246538}
 --- !u!1 &7384473172728754955
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,6 +306,7 @@ GameObject:
   - component: {fileID: 3813699278680480806}
   - component: {fileID: 6495675439764675346}
   - component: {fileID: 4941919932579246538}
+  - component: {fileID: 1483190043118264942}
   m_Layer: 5
   m_Name: QuantityText
   m_TagString: Untagged
@@ -419,6 +432,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1483190043118264942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7719040564236562288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32a0aa71875b0504b9c49ab2ea928278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 4941919932579246538}
+  DataID: QuantityText
+  AutoRefreshDataID: 1
 --- !u!1 &7759524346342262832
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,6 +459,7 @@ GameObject:
   - component: {fileID: 5742897120522359651}
   - component: {fileID: 7237417650635248800}
   - component: {fileID: 3467213027341195126}
+  - component: {fileID: 5615385869838762928}
   m_Layer: 5
   m_Name: CooldownImage
   m_TagString: Untagged
@@ -507,6 +536,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98afef2a95d35434eb5944f3209b0d9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5615385869838762928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7759524346342262832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca2d3e9b5d447a34d862986ef1676edb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 3467213027341195126}
+  DataID: CooldownImage
+  AutoRefreshDataID: 1
+  TypeName: UI_CooldownImage
 --- !u!1 &8183742508707007869
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,6 +563,7 @@ GameObject:
   - component: {fileID: 3503785484171105619}
   - component: {fileID: 8044685239657148250}
   - component: {fileID: 1495835941603325879}
+  - component: {fileID: 4675394993744445289}
   m_Layer: 5
   m_Name: TempImage
   m_TagString: Untagged
@@ -582,3 +628,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4675394993744445289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8183742508707007869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d898d0e61025d3d44b2e2a64004ab2fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 1495835941603325879}
+  DataID: TempImage
+  AutoRefreshDataID: 1

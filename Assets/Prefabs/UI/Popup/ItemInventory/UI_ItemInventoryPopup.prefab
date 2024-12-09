@@ -379,6 +379,7 @@ GameObject:
   - component: {fileID: 1873672672546350352}
   - component: {fileID: 7668068333175325915}
   - component: {fileID: 3916663617883389}
+  - component: {fileID: 7623905712600605824}
   m_Layer: 5
   m_Name: ItemSlots
   m_TagString: Untagged
@@ -443,6 +444,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 1
+--- !u!114 &7623905712600605824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032011439852272333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d85cab10ec4546243823ae3cf471db6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 1873672672546350352}
+  DataID: ItemSlots
+  AutoRefreshDataID: 1
 --- !u!1 &2690800907558000029
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,6 +545,7 @@ GameObject:
   - component: {fileID: 6525162399005234684}
   - component: {fileID: 8504512412054101492}
   - component: {fileID: 8503726118796863568}
+  - component: {fileID: 8211378143819671145}
   m_Layer: 5
   m_Name: GoldText
   m_TagString: Untagged
@@ -654,6 +671,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8211378143819671145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3517614515315416459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32a0aa71875b0504b9c49ab2ea928278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 8503726118796863568}
+  DataID: GoldText
+  AutoRefreshDataID: 1
 --- !u!1 &4891884569839179179
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,6 +698,7 @@ GameObject:
   - component: {fileID: 732930988480135162}
   - component: {fileID: 4466339307259440048}
   - component: {fileID: 8847356342703156027}
+  - component: {fileID: 324797192263152575}
   m_Layer: 5
   m_Name: CloseButton
   m_TagString: Untagged
@@ -774,6 +807,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &324797192263152575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4891884569839179179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42d4449b40946d6489081982b152c904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 8847356342703156027}
+  DataID: CloseButton
+  AutoRefreshDataID: 1
 --- !u!1 &5152690950953361870
 GameObject:
   m_ObjectHideFlags: 0
@@ -1010,9 +1058,6 @@ MonoBehaviour:
   <IgnoreSelfish>k__BackingField: 0
   <Body>k__BackingField: {fileID: 7322062175466374394}
   <DefaultPosition>k__BackingField: {x: 400, y: 0, z: 0}
-  _itemSlots: {fileID: 1873672672546350352}
-  _goldText: {fileID: 8503726118796863568}
-  _closeButton: {fileID: 8847356342703156027}
 --- !u!1 &6464976903585611418
 GameObject:
   m_ObjectHideFlags: 0

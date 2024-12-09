@@ -3,39 +3,15 @@ using UnityEngine;
 [RequireComponent(typeof(UI_FollowWorldObject))]
 public class UI_Interactor : MonoBehaviour, IConnectable<Interactor>
 {
-    enum Objects
-    {
-        Body,
-    }
-
-    enum Images
-    {
-        LoadingTimeImage,
-        BG,
-        Frame,
-    }
-
-    enum Texts
-    {
-        KeyText,
-        InteractionText,
-        NameText,
-    }
-
+    private DataBinder _binder;
     private Interactor _interactor;
     private UI_FollowWorldObject _followTarget;
-
-    private UIBinder _binder;
 
     private void Awake()
     {
         _binder = new(gameObject);
-        _binder.BindObject(typeof(Objects));
-        _binder.BindImage(typeof(Images));
-        _binder.BindText(typeof(Texts));
-
         _followTarget = GetComponent<UI_FollowWorldObject>();
-        _binder.GetText((int)Texts.KeyText).text = InputManager.GetBindingPath("Interact");
+        _binder.GetText("KeyText").text = InputManager.GetBindingPath("Interact");
 
         gameObject.SetActive(false);
     }
@@ -44,18 +20,18 @@ public class UI_Interactor : MonoBehaviour, IConnectable<Interactor>
     {
         if (_interactor.Target.IsInteracted)
         {
-            _binder.GetObject((int)Objects.Body).SetActive(false);
+            _binder.GetObject("Body").SetActive(false);
             return;
         }
 
-        if (!_binder.GetObject((int)Objects.Body).activeSelf)
+        if (!_binder.GetObject("Body").activeSelf)
         {
-            _binder.GetObject((int)Objects.Body).SetActive(true);
+            _binder.GetObject("Body").SetActive(true);
         }
 
-        if (_binder.GetImage((int)Images.LoadingTimeImage).IsActive())
+        if (_binder.GetImage("LoadingTimeImage").IsActive())
         {
-            _binder.GetImage((int)Images.LoadingTimeImage).fillAmount = _interactor.HoldingTime / _interactor.Target.HoldTime;
+            _binder.GetImage("LoadingTimeImage").fillAmount = _interactor.HoldingTime / _interactor.Target.HoldTime;
         }
     }
 
@@ -88,18 +64,18 @@ public class UI_Interactor : MonoBehaviour, IConnectable<Interactor>
         if (isNotNull)
         {
             bool canInteract = target.CanInteract;
-            _binder.GetImage((int)Images.BG).gameObject.SetActive(canInteract);
-            _binder.GetText((int)Texts.KeyText).gameObject.SetActive(canInteract);
+            _binder.GetImage("BG").gameObject.SetActive(canInteract);
+            _binder.GetText("KeyText").gameObject.SetActive(canInteract);
 
             bool hasHoldTime = canInteract && target.HoldTime > 0f;
-            _binder.GetImage((int)Images.LoadingTimeImage).gameObject.SetActive(hasHoldTime);
-            _binder.GetImage((int)Images.Frame).gameObject.SetActive(hasHoldTime);
+            _binder.GetImage("LoadingTimeImage").gameObject.SetActive(hasHoldTime);
+            _binder.GetImage("Frame").gameObject.SetActive(hasHoldTime);
 
-            var interactionText = _binder.GetText((int)Texts.InteractionText);
+            var interactionText = _binder.GetText("InteractionText");
             interactionText.text = target.ActionName;
             interactionText.gameObject.SetActive(canInteract);
 
-            var name = _binder.GetText((int)Texts.NameText);
+            var name = _binder.GetText("NameText");
             name.text = target.ObjectName;
             name.gameObject.SetActive(!string.IsNullOrEmpty(target.ObjectName));
 

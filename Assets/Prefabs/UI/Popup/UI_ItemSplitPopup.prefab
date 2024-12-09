@@ -194,6 +194,7 @@ GameObject:
   - component: {fileID: 1134853558312221489}
   - component: {fileID: 8281748858105031051}
   - component: {fileID: 6418432198097850782}
+  - component: {fileID: 8364924568588072735}
   m_Layer: 5
   m_Name: UpButton
   m_TagString: Untagged
@@ -322,6 +323,21 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &8364924568588072735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922050004628730440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42d4449b40946d6489081982b152c904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 8281748858105031051}
+  DataID: UpButton
+  AutoRefreshDataID: 1
 --- !u!1 &1093109808699269004
 GameObject:
   m_ObjectHideFlags: 0
@@ -799,6 +815,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3402432988782950629}
   - component: {fileID: 1686073267960381333}
+  - component: {fileID: 3749125028555620432}
   m_Layer: 5
   m_Name: ItemPrice
   m_TagString: Untagged
@@ -849,6 +866,21 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &3749125028555620432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2901891341644089728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 478cbc56efbecd54ca93b56e55fa3fa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 2901891341644089728}
+  DataID: ItemPrice
+  AutoRefreshDataID: 1
 --- !u!1 &3375612213225008301
 GameObject:
   m_ObjectHideFlags: 0
@@ -861,6 +893,7 @@ GameObject:
   - component: {fileID: 2917138948554508685}
   - component: {fileID: 4678963951939659619}
   - component: {fileID: 7360649348423695101}
+  - component: {fileID: 7837801355589001860}
   m_Layer: 5
   m_Name: InputField
   m_TagString: Untagged
@@ -1027,6 +1060,21 @@ MonoBehaviour:
   isAlert: 0
   m_InputValidator: {fileID: 0}
   m_ShouldActivateOnSelect: 1
+--- !u!114 &7837801355589001860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3375612213225008301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97a58d2da89ff4048a2196fbff493340, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 7360649348423695101}
+  DataID: InputField
+  AutoRefreshDataID: 1
 --- !u!1 &4002068150879499359
 GameObject:
   m_ObjectHideFlags: 0
@@ -1141,6 +1189,7 @@ GameObject:
   - component: {fileID: 4977458961021318388}
   - component: {fileID: 3640733213151306426}
   - component: {fileID: 4427123476467759894}
+  - component: {fileID: 5257908256839521570}
   m_Layer: 5
   m_Name: PriceText
   m_TagString: Untagged
@@ -1266,6 +1315,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5257908256839521570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4054843402418880938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32a0aa71875b0504b9c49ab2ea928278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 4427123476467759894}
+  DataID: PriceText
+  AutoRefreshDataID: 1
 --- !u!1 &4139237233975049639
 GameObject:
   m_ObjectHideFlags: 0
@@ -1617,6 +1681,7 @@ GameObject:
   - component: {fileID: 3758512779077891354}
   - component: {fileID: 4048681345784698133}
   - component: {fileID: 4845718326456521404}
+  - component: {fileID: 3959679372571806797}
   m_Layer: 5
   m_Name: DownButton
   m_TagString: Untagged
@@ -1745,6 +1810,21 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &3959679372571806797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5791513595159833279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42d4449b40946d6489081982b152c904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 4048681345784698133}
+  DataID: DownButton
+  AutoRefreshDataID: 1
 --- !u!1 &6538832173827275957
 GameObject:
   m_ObjectHideFlags: 0
@@ -1757,6 +1837,7 @@ GameObject:
   - component: {fileID: 4389668748162962500}
   - component: {fileID: 4057625428498438221}
   - component: {fileID: 6651864952087139604}
+  - component: {fileID: 1927603126087856602}
   m_Layer: 5
   m_Name: NoButton
   m_TagString: Untagged
@@ -1866,6 +1947,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1927603126087856602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6538832173827275957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42d4449b40946d6489081982b152c904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 6651864952087139604}
+  DataID: NoButton
+  AutoRefreshDataID: 1
 --- !u!1 &6950970881189465920
 GameObject:
   m_ObjectHideFlags: 0
@@ -2158,6 +2254,7 @@ GameObject:
   - component: {fileID: 1106699827350132462}
   - component: {fileID: 5097840995921067413}
   - component: {fileID: 183416802362560901}
+  - component: {fileID: 1643932194422948823}
   m_Layer: 5
   m_Name: YesButton
   m_TagString: Untagged
@@ -2267,6 +2364,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1643932194422948823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7879189995515394300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42d4449b40946d6489081982b152c904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 183416802362560901}
+  DataID: YesButton
+  AutoRefreshDataID: 1
 --- !u!1 &8928804119907493818
 GameObject:
   m_ObjectHideFlags: 0
@@ -2278,6 +2390,7 @@ GameObject:
   - component: {fileID: 2859970421549869194}
   - component: {fileID: 2640111308992159910}
   - component: {fileID: 4743860630497962580}
+  - component: {fileID: 5901245209364244041}
   m_Layer: 5
   m_Name: GuideText
   m_TagString: Untagged
@@ -2403,3 +2516,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5901245209364244041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8928804119907493818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32a0aa71875b0504b9c49ab2ea928278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 4743860630497962580}
+  DataID: GuideText
+  AutoRefreshDataID: 1

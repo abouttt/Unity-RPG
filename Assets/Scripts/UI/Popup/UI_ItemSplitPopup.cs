@@ -1,35 +1,11 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 public class UI_ItemSplitPopup : UI_Popup
 {
     public int Quantity { get; private set; }
 
-    [SerializeField]
-    private TMP_InputField _inputField;
-
-    [SerializeField]
-    private TextMeshProUGUI _guideText;
-
-    [SerializeField]
-    private Button _upButton;
-
-    [SerializeField]
-    private Button _downButton;
-
-    [SerializeField]
-    private Button _yesButton;
-
-    [SerializeField]
-    private Button _noButton;
-
-    [SerializeField]
-    private GameObject _itemPrice;
-
-    [SerializeField]
-    private TextMeshProUGUI _priceText;
+    private DataBinder _binder;
 
     private int _price;
     private int _minQuantity;
@@ -39,21 +15,25 @@ public class UI_ItemSplitPopup : UI_Popup
     {
         base.Init();
 
-        _inputField.onValueChanged.AddListener(value => OnValueChanged(value));
-        _inputField.onEndEdit.AddListener(value => OnEndEdit(value));
-        _inputField.onSubmit.AddListener(value => _yesButton.onClick?.Invoke());
+        _binder = new(gameObject);
 
-        _upButton.onClick.AddListener(() => OnClickUpOrDownButton(1));
-        _downButton.onClick.AddListener(() => OnClickUpOrDownButton(-1));
-        _noButton.onClick.AddListener(UIManager.Close<UI_ItemSplitPopup>);
+        var inputField = _binder.GetInputField("InputField");
+        inputField.onValueChanged.AddListener(value => OnValueChanged(value));
+        inputField.onEndEdit.AddListener(value => OnEndEdit(value));
+        inputField.onSubmit.AddListener(value => _binder.GetButton("YesButton").onClick?.Invoke());
+
+        _binder.GetButton("UpButton").onClick.AddListener(() => OnClickUpOrDownButton(1));
+        _binder.GetButton("DownButton").onClick.AddListener(() => OnClickUpOrDownButton(-1));
+        _binder.GetButton("NoButton").onClick.AddListener(UIManager.Close<UI_ItemSplitPopup>);
 
         UIManager.Register(this);
     }
 
     public void SetEvent(Action callback, string guideText, int minQuantity, int maxQuantity, int price = -1)
     {
-        _yesButton.onClick.RemoveAllListeners();
-        _yesButton.onClick.AddListener(() =>
+        var yesButton = _binder.GetButton("YesButton");
+        yesButton.onClick.RemoveAllListeners();
+        yesButton.onClick.AddListener(() =>
         {
             callback?.Invoke();
             UIManager.Close<UI_ItemSplitPopup>();
@@ -64,10 +44,12 @@ public class UI_ItemSplitPopup : UI_Popup
         _minQuantity = minQuantity;
         _price = price;
 
-        _itemPrice.SetActive(price >= 0);
-        _guideText.text = guideText;
-        _inputField.text = maxQuantity.ToString();
-        _inputField.ActivateInputField();
+        _binder.GetObject("ItemPrice").SetActive(price >= 0);
+        _binder.GetText("GuideText").text = guideText;
+
+        var inputField = _binder.GetInputField("InputField");
+        inputField.text = maxQuantity.ToString();
+        inputField.ActivateInputField();
 
         RefreshPriceText();
     }
@@ -80,20 +62,20 @@ public class UI_ItemSplitPopup : UI_Popup
         }
 
         Quantity = Mathf.Clamp(int.Parse(value), _minQuantity, _maxQuantity);
-        _inputField.text = Quantity.ToString();
+        _binder.GetInputField("InputField").text = Quantity.ToString();
         RefreshPriceText();
     }
 
     public void OnEndEdit(string value)
     {
         Quantity = Mathf.Clamp(string.IsNullOrEmpty(value) ? _maxQuantity : int.Parse(value), _minQuantity, _maxQuantity);
-        _inputField.text = Quantity.ToString();
+        _binder.GetInputField("InputField").text = Quantity.ToString();
     }
 
     public void OnClickUpOrDownButton(int quantity)
     {
         Quantity = Mathf.Clamp(Quantity + quantity, _minQuantity, _maxQuantity);
-        _inputField.text = Quantity.ToString();
+        _binder.GetInputField("InputField").text = Quantity.ToString();
     }
 
     private void RefreshPriceText()
@@ -104,7 +86,7 @@ public class UI_ItemSplitPopup : UI_Popup
         }
 
         int totalPrice = _price * Quantity;
-        _priceText.text = totalPrice.ToString();
+        _binder.GetText("PriceText").text = totalPrice.ToString();
         // TODO : Player Gold
     }
 }
