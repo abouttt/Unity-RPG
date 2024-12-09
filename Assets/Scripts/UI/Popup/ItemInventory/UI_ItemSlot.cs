@@ -124,7 +124,7 @@ public class UI_ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         if (eventData.pointerDrag.TryGetComponent<UI_ItemSlot>(out var otherSlot))
         {
-            if (_item == null && otherSlot._item is IStackable otherStackable)
+            if (_item == null && otherSlot._item is IStackable otherStackable && otherStackable.Quantity > 1)
             {
                 var splitPopup = UIManager.Show<UI_ItemSplitPopup>();
                 splitPopup.SetEvent(() =>
