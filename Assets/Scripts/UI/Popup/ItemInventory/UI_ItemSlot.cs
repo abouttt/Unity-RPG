@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 public class UI_ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     public int Index { get; set; }
+    public bool IsDragging { get; private set; }
 
     private DataBinder _binder;
     private Item _item;
@@ -12,6 +13,16 @@ public class UI_ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     {
         _binder = new(gameObject);
         Clear();
+    }
+
+    private void OnDisable()
+    {
+        if (IsDragging)
+        {
+            IsDragging = false;
+            _binder.GetImage("ItemImage").color = Color.white;
+            _binder.GetImage("TempImage").gameObject.SetActive(false);
+        }
     }
 
     public void Refresh(Item item)
@@ -98,21 +109,37 @@ public class UI_ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         tempImage.gameObject.SetActive(true);
         tempImage.transform.SetParent(UIManager.Get<UI_TopCanvas>().transform);
         tempImage.transform.SetAsLastSibling();
+
+        IsDragging = true;
     }
 
     public virtual void OnDrag(PointerEventData eventData)
     {
+        if (!IsDragging)
+        {
+            eventData.pointerDrag = null;
+            return;
+        }
+
         _binder.GetImage("TempImage").rectTransform.position = eventData.position;
     }
 
     public virtual void OnEndDrag(PointerEventData eventData)
     {
+        if (!IsDragging)
+        {
+            eventData.pointerDrag = null;
+            return;
+        }
+
         var itemImage = _binder.GetImage("ItemImage");
         var tempImage = _binder.GetImage("TempImage");
         itemImage.color = Color.white;
         tempImage.gameObject.SetActive(false);
         tempImage.transform.SetParent(transform);
         tempImage.rectTransform.position = transform.position;
+
+        IsDragging = false;
     }
 
     public void OnDrop(PointerEventData eventData)

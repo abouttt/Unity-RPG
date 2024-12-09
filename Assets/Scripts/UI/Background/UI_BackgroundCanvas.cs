@@ -17,6 +17,11 @@ public class UI_BackgroundCanvas : UI_View, IPointerDownHandler, IDropHandler
     {
         if (eventData.pointerDrag.TryGetComponent<UI_ItemSlot>(out var itemSlot))
         {
+            if (!itemSlot.IsDragging)
+            {
+                return;
+            }
+
             OnDropItemSlot(itemSlot);
         }
     }
