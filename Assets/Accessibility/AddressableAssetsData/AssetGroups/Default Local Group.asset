@@ -16,7 +16,13 @@ MonoBehaviour:
   m_GUID: a0a72ac3f716c684a91c4d59517ba207
   m_SerializeEntries:
   - m_GUID: a488f3603db0503498e895ef7e5900eb
-    m_Address: Assets/Prefabs/Default/EventSystem.prefab
+    m_Address: EventSystem
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd39e77b8f02f3f48b5d56234dc3670f
+    m_Address: DDDSoundPlayer
     m_ReadOnly: 0
     m_SerializedLabels:
     - Default
