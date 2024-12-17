@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     private GameObject _mainCamera;
     private CharacterMovement _movement;
+    private CameraController _cameraController;
 
     // Input Value
     private Vector2 _move;
@@ -24,11 +25,17 @@ public class PlayerController : MonoBehaviour
     {
         _mainCamera = Camera.main.gameObject;
         _movement = GetComponent<CharacterMovement>();
+        _cameraController = GetComponent<CameraController>();
     }
 
     private void Update()
     {
         MoveAndRotate();
+    }
+
+    private void LateUpdate()
+    {
+        RotateCamera();
     }
 
     private void MoveAndRotate()
@@ -45,6 +52,11 @@ public class PlayerController : MonoBehaviour
 
         _movement.Move(inputDirection, cameraYaw);
         _movement.Rotate(inputDirection, cameraYaw);
+    }
+
+    private void RotateCamera()
+    {
+        _cameraController.Rotate(_look.y, _look.x);
     }
 
     // Input
