@@ -52,18 +52,9 @@ public class CameraController : MonoBehaviour
         _cinemachineCameraTarget.rotation = _rotation;
     }
 
-    private float ClampAngle(float lfAngle, float lfMin, float lfMax)
+    private float ClampAngle(float angle, float min, float max)
     {
-        if (lfAngle > 180f)
-        {
-            return lfAngle - 360f;
-        }
-
-        if (lfAngle < -180f)
-        {
-            return lfAngle + 360f;
-        }
-
-        return Mathf.Clamp(lfAngle, lfMin, lfMax);
+        angle = Mathf.Repeat(angle + 180f, 360f) - 180f;
+        return Mathf.Clamp(angle, min, max);
     }
 }
