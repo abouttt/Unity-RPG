@@ -46,15 +46,9 @@ public class CameraController : MonoBehaviour
 
     private void ApplyRotate()
     {
-        _eulerAngles.x = ClampAngle(_eulerAngles.x, _bottomClamp, _topClamp);
-        _eulerAngles.y = ClampAngle(_eulerAngles.y, float.MinValue, float.MaxValue);
+        _eulerAngles.x = Util.ClampAngle(_eulerAngles.x, _bottomClamp, _topClamp);
+        _eulerAngles.y = Util.ClampAngle(_eulerAngles.y, float.MinValue, float.MaxValue);
         _rotation = Quaternion.Euler(_eulerAngles.x, _eulerAngles.y, 0f);
         _cinemachineCameraTarget.rotation = _rotation;
-    }
-
-    private float ClampAngle(float angle, float min, float max)
-    {
-        angle = Mathf.Repeat(angle + 180f, 360f) - 180f;
-        return Mathf.Clamp(angle, min, max);
     }
 }

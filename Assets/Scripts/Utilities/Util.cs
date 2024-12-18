@@ -54,4 +54,19 @@ public static class Util
     {
         return (layerMask.value & (1 << go.layer)) != 0;
     }
+
+    public static float ClampAngle(float angle, float min, float max)
+    {
+        if (angle > 180f)
+        {
+            return angle - 360f;
+        }
+
+        if (angle < -180f)
+        {
+            return angle + 360f;
+        }
+
+        return Mathf.Clamp(angle, min, max);
+    }
 }

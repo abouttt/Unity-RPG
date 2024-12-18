@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _landingSpeed;
 
+    [SerializeField]
+    private float _lockOnRotationSpeed;
+
     // 애니메이션 블렌드
     private float _speedBlend;
     private float _posXBlend;
@@ -29,6 +32,7 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
     private CharacterMovement _movement;
     private CameraController _cameraController;
+    private FieldOfView _lockOnFov;
 
     // Input Value
     private Vector2 _move;
@@ -41,6 +45,7 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponent<Animator>();
         _movement = GetComponent<CharacterMovement>();
         _cameraController = GetComponent<CameraController>();
+        _lockOnFov = _mainCamera.GetComponent<FieldOfView>();
     }
 
     private void Update()
@@ -67,12 +72,32 @@ public class PlayerController : MonoBehaviour
         }
 
         _movement.Move(inputDirection, cameraYaw);
-        _movement.Rotate(inputDirection, cameraYaw);
+
+        if (_lockOnFov.HasTarget && IsOnlyRun())
+        {
+            var rotationDirection = inputDirection == Vector3.zero
+                                  ? Vector3.zero
+                                  : (_lockOnFov.Target.position - transform.position).normalized;
+
+            _movement.Rotate(rotationDirection);
+        }
+        else
+        {
+            _movement.Rotate(inputDirection, cameraYaw);
+        }
     }
 
     private void RotateCamera()
     {
-        _cameraController.Rotate(_look.y, _look.x);
+        if (_lockOnFov.HasTarget)
+        {
+            var lookPosition = (_lockOnFov.Target.position + transform.position) * 0.5f;
+            _cameraController.LookRotate(lookPosition, _lockOnRotationSpeed);
+        }
+        else
+        {
+            _cameraController.Rotate(_look.y, _look.x);
+        }
     }
 
     private void UpdateAnimatorParameters()
@@ -80,6 +105,7 @@ public class PlayerController : MonoBehaviour
         var inputDirection = new Vector3(_move.x, 0f, _move.y);
         float targetSpeed = inputDirection == Vector3.zero ? 0f : _movement.MoveSpeed;
         float speedChangeRate = _movement.SpeedChangeRate * Time.deltaTime;
+        bool isLockOnOnlyRun = _lockOnFov.HasTarget && IsOnlyRun();
 
         _speedBlend = Mathf.Lerp(_speedBlend, targetSpeed, speedChangeRate);
         _posXBlend = Mathf.Lerp(_posXBlend, inputDirection.x, speedChangeRate);
@@ -92,11 +118,16 @@ public class PlayerController : MonoBehaviour
         }
 
         _animator.SetFloat(_animIDSpeed, _speedBlend);
-        _animator.SetFloat(_animIDPosX, 0f);
-        _animator.SetFloat(_animIDPosY, 1f);
+        _animator.SetFloat(_animIDPosX, isLockOnOnlyRun ? _posXBlend : 0f);
+        _animator.SetFloat(_animIDPosY, isLockOnOnlyRun ? _posYBlend : 1f);
         _animator.SetBool(_animIDGrounded, _movement.IsGrounded);
         _animator.SetBool(_animIDJump, _movement.IsJumping);
         _animator.SetBool(_animIDFall, _movement.IsFalling);
+    }
+
+    private bool IsOnlyRun()
+    {
+        return !(_isPressedSprint || _movement.IsJumping || _movement.IsFalling || _movement.IsLanding);
     }
 
     // Input
@@ -119,5 +150,17 @@ public class PlayerController : MonoBehaviour
     private void OnJump(InputValue inputValue)
     {
         _movement.Jump();
+    }
+
+    private void OnLockOn(InputValue inputValue)
+    {
+        if (_lockOnFov.HasTarget)
+        {
+            _lockOnFov.Target = null;
+        }
+        else
+        {
+            _lockOnFov.FindTarget();
+        }
     }
 }
