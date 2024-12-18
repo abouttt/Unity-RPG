@@ -45,8 +45,9 @@ public sealed class UIManager : MonoBehaviourSingleton<UIManager>
         {
             foreach (var prefab in settings[uiType].Prefabs)
             {
-                var ui = Instantiate(prefab);
-                instance.Add(ui);
+                var go = Instantiate(prefab);
+                var view = go.GetComponent<UI_View>();
+                instance.Add(view);
             }
         }
     }
@@ -214,24 +215,25 @@ public sealed class UIManager : MonoBehaviourSingleton<UIManager>
         }
     }
 
-    private void Add<T>(T ui) where T : UI_View
+    private void Add(UI_View view)
     {
         var instance = Instance;
+        var viewType = view.GetType();
 
-        if (!instance._objects.TryGetValue(typeof(T), out _))
+        if (!instance._objects.TryGetValue(viewType, out _))
         {
-            if (ui.UIType == UIType.Popup)
+            if (view.UIType == UIType.Popup)
             {
-                instance.InitPopup(ui as UI_Popup);
+                instance.InitPopup(view as UI_Popup);
             }
 
-            ui.transform.SetParent(instance._canvases[ui.UIType].transform);
-            instance._objects.Add(typeof(T), ui);
+            view.transform.SetParent(instance._canvases[view.UIType].transform);
+            instance._objects.Add(viewType, view);
         }
         else
         {
-            Destroy(ui.gameObject);
-            Debug.LogWarning($"[UIManager.Add] {typeof(T)} is destroyed because it already exists.");
+            Destroy(view.gameObject);
+            Debug.LogWarning($"[UIManager.Add] {viewType} is destroyed because it already exists.");
         }
     }
 
