@@ -17,7 +17,7 @@ public class UISettings : ScriptableSingleton<UISettings>
         public bool GraphicRaycaster { get; private set; } = true;
 
         [field: SerializeField]
-        public List<UI_View> Prefabs { get; private set; }
+        public List<GameObject> Prefabs { get; private set; }
     }
 
     public Settings this[UIType uiType] => _settings[uiType];
@@ -37,11 +37,14 @@ public class UISettings : ScriptableSingleton<UISettings>
             }
         }
 
-        foreach (var guid in AssetDatabase.FindAssets($"t:{typeof(UI_View)}"))
+        foreach (var guid in AssetDatabase.FindAssets("t:Prefab", new[] { "Assets/Prefabs/UI" }))
         {
             string assetPath = AssetDatabase.GUIDToAssetPath(guid);
-            var ui = AssetDatabase.LoadAssetAtPath<UI_View>(assetPath);
-            _settings[ui.UIType].Prefabs.Add(ui);
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
+            if (prefab.TryGetComponent<UI_View>(out var view))
+            {
+                _settings[view.UIType].Prefabs.Add(prefab);
+            }
         }
 
         EditorUtility.SetDirty(this);
