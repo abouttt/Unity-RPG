@@ -1,8 +1,5 @@
 using System;
 using UnityEngine;
-using static Unity.Burst.Intrinsics.X86;
-using static UnityEditor.PlayerSettings;
-using UnityEngine.UIElements;
 
 public class FieldOfView : MonoBehaviour
 {
@@ -106,7 +103,9 @@ public class FieldOfView : MonoBehaviour
             return;
         }
 
-        if (IsTargetOutOfRange(_target) || IsTargetObstructed(_target) || IsTargetAngleInvalid())
+        if (IsTargetOutOfRange(_target) || 
+            IsTargetObstructed(_target) || 
+            IsTargetAngleInvalid())
         {
             Target = null;
         }
