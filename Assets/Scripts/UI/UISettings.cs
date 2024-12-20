@@ -17,7 +17,7 @@ public class UISettings : ScriptableSingleton<UISettings>
         public bool GraphicRaycaster { get; private set; } = true;
 
         [field: SerializeField]
-        public List<GameObject> Prefabs { get; private set; }
+        public List<GameObject> Prefabs { get; private set; } = new();
     }
 
     public Settings this[UIType uiType] => _settings[uiType];
@@ -29,12 +29,11 @@ public class UISettings : ScriptableSingleton<UISettings>
     [ContextMenu("Find UI prefabs")]
     public void FindUIPrefabs()
     {
+        _settings = new();
+
         foreach (UIType uiType in Enum.GetValues(typeof(UIType)))
         {
-            if (!_settings.ContainsKey(uiType))
-            {
-                _settings.Add(uiType, new());
-            }
+            _settings.Add(uiType, new());
         }
 
         foreach (var guid in AssetDatabase.FindAssets("t:Prefab", new[] { "Assets/Prefabs/UI" }))
