@@ -1,13 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_Loading : MonoBehaviour
+public class UI_Loading : UI_View
 {
-    private DataBinder _binder;
-
-    private void Awake()
+    protected override void Init()
     {
-        _binder = new(gameObject);
+
     }
 
     private void Start()

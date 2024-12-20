@@ -17,8 +17,7 @@ MonoBehaviour:
     - Key: 0
       Value:
         <GraphicRaycaster>k__BackingField: 1
-        <Prefabs>k__BackingField:
-        - {fileID: 6489487676605923353, guid: ce2737c7bcef110438bda66050c945cc, type: 3}
+        <Prefabs>k__BackingField: []
     - Key: 1
       Value:
         <GraphicRaycaster>k__BackingField: 1

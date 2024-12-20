@@ -26,8 +26,7 @@ public class UISettings : ScriptableSingleton<UISettings>
     private SerializedDictionary<UIType, Settings> _settings;
 
 #if UNITY_EDITOR
-    [ContextMenu("Find UI prefabs")]
-    public void FindUIPrefabs()
+    public void RefreshUIPrefabs()
     {
         _settings = new();
 
@@ -42,7 +41,10 @@ public class UISettings : ScriptableSingleton<UISettings>
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
             if (prefab.TryGetComponent<UI_View>(out var view))
             {
-                _settings[view.UIType].Prefabs.Add(prefab);
+                if (view.IsValidForUISettings)
+                {
+                    _settings[view.UIType].Prefabs.Add(prefab);
+                }
             }
         }
 
