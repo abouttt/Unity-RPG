@@ -35,7 +35,7 @@ public class CharacterMovement : MonoBehaviour
         set => _useGravity = value;
     }
 
-    [Space(10)]
+    [Header("     State")]
     [SerializeField, ReadOnly]
     private bool _isGrounded;
 
