@@ -1273,7 +1273,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _jumpTimeout: 0.5
-  _fallTimeout: 0.1
+  _fallTimeout: 0.2
   _landTimeout: 0.55
 --- !u!114 &1755557878
 MonoBehaviour:

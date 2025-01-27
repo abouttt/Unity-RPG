@@ -151,8 +151,6 @@ public class GroundedCharacterController : MonoBehaviour
         _isFalling = false;
         _isLanding = false;
         _jumpTimeoutDelta = _jumpTimeout;
-        _fallTimeoutDelta = _fallTimeout;
-        _landTimeoutDelta = _landTimeout;
         _verticalVelocity = Mathf.Sqrt(force * -2f * _gravity * _gravityMultiplier);
     }
 
