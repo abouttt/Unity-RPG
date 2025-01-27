@@ -21,18 +21,25 @@ public class PlayerController : MonoBehaviour
     private bool _isPressedSprint;
 
     private GameObject _mainCamera;
-    private GroundedCharacterController _controller;
+    private GroundedCharacterController _movement;
+    private CameraController _cameraController;
 
     private void Awake()
     {
         _mainCamera = Camera.main.gameObject;
-        _controller = GetComponent<GroundedCharacterController>();
+        _movement = GetComponent<GroundedCharacterController>();
+        _cameraController = GetComponent<CameraController>();
     }
 
     private void Update()
     {
         UpdateMoveSpeed();
         MoveAndRotate();
+    }
+
+    private void LateUpdate()
+    {
+        RotateCamera();
     }
 
     private void MoveAndRotate()
@@ -46,20 +53,25 @@ public class PlayerController : MonoBehaviour
             var movementDirection = Quaternion.Euler(0f, y, 0f) * Vector3.forward;
             var rotationDirection = new Vector3(0f, y, 0f);
 
-            _controller.Move(movementDirection);
-            _controller.Rotate(rotationDirection);
+            _movement.Move(movementDirection);
+            _movement.Rotate(rotationDirection);
         }
         else
         {
-            _controller.Move(Vector3.zero);
+            _movement.Move(Vector3.zero);
         }
+    }
+
+    private void RotateCamera()
+    {
+        _cameraController.Rotate(_look.y, _look.x);
     }
 
     private void UpdateMoveSpeed()
     {
-        if (_controller.IsGrounded)
+        if (_movement.IsGrounded)
         {
-            _controller.MoveSpeed = _controller.IsLanding ? _landingSpeed
+            _movement.MoveSpeed = _movement.IsLanding ? _landingSpeed
                                   : _isPressedSprint ? _sprintSpeed
                                   : _runSpeed;
         }
@@ -84,6 +96,6 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputValue inputValue)
     {
-        _controller.Jump(_jumpForce);
+        _movement.Jump(_jumpForce);
     }
 }
