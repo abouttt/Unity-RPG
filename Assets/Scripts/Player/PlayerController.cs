@@ -12,39 +12,57 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _landingSpeed;
 
+    [SerializeField]
+    private float _jumpForce;
+
     // Input Value
     private Vector2 _move;
     private Vector2 _look;
     private bool _isPressedSprint;
 
     private GameObject _mainCamera;
-    private CharacterMovement _movement;
+    private GroundedCharacterController _controller;
 
     private void Awake()
     {
         _mainCamera = Camera.main.gameObject;
-        _movement = GetComponent<CharacterMovement>();
+        _controller = GetComponent<GroundedCharacterController>();
     }
 
     private void Update()
     {
+        UpdateMoveSpeed();
         MoveAndRotate();
     }
 
     private void MoveAndRotate()
     {
         var inputDirection = new Vector3(_move.x, 0f, _move.y);
-        float cameraYaw = _mainCamera.transform.eulerAngles.y;
 
-        if (_movement.IsGrounded)
+        if (inputDirection != Vector3.zero)
         {
-            _movement.MoveSpeed = _movement.IsLanding ? _landingSpeed
-                                : _isPressedSprint ? _sprintSpeed
-                                : _runSpeed;
-        }
+            float cameraYaw = _mainCamera.transform.eulerAngles.y;
+            float y = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + cameraYaw;
+            var movementDirection = Quaternion.Euler(0f, y, 0f) * Vector3.forward;
+            var rotationDirection = new Vector3(0f, y, 0f);
 
-        _movement.Move(inputDirection, cameraYaw);
-        _movement.Rotate(inputDirection, cameraYaw);
+            _controller.Move(movementDirection);
+            _controller.Rotate(rotationDirection);
+        }
+        else
+        {
+            _controller.Move(Vector3.zero);
+        }
+    }
+
+    private void UpdateMoveSpeed()
+    {
+        if (_controller.IsGrounded)
+        {
+            _controller.MoveSpeed = _controller.IsLanding ? _landingSpeed
+                                  : _isPressedSprint ? _sprintSpeed
+                                  : _runSpeed;
+        }
     }
 
     // Input System Callbacks
@@ -66,6 +84,6 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputValue inputValue)
     {
-        _movement.Jump();
+        _controller.Jump(_jumpForce);
     }
 }

@@ -1132,13 +1132,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
+  m_Height: 1.8
   m_Radius: 0.3
   m_SlopeLimit: 50
   m_StepOffset: 0.25
   m_SkinWidth: 0.03
   m_MinMoveDistance: 0
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0.95, z: 0}
 --- !u!114 &1755557877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1157,14 +1157,14 @@ MonoBehaviour:
   _isLanding: 0
   _moveSpeed: 0
   _speedChangeRate: 10
+  _rotationSpeed: 15
   _slopeRayLength: 0.2
   _slopeVelocity: -20
-  _rotationSmoothTime: 0.075
-  _jumpHeight: 1.2
   _jumpTimeout: 0.5
   _fallTimeout: 0.1
   _landTimeout: 0.55
   _useGravity: 1
+  _gravity: -9.81
   _gravityMultiplier: 2
   _groundedOffset: -0.14
   _groundedRadius: 0.28
@@ -1186,6 +1186,7 @@ MonoBehaviour:
   _runSpeed: 4
   _sprintSpeed: 7
   _landingSpeed: 2
+  _jumpForce: 1.2
 --- !u!114 &1755557879
 MonoBehaviour:
   m_ObjectHideFlags: 0
