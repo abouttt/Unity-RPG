@@ -535,7 +535,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1204226052
+--- !u!1001 &1015199730
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -596,10 +596,10 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6d06c887a1aae94f8c6e8cc2c0c557b, type: 3}
---- !u!4 &1204226053 stripped
+--- !u!4 &1015199731 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4759721911903040, guid: d6d06c887a1aae94f8c6e8cc2c0c557b, type: 3}
-  m_PrefabInstance: {fileID: 1204226052}
+  m_PrefabInstance: {fileID: 1015199730}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1492074871
 PrefabInstance:
@@ -1214,7 +1214,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1204226053}
+  - {fileID: 1015199731}
   - {fileID: 747517886}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1267,8 +1267,8 @@ MonoBehaviour:
   _useGravity: 1
   _gravity: -9.81
   _gravityMultiplier: 2
-  _groundedOffset: -0.14
-  _groundedRadius: 0.28
+  _groundedOffset: -0.08
+  _groundedRadius: 0.2
   _groundLayers:
     serializedVersion: 2
     m_Bits: 64
@@ -1289,8 +1289,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _runSpeed: 4
   _sprintSpeed: 7
+  _inAirSpeed: 2
   _landingSpeed: 2
-  _jumpForce: 1.2
+  _jumpForce: 1
 --- !u!114 &1755557879
 MonoBehaviour:
   m_ObjectHideFlags: 0

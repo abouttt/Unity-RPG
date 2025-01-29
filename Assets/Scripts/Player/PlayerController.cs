@@ -10,15 +10,22 @@ public class PlayerController : MonoBehaviour
     private float _sprintSpeed;
 
     [SerializeField]
+    private float _inAirSpeed;
+
+    [SerializeField]
     private float _landingSpeed;
 
     [SerializeField]
     private float _jumpForce;
 
+    private bool _isJumped;
+    private bool _isJumpedWithInput;
+
     // Input value
     private Vector2 _move;
     private Vector2 _look;
     private bool _isPressedSprint;
+    private bool _isPressedJump;
 
     // Animation blend
     private float _speedBlend;
@@ -32,6 +39,7 @@ public class PlayerController : MonoBehaviour
     private readonly int _animIDGrounded = Animator.StringToHash("Grounded");
     private readonly int _animIDJump = Animator.StringToHash("Jump");
     private readonly int _animIDFall = Animator.StringToHash("Fall");
+    private readonly int _animIDLand = Animator.StringToHash("Land");
 
     private GameObject _mainCamera;
     private Animator _animator;
@@ -49,6 +57,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         UpdateMoveSpeed();
+        CheckJump();
         MoveAndRotate();
         UpdateAnimatorParameters();
     }
@@ -74,13 +83,32 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            _movement.Move(Vector3.zero);
+            // 입력과 함께 점프 후 입력이 없어도 이동이 가능하고 그 이외에는 정지.
+            if (!_isJumped)
+            {
+                _movement.Move(Vector3.zero);
+            }
         }
     }
 
-    private void RotateCamera()
+    private void CheckJump()
     {
-        _cameraController.Rotate(_look.y, _look.x);
+        // 착지 상태로 판별을 안한 이유는 공중에서 착지 제한 시간이 끝난 뒤에
+        // 착지 상태가 되기 때문에 점프한 후 바로 땅에 닿으면 착지 상태로 판별이 안됨.
+        if (_movement.IsGrounded &&
+            !_movement.IsJumping &&
+            !_movement.IsFalling)
+        {
+            _isJumped = false;
+        }
+
+        if (_isPressedJump)
+        {
+            _isJumped = true;
+            _isJumpedWithInput = _move != Vector2.zero;
+            _isPressedJump = false;
+            _movement.Jump(_jumpForce);
+        }
     }
 
     private void UpdateMoveSpeed()
@@ -88,8 +116,19 @@ public class PlayerController : MonoBehaviour
         if (_movement.IsGrounded)
         {
             _movement.MoveSpeed = _movement.IsLanding ? _landingSpeed
-                                  : _isPressedSprint ? _sprintSpeed
-                                  : _runSpeed;
+                                : _isPressedSprint ? _sprintSpeed
+                                : _runSpeed;
+        }
+        else if (_isJumped)
+        {
+            if (!_isJumpedWithInput)
+            {
+                _movement.MoveSpeed = _inAirSpeed;
+            }
+        }
+        else if (_movement.IsFalling)
+        {
+            _movement.MoveSpeed = _inAirSpeed;
         }
     }
 
@@ -116,6 +155,12 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool(_animIDGrounded, _movement.IsGrounded);
         _animator.SetBool(_animIDJump, _movement.IsJumping);
         _animator.SetBool(_animIDFall, _movement.IsFalling);
+        _animator.SetBool(_animIDLand, _movement.IsLanding);
+    }
+
+    private void RotateCamera()
+    {
+        _cameraController.Rotate(_look.y, _look.x);
     }
 
     // Input System Callbacks
@@ -137,6 +182,6 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputValue inputValue)
     {
-        _movement.Jump(_jumpForce);
+        _isPressedJump = inputValue.isPressed;
     }
 }
