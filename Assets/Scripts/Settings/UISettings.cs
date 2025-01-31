@@ -28,11 +28,17 @@ public class UISettings : ScriptableSingleton<UISettings>
 #if UNITY_EDITOR
     public void RefreshUIPrefabs()
     {
-        _settings = new();
+        if (_settings == null)
+        {
+            _settings = new();
+        }
 
         foreach (UIType uiType in Enum.GetValues(typeof(UIType)))
         {
-            _settings.Add(uiType, new());
+            if (!_settings.ContainsKey(uiType))
+            {
+                _settings.Add(uiType, new());
+            }
         }
 
         foreach (var guid in AssetDatabase.FindAssets("t:Prefab", new[] { "Assets/Prefabs/UI" }))
