@@ -83,7 +83,6 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            // 입력과 함께 점프 후 입력이 없어도 이동이 가능하고 그 이외에는 정지.
             if (!_isJumped)
             {
                 _movement.Move(Vector3.zero);
@@ -93,21 +92,26 @@ public class PlayerController : MonoBehaviour
 
     private void CheckJump()
     {
-        // 착지 상태로 판별을 안한 이유는 공중에서 착지 제한 시간이 끝난 뒤에
-        // 착지 상태가 되기 때문에 점프한 후 바로 땅에 닿으면 착지 상태로 판별이 안됨.
-        if (_movement.IsGrounded &&
-            !_movement.IsJumping &&
-            !_movement.IsFalling)
+        if (_isJumped)
         {
-            _isJumped = false;
-        }
+            if (_movement.IsGrounded &&
+                !_movement.IsJumping &&
+                !_movement.IsFalling)
+            {
+                _isJumped = false;
+            }
 
-        if (_isPressedJump)
-        {
-            _isJumped = true;
-            _isJumpedWithInput = _move != Vector2.zero;
             _isPressedJump = false;
-            _movement.Jump(_jumpForce);
+        }
+        else
+        {
+            if (_isPressedJump)
+            {
+                _isJumped = true;
+                _isJumpedWithInput = _move != Vector2.zero;
+                _isPressedJump = false;
+                _movement.Jump(_jumpForce);
+            }
         }
     }
 
