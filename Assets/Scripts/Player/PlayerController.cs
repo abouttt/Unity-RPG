@@ -18,6 +18,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _jumpForce;
 
+    [SerializeField]
+    private float _lockOnRotationSpeed;
+
+    [Header("Tracking Lock On Target")]
+    [SerializeField]
+    private float _horizontalAngle;
+
+    [SerializeField]
+    private float _verticalAngle;
+
     private bool _isJumped;
     private bool _isJumpedWithInput;
 
@@ -45,6 +55,8 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
     private GroundedCharacterController _movement;
     private CameraController _cameraController;
+    private FieldOfView _lockOnFov;
+    private LockOnTargetTracker _lockOnTargetTracker;
 
     private void Awake()
     {
@@ -52,22 +64,26 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponent<Animator>();
         _movement = GetComponent<GroundedCharacterController>();
         _cameraController = GetComponent<CameraController>();
+        _lockOnFov = _mainCamera.GetComponent<FieldOfView>();
+        _lockOnTargetTracker = GetComponent<LockOnTargetTracker>();
     }
 
     private void Update()
     {
         UpdateMoveSpeed();
         CheckJump();
-        MoveAndRotate();
+        Move();
+        Rotate();
         UpdateAnimatorParameters();
     }
 
     private void LateUpdate()
     {
         RotateCamera();
+        _lockOnTargetTracker.TrackingLockOnTarget(_lockOnFov);
     }
 
-    private void MoveAndRotate()
+    private void Move()
     {
         var inputDirection = new Vector3(_move.x, 0f, _move.y);
 
@@ -76,16 +92,37 @@ public class PlayerController : MonoBehaviour
             float cameraYaw = _mainCamera.transform.eulerAngles.y;
             float y = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + cameraYaw;
             var movementDirection = Quaternion.Euler(0f, y, 0f) * Vector3.forward;
-            var rotationDirection = new Vector3(0f, y, 0f);
 
             _movement.Move(movementDirection);
-            _movement.Rotate(rotationDirection);
         }
         else
         {
             if (!_isJumped)
             {
                 _movement.Move(Vector3.zero);
+            }
+        }
+    }
+
+    private void Rotate()
+    {
+        var inputDirection = new Vector3(_move.x, 0f, _move.y);
+
+        if (inputDirection != Vector3.zero)
+        {
+            if (_lockOnFov.HasTarget && IsOnlyRun())
+            {
+                var directionToTarget = (_lockOnFov.Target.position - transform.position).normalized;
+                float y = Mathf.Atan2(directionToTarget.x, directionToTarget.z) * Mathf.Rad2Deg;
+                var rotationDirection = new Vector3(0f, y, 0f);
+                _movement.Rotate(rotationDirection);
+            }
+            else
+            {
+                float cameraYaw = _mainCamera.transform.eulerAngles.y;
+                float y = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + cameraYaw;
+                var rotationDirection = new Vector3(0f, y, 0f);
+                _movement.Rotate(rotationDirection);
             }
         }
     }
@@ -141,6 +178,7 @@ public class PlayerController : MonoBehaviour
         var inputDirection = new Vector3(_move.x, 0f, _move.y);
         float targetSpeed = inputDirection == Vector3.zero ? 0f : _movement.MoveSpeed;
         float speedChangeRate = _movement.SpeedChangeRate * Time.deltaTime;
+        bool isLockOnOnlyRun = _lockOnFov.Target != null && IsOnlyRun();
 
         _speedBlend = Mathf.Lerp(_speedBlend, targetSpeed, speedChangeRate);
         _posXBlend = Mathf.Lerp(_posXBlend, inputDirection.x, speedChangeRate);
@@ -154,8 +192,8 @@ public class PlayerController : MonoBehaviour
         }
 
         _animator.SetFloat(_animIDSpeed, _speedBlend);
-        _animator.SetFloat(_animIDPosX, 0f);
-        _animator.SetFloat(_animIDPosY, 1f);
+        _animator.SetFloat(_animIDPosX, isLockOnOnlyRun ? _posXBlend : 0f);
+        _animator.SetFloat(_animIDPosY, isLockOnOnlyRun ? _posYBlend : 1f);
         _animator.SetBool(_animIDGrounded, _movement.IsGrounded);
         _animator.SetBool(_animIDJump, _movement.IsJumping);
         _animator.SetBool(_animIDFall, _movement.IsFalling);
@@ -164,7 +202,20 @@ public class PlayerController : MonoBehaviour
 
     private void RotateCamera()
     {
-        _cameraController.Rotate(_look.y, _look.x);
+        if (_lockOnFov.HasTarget)
+        {
+            var lookPosition = (_lockOnFov.Target.position + transform.position) / 2;
+            _cameraController.LookRotate(lookPosition, _lockOnRotationSpeed);
+        }
+        else
+        {
+            _cameraController.Rotate(_look.y, _look.x);
+        }
+    }
+
+    private bool IsOnlyRun()
+    {
+        return !(_isPressedSprint || _movement.IsJumping || _movement.IsFalling || _movement.IsLanding);
     }
 
     // Input System Callbacks
@@ -187,5 +238,17 @@ public class PlayerController : MonoBehaviour
     public void OnJump(InputValue inputValue)
     {
         _isPressedJump = inputValue.isPressed;
+    }
+
+    public void OnLockOn(InputValue inputValue)
+    {
+        if (_lockOnFov.HasTarget)
+        {
+            _lockOnFov.Target = null;
+        }
+        else
+        {
+            _lockOnFov.FindTarget();
+        }
     }
 }
