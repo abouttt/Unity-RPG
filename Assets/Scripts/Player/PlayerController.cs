@@ -21,13 +21,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _lockOnRotationSpeed;
 
-    [Header("Tracking Lock On Target")]
-    [SerializeField]
-    private float _horizontalAngle;
-
-    [SerializeField]
-    private float _verticalAngle;
-
     private bool _isJumped;
     private bool _isJumpedWithInput;
 
@@ -90,8 +83,8 @@ public class PlayerController : MonoBehaviour
         if (inputDirection != Vector3.zero)
         {
             float cameraYaw = _mainCamera.transform.eulerAngles.y;
-            float y = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + cameraYaw;
-            var movementDirection = Quaternion.Euler(0f, y, 0f) * Vector3.forward;
+            float yaw = GetYaw(inputDirection) + cameraYaw;
+            var movementDirection = Quaternion.Euler(0f, yaw, 0f) * Vector3.forward;
 
             _movement.Move(movementDirection);
         }
@@ -110,20 +103,21 @@ public class PlayerController : MonoBehaviour
 
         if (inputDirection != Vector3.zero)
         {
+            float yaw;
+
             if (_lockOnFov.HasTarget && IsOnlyRun())
             {
                 var directionToTarget = (_lockOnFov.Target.position - transform.position).normalized;
-                float y = Mathf.Atan2(directionToTarget.x, directionToTarget.z) * Mathf.Rad2Deg;
-                var rotationDirection = new Vector3(0f, y, 0f);
-                _movement.Rotate(rotationDirection);
+                yaw = GetYaw(directionToTarget);
             }
             else
             {
                 float cameraYaw = _mainCamera.transform.eulerAngles.y;
-                float y = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + cameraYaw;
-                var rotationDirection = new Vector3(0f, y, 0f);
-                _movement.Rotate(rotationDirection);
+                yaw = GetYaw(inputDirection) + cameraYaw;
             }
+
+            var rotationDirection = new Vector3(0f, yaw, 0f);
+            _movement.Rotate(rotationDirection);
         }
     }
 
@@ -178,7 +172,7 @@ public class PlayerController : MonoBehaviour
         var inputDirection = new Vector3(_move.x, 0f, _move.y);
         float targetSpeed = inputDirection == Vector3.zero ? 0f : _movement.MoveSpeed;
         float speedChangeRate = _movement.SpeedChangeRate * Time.deltaTime;
-        bool isLockOnOnlyRun = _lockOnFov.Target != null && IsOnlyRun();
+        bool isLockOnOnlyRun = _lockOnFov.HasTarget && IsOnlyRun();
 
         _speedBlend = Mathf.Lerp(_speedBlend, targetSpeed, speedChangeRate);
         _posXBlend = Mathf.Lerp(_posXBlend, inputDirection.x, speedChangeRate);
@@ -216,6 +210,11 @@ public class PlayerController : MonoBehaviour
     private bool IsOnlyRun()
     {
         return !(_isPressedSprint || _movement.IsJumping || _movement.IsFalling || _movement.IsLanding);
+    }
+
+    private float GetYaw(Vector3 direction)
+    {
+        return Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
     }
 
     // Input System Callbacks

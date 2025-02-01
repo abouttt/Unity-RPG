@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class UI_LockOn : UI_View, IConnectable<FieldOfView>
 {
+    public FieldOfView Context => _lockOnFovRef;
+
     private FieldOfView _lockOnFovRef;
     private UI_FollowWorldObject _followTarget;
 
