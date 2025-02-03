@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
     private CameraController _cameraController;
     private FieldOfView _lockOnFov;
     private LockOnTargetTracker _lockOnTargetTracker;
+    private Interactor _interactor;
 
     private void Awake()
     {
@@ -59,6 +60,7 @@ public class PlayerController : MonoBehaviour
         _cameraController = GetComponent<CameraController>();
         _lockOnFov = _mainCamera.GetComponent<FieldOfView>();
         _lockOnTargetTracker = GetComponent<LockOnTargetTracker>();
+        _interactor = GetComponentInChildren<Interactor>();
     }
 
     private void Update()
@@ -249,5 +251,10 @@ public class PlayerController : MonoBehaviour
         {
             _lockOnFov.FindTarget();
         }
+    }
+
+    private void OnInteract(InputValue inputValue)
+    {
+        _interactor.Interact = inputValue.isPressed;
     }
 }

@@ -17,8 +17,18 @@ public static class Extension
         return Util.FindChildWithTag(parent, tag, recursive);
     }
 
-    public static bool IsInLayerMask(this GameObject gameObject, LayerMask layerMask)
+    public static bool IsInLayerMask(this GameObject go, LayerMask layerMask)
     {
-        return Util.IsInLayerMask(gameObject, layerMask);
+        return Util.IsInLayerMask(go, layerMask);
+    }
+
+    public static void AllIgnoreLayerCollision(this GameObject go)
+    {
+        Util.AllIgnoreLayerCollision(go);
+    }
+
+    public static void SetLayerCollision(this GameObject go, LayerMask layerMask, bool ignore)
+    {
+        Util.SetLayerCollision(go, layerMask, ignore);
     }
 }

@@ -55,6 +55,29 @@ public static class Util
         return (layerMask.value & (1 << go.layer)) != 0;
     }
 
+    public static void AllIgnoreLayerCollision(GameObject go)
+    {
+        int layer = go.layer;
+
+        for (int i = 0; i < 32; i++)
+        {
+            Physics.IgnoreLayerCollision(layer, i, true);
+        }
+    }
+
+    public static void SetLayerCollision(GameObject go, LayerMask layers, bool ignore)
+    {
+        int layer = go.layer;
+
+        for (int i = 0; i < 32; i++)
+        {
+            if ((layers.value & (1 << i)) != 0) // targetLayers에 포함된 레이어인지 확인
+            {
+                Physics.IgnoreLayerCollision(layer, i, ignore);
+            }
+        }
+    }
+
     public static float ClampAngle(float angle, float min, float max)
     {
         if (angle > 180f)
