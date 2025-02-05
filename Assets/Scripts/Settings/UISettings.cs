@@ -49,7 +49,10 @@ public class UISettings : ScriptableSingleton<UISettings>
             {
                 if (view.IsValidForUISettings)
                 {
-                    _settings[view.UIType].Prefabs.Add(prefab);
+                    if (!_settings.ContainsKey(view.UIType))
+                    {
+                        _settings[view.UIType].Prefabs.Add(prefab);
+                    }
                 }
             }
         }
