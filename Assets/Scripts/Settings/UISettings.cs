@@ -26,7 +26,8 @@ public class UISettings : ScriptableSingleton<UISettings>
     private SerializedDictionary<UIType, Settings> _settings;
 
 #if UNITY_EDITOR
-    public void RefreshUIPrefabs()
+    [ContextMenu("Refresh")]
+    private void RefreshUIPrefabs()
     {
         if (_settings == null)
         {
