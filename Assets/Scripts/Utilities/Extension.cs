@@ -31,4 +31,9 @@ public static class Extension
     {
         Util.SetLayerCollision(go, layerMask, ignore);
     }
+
+    public static string ToSnake(this string str)
+    {
+        return Util.ToSnake(str);
+    }
 }
