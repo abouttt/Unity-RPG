@@ -253,7 +253,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnInteract(InputValue inputValue)
+    public void OnInteract(InputValue inputValue)
     {
         _interactor.Interact = inputValue.isPressed;
     }

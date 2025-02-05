@@ -23,6 +23,8 @@ public class GameScene : BaseScene
     {
         var player = GameObject.FindWithTag("Player");
         var lockOnFov = Camera.main.GetComponent<FieldOfView>();
+        var interactor = player.GetComponentInChildren<Interactor>();
         UIManager.Get<UI_LockOn>().Connect(lockOnFov);
+        UIManager.Get<UI_Interactor>().Connect(interactor);
     }
 }
