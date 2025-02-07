@@ -29,7 +29,7 @@ public abstract class UI_Popup : UI_View, IPointerDownHandler
 
         if (Body == null)
         {
-            Body = transform.GetComponent<RectTransform>();
+            Body = transform as RectTransform;
         }
 
         Body.anchoredPosition = DefaultPosition;
