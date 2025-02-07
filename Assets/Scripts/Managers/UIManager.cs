@@ -58,7 +58,7 @@ public sealed class UIManager : MonoSingleton<UIManager>
                 instance.InitPopup(view as UI_Popup);
             }
 
-            view.transform.SetParent(instance._canvases[view.UIType].transform);
+            view.transform.SetParent(instance._canvases[view.UIType].transform, false);
             instance._objects.Add(viewType, view);
         }
         else
@@ -174,6 +174,16 @@ public sealed class UIManager : MonoSingleton<UIManager>
             {
                 canvas.gameObject.SetActive(false);
             }
+        }
+    }
+
+    public static void HideTopPopup()
+    {
+        var instance = Instance;
+
+        if (ActivePopupCount > 0)
+        {
+            instance.HidePopup(instance._activePopups.First.Value);
         }
     }
 

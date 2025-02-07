@@ -67,6 +67,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Cancel",
+                    "type": "Button",
+                    "id": "f594b9e8-8d7f-41eb-9840-6c60dd2b16d5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ItemInventory",
+                    "type": "Button",
+                    "id": "5afd4fd3-2c1b-4bc9-8ab5-5a202b52bcfc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -188,6 +206,28 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "CursorToggle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cf142cba-188f-4683-b9c3-734f5e02c4a9",
+                    "path": "<Keyboard>/i",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ItemInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b504e747-3ae3-4e76-893b-f0c6caacddea",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Cancel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

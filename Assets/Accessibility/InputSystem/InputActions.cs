@@ -153,6 +153,24 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""f594b9e8-8d7f-41eb-9840-6c60dd2b16d5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ItemInventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""5afd4fd3-2c1b-4bc9-8ab5-5a202b52bcfc"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -274,6 +292,28 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""CursorToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cf142cba-188f-4683-b9c3-734f5e02c4a9"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ItemInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b504e747-3ae3-4e76-893b-f0c6caacddea"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Cancel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -824,6 +864,8 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Player_LockOn = m_Player.FindAction("LockOn", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_CursorToggle = m_Player.FindAction("CursorToggle", throwIfNotFound: true);
+        m_Player_Cancel = m_Player.FindAction("Cancel", throwIfNotFound: true);
+        m_Player_ItemInventory = m_Player.FindAction("ItemInventory", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -924,6 +966,8 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_LockOn;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_CursorToggle;
+    private readonly InputAction m_Player_Cancel;
+    private readonly InputAction m_Player_ItemInventory;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -963,6 +1007,14 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/CursorToggle".
         /// </summary>
         public InputAction @CursorToggle => m_Wrapper.m_Player_CursorToggle;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Cancel".
+        /// </summary>
+        public InputAction @Cancel => m_Wrapper.m_Player_Cancel;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/ItemInventory".
+        /// </summary>
+        public InputAction @ItemInventory => m_Wrapper.m_Player_ItemInventory;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1010,6 +1062,12 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @CursorToggle.started += instance.OnCursorToggle;
             @CursorToggle.performed += instance.OnCursorToggle;
             @CursorToggle.canceled += instance.OnCursorToggle;
+            @Cancel.started += instance.OnCancel;
+            @Cancel.performed += instance.OnCancel;
+            @Cancel.canceled += instance.OnCancel;
+            @ItemInventory.started += instance.OnItemInventory;
+            @ItemInventory.performed += instance.OnItemInventory;
+            @ItemInventory.canceled += instance.OnItemInventory;
         }
 
         /// <summary>
@@ -1042,6 +1100,12 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @CursorToggle.started -= instance.OnCursorToggle;
             @CursorToggle.performed -= instance.OnCursorToggle;
             @CursorToggle.canceled -= instance.OnCursorToggle;
+            @Cancel.started -= instance.OnCancel;
+            @Cancel.performed -= instance.OnCancel;
+            @Cancel.canceled -= instance.OnCancel;
+            @ItemInventory.started -= instance.OnItemInventory;
+            @ItemInventory.performed -= instance.OnItemInventory;
+            @ItemInventory.canceled -= instance.OnItemInventory;
         }
 
         /// <summary>
@@ -1339,6 +1403,20 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCursorToggle(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Cancel" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCancel(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ItemInventory" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnItemInventory(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
