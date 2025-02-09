@@ -16,7 +16,7 @@ MonoBehaviour:
     _serializedList:
     - Key: 0
       Value:
-        <GraphicRaycaster>k__BackingField: 0
+        <GraphicRaycaster>k__BackingField: 1
         <Prefabs>k__BackingField:
         - {fileID: 1019307047008799839, guid: 40118d96065aab04fb95c58bac5c60aa, type: 3}
     - Key: 1
@@ -34,6 +34,7 @@ MonoBehaviour:
         <GraphicRaycaster>k__BackingField: 1
         <Prefabs>k__BackingField:
         - {fileID: 2885440097907139729, guid: 71d4c3e87ac84a246bc298c2ef3ddbc2, type: 3}
+        - {fileID: 1766828409362965199, guid: 05bbffdbc7a31844094be9cf7892950d, type: 3}
     - Key: 4
       Value:
         <GraphicRaycaster>k__BackingField: 0

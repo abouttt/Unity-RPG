@@ -27,6 +27,6 @@ public class GameScene : BaseScene
         var itemInventory = player.GetComponent<ItemInventory>();
         UIManager.Get<UI_LockOn>().Connect(lockOnFov);
         UIManager.Get<UI_Interactor>().Connect(interactor);
-        UIManager.Get<UI_ItemInventoryPopup>().Connect(itemInventory);
+        UIManager.Get<UI_ItemInventory>().Connect(itemInventory);
     }
 }
