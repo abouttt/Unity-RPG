@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5130168159035406524}
-  - component: {fileID: 5730965237738503557}
   - component: {fileID: 6395389249021721055}
+  - component: {fileID: 5730965237738503557}
   m_Layer: 5
   m_Name: UI_LockOn
   m_TagString: Untagged
@@ -39,20 +39,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 14, y: 14}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5730965237738503557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3751432314142483764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81447448fbfb9d341a4c5eb9ed681ef8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _target: {fileID: 0}
-  _offset: {x: 0, y: 0, z: 0}
 --- !u!114 &6395389249021721055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,6 +53,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <UIType>k__BackingField: 1
   <IsValidForUISettings>k__BackingField: 1
+--- !u!114 &5730965237738503557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3751432314142483764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81447448fbfb9d341a4c5eb9ed681ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {fileID: 0}
+  _offset: {x: 0, y: 0, z: 0}
 --- !u!1 &5040481820780355145
 GameObject:
   m_ObjectHideFlags: 0
