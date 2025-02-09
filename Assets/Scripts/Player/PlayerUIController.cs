@@ -10,7 +10,7 @@ public class PlayerUIController : MonoBehaviour
 
     public void OnItemInventory(InputValue inputValue)
     {
-        ShowOrHidePopup<UI_ItemInventoryPopup>();
+        ShowOrHidePopup<UI_ItemInventory>();
     }
 
     public void OnCancel(InputValue inputValue)

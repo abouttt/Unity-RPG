@@ -424,7 +424,7 @@ GameObject:
   - component: {fileID: 5621198634139877994}
   - component: {fileID: -8892804988629860885}
   m_Layer: 5
-  m_Name: UI_ItemInventoryPopup
+  m_Name: UI_ItemInventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

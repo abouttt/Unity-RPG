@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UI_ItemInventoryPopup : UI_Popup, IConnectable<ItemInventory>
+public class UI_ItemInventory : UI_Popup, IConnectable<ItemInventory>
 {
     public ItemInventory Context => _itemInventoryRef;
 
@@ -12,7 +12,7 @@ public class UI_ItemInventoryPopup : UI_Popup, IConnectable<ItemInventory>
     protected override void Init()
     {
         base.Init();
-        GetButton("CloseButton").onClick.AddListener(UIManager.Hide<UI_ItemInventoryPopup>);
+        GetButton("CloseButton").onClick.AddListener(UIManager.Hide<UI_ItemInventory>);
         GetImage("DragItemImage").gameObject.SetActive(false);
 
         Hided += () =>
