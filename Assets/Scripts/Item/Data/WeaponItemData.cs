@@ -12,4 +12,9 @@ public class WeaponItemData : EquipmentItemData
         base.Awake();
         EquipmentType = EquipmentType.Weapon;
     }
+
+    public override Item CreateItem()
+    {
+        return new WeaponItem(this);
+    }
 }

@@ -8,4 +8,14 @@ public class MiscellaneousItemData : StackableItemData
         base.Awake();
         ItemType = ItemType.Miscellaneous;
     }
+
+    public override Item CreateItem()
+    {
+        return new MiscellaneousItem(this, 1);
+    }
+
+    public override Item CreateItem(int quantity)
+    {
+        return new MiscellaneousItem(this, quantity);
+    }
 }

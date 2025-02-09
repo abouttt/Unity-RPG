@@ -29,6 +29,8 @@ public abstract class ItemData : ScriptableObject
         }
     }
 
+    public abstract Item CreateItem();
+
     public bool Equals(ItemData other)
     {
         if (other == null)

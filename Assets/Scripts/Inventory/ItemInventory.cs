@@ -117,7 +117,10 @@ public class ItemInventory : MonoBehaviour
 
         RemoveItem(index);
 
-        var newItem = ItemFactory.CreateItem(itemData, quantity);
+        var newItem = itemData is StackableItemData stackableData
+                    ? stackableData.CreateItem(quantity)
+                    : itemData.CreateItem();
+
         _items[index] = newItem;
         _count++;
         InventoryChanged?.Invoke(newItem, index);
