@@ -15,10 +15,7 @@ public class PlayerUIController : MonoBehaviour
 
     public void OnCancel(InputValue inputValue)
     {
-        if (UIManager.ActivePopupCount > 0)
-        {
-            UIManager.HideTopPopup();
-        }
+        UIManager.HideTopPopup();
     }
 
     private void ShowOrHidePopup<T>() where T : UI_Popup
