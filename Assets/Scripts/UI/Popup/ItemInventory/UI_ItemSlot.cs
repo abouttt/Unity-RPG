@@ -11,8 +11,7 @@ public class UI_ItemSlot : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHan
 
     public int Index { get; set; } = -1;
     public Item ItemRef { get; private set; }
-
-    private bool _isDragging;
+    public bool IsDragging { get; private set; }
 
     protected override void Init()
     {
@@ -42,9 +41,9 @@ public class UI_ItemSlot : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHan
 
     public void CancelDrag()
     {
-        if (_isDragging)
+        if (IsDragging)
         {
-            _isDragging = false;
+            IsDragging = false;
             GetImage("ItemImage").color = Color.white;
             EndDraged?.Invoke(this, null);
         }
@@ -99,14 +98,14 @@ public class UI_ItemSlot : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHan
             return;
         }
 
-        _isDragging = true;
+        IsDragging = true;
         GetImage("ItemImage").color = new Color(1f, 1f, 1f, 0.3f);
         BeginDraged?.Invoke(this, eventData);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (!_isDragging)
+        if (!IsDragging)
         {
             eventData.pointerDrag = null;
             return;
@@ -117,7 +116,7 @@ public class UI_ItemSlot : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHan
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (!_isDragging)
+        if (!IsDragging)
         {
             eventData.pointerDrag = null;
             return;
@@ -135,7 +134,7 @@ public class UI_ItemSlot : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHan
 
         if (eventData.pointerDrag.TryGetComponent<UI_ItemSlot>(out var droppedItemSlot))
         {
-            if (!droppedItemSlot._isDragging)
+            if (!droppedItemSlot.IsDragging)
             {
                 eventData.pointerDrag = null;
                 return;
