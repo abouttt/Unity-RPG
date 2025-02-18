@@ -112,7 +112,7 @@
                     "id": "0412cf4a-a4b0-41b4-9d47-bc41669a8d8c",
                     "path": "<Mouse>/delta",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "InvertVector2(invertX=false),ScaleVector2(x=0.5,y=0.5)",
                     "groups": ";Keyboard&Mouse",
                     "action": "Look",
                     "isComposite": false,

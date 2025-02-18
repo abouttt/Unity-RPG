@@ -23,12 +23,14 @@ public class PlayerController : MonoBehaviour
     private GameObject _mainCamera;
     private PlayerInputValue _input;
     private GroundedCharacterController _movement;
+    private CameraController _cameraController;
 
     private void Awake()
     {
         _mainCamera = Camera.main.gameObject;
         _input = GetComponent<PlayerInputValue>();
         _movement = GetComponent<GroundedCharacterController>();
+        _cameraController = GetComponent<CameraController>();
     }
 
     private void Update()
@@ -37,6 +39,11 @@ public class PlayerController : MonoBehaviour
         CheckJump();
         Move();
         Rotate();
+    }
+
+    private void LateUpdate()
+    {
+        RotateCamera();
     }
 
     private void Move()
@@ -118,6 +125,11 @@ public class PlayerController : MonoBehaviour
         {
             _movement.MoveSpeed = _inAirSpeed;
         }
+    }
+
+    private void RotateCamera()
+    {
+        _cameraController.Rotate(_input.Look.y, _input.Look.x);
     }
 
     private float GetYaw(Vector3 direction)
