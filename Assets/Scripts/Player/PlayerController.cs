@@ -43,7 +43,6 @@ public class PlayerController : MonoBehaviour
     private GroundedCharacterController _movement;
     private CameraController _cameraController;
     private FieldOfView _lockOnFov;
-    private FieldOfViewTracker _lockOnTracker;
 
     private void Awake()
     {
@@ -53,7 +52,6 @@ public class PlayerController : MonoBehaviour
         _movement = GetComponent<GroundedCharacterController>();
         _cameraController = GetComponent<CameraController>();
         _lockOnFov = _mainCamera.GetComponent<FieldOfView>();
-        _lockOnTracker = GetComponent<FieldOfViewTracker>();
     }
 
     private void Update()

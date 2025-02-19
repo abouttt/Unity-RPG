@@ -3,7 +3,7 @@ using UnityEngine;
 public class FieldOfViewTracker : MonoBehaviour
 {
     [field: SerializeField]
-    public FieldOfView FOV { get; set; }
+    public FieldOfView FieldOfView { get; set; }
 
     [SerializeField]
     private bool _distance = true;
@@ -12,16 +12,16 @@ public class FieldOfViewTracker : MonoBehaviour
     private bool _obstacle = true;
 
     [SerializeField]
-    private bool _horizontalAngle = true;
+    private bool _horizontal = true;
 
     [SerializeField]
-    private bool _verticalAngle = true;
+    private bool _vertical = true;
 
     [SerializeField]
-    private float _horizontalAngleValue;
+    private float _horizontalClamp;
 
     [SerializeField]
-    private float _verticalAngleValue;
+    private float _verticalClamp;
 
     private void LateUpdate()
     {
@@ -30,7 +30,12 @@ public class FieldOfViewTracker : MonoBehaviour
 
     public void TrackingTarget()
     {
-        if (!FOV.HasTarget)
+        if (FieldOfView == null)
+        {
+            return;
+        }
+
+        if (!FieldOfView.HasTarget)
         {
             return;
         }
@@ -39,24 +44,24 @@ public class FieldOfViewTracker : MonoBehaviour
             IsTargetObstructed() ||
             IsTargetAngleInvalid())
         {
-            FOV.Target = null;
+            FieldOfView.Target = null;
         }
     }
 
     private bool IsTargetOutOfRange()
     {
-        return _distance && Vector3.Distance(FOV.transform.position, FOV.Target.position) > FOV.ViewRadius;
+        return _distance && Vector3.Distance(FieldOfView.transform.position, FieldOfView.Target.position) > FieldOfView.ViewRadius;
     }
 
     private bool IsTargetObstructed()
     {
-        return _obstacle && Physics.Linecast(FOV.transform.position, FOV.Target.position, FOV.ObstacleLayers);
+        return _obstacle && Physics.Linecast(FieldOfView.transform.position, FieldOfView.Target.position, FieldOfView.ObstacleLayers);
     }
 
     private bool IsTargetAngleInvalid()
     {
-        return (_horizontalAngle && !IsAngleInRange(FOV.transform.eulerAngles.y, -_horizontalAngleValue, _horizontalAngleValue)) ||
-               (_verticalAngle && !IsAngleInRange(FOV.transform.eulerAngles.x, -_verticalAngleValue, _verticalAngleValue));
+        return (_horizontal && !IsAngleInRange(FieldOfView.transform.eulerAngles.y, -_horizontalClamp, _horizontalClamp)) ||
+               (_vertical && !IsAngleInRange(FieldOfView.transform.eulerAngles.x, -_verticalClamp, _verticalClamp));
     }
 
     private bool IsAngleInRange(float angle, float min, float max)

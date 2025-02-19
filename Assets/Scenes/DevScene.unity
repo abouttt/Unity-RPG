@@ -1672,12 +1672,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5756a07494b23c049ae0e3f249f2b7ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <FieldOfView>k__BackingField: {fileID: 330585549}
   _distance: 1
   _obstacle: 1
-  _horizontalAngle: 1
-  _verticalAngle: 1
-  _horizontalAngleValue: 180
-  _verticalAngleValue: 50
+  _horizontal: 1
+  _vertical: 1
+  _horizontalClamp: 180
+  _verticalClamp: 50
 --- !u!1 &2033143638
 GameObject:
   m_ObjectHideFlags: 0
