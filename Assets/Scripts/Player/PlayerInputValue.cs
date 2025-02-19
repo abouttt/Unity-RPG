@@ -7,6 +7,7 @@ public class PlayerInputValue : MonoBehaviour
     public Vector2 Look;
     public bool Sprint;
     public bool Jump;
+    public bool LockOn;
 
     public void OnMove(InputValue inputValue)
     {
@@ -26,5 +27,10 @@ public class PlayerInputValue : MonoBehaviour
     public void OnJump(InputValue inputValue)
     {
         Jump = inputValue.isPressed;
+    }
+
+    public void OnLockOn(InputValue inputValue)
+    {
+        LockOn = inputValue.isPressed;
     }
 }
