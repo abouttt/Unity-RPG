@@ -93,11 +93,11 @@ public class GroundedCharacterController : MonoBehaviour
         ApplyRotate(deltaTime);
     }
 
-    public void Move(Vector3 direction, bool calcNormalize = true)
+    public void Move(Vector3 direction)
     {
         if (direction != Vector3.zero)
         {
-            _movementDirection = calcNormalize ? direction.normalized : direction;
+            _movementDirection = direction.normalized;
             _targetSpeed = MoveSpeed;
         }
         else
@@ -163,7 +163,7 @@ public class GroundedCharacterController : MonoBehaviour
 
         if (IsGrounded && _verticalVelocity < 0f)
         {
-            _verticalVelocity = OnSlope() ? SlopeVelocity : -2f;
+            _verticalVelocity = IsOnSlope() ? SlopeVelocity : -2f;
         }
 
         if (_verticalVelocity < _terminalVelocity)
@@ -178,14 +178,14 @@ public class GroundedCharacterController : MonoBehaviour
         IsGrounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
     }
 
-    private bool OnSlope()
+    private bool IsOnSlope()
     {
         if (IsJumping)
         {
             return false;
         }
 
-        if (Physics.Raycast(transform.position, Vector3.down, out var hit, SlopeRayLength))
+        if (Physics.Raycast(transform.position, Vector3.down, out var hit, SlopeRayLength, GroundLayers))
         {
             if (hit.normal != Vector3.up)
             {

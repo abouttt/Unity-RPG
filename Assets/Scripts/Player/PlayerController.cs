@@ -51,8 +51,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        UpdateMoveSpeed();
         CheckJump();
+        UpdateMoveSpeed();
         Move();
         Rotate();
         UpdateAnimatorParameters();
