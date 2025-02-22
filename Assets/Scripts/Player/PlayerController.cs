@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
     private GroundedCharacterController _movement;
     private CameraController _cameraController;
     private FieldOfView _lockOnFov;
+    private Interactor _interactor;
 
     private void Awake()
     {
@@ -52,12 +53,14 @@ public class PlayerController : MonoBehaviour
         _movement = GetComponent<GroundedCharacterController>();
         _cameraController = GetComponent<CameraController>();
         _lockOnFov = _mainCamera.GetComponent<FieldOfView>();
+        _interactor = GetComponentInChildren<Interactor>();
     }
 
     private void Update()
     {
         CheckJump();
         CheckLockOn();
+        CheckInteract();
         UpdateMoveSpeed();
         Move();
         Rotate();
@@ -156,6 +159,11 @@ public class PlayerController : MonoBehaviour
         }
 
         _input.LockOn = false;
+    }
+
+    private void CheckInteract()
+    {
+        _interactor.Interact = _input.Interact;
     }
 
     private void UpdateMoveSpeed()

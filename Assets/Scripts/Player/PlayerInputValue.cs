@@ -8,6 +8,7 @@ public class PlayerInputValue : MonoBehaviour
     public bool Sprint;
     public bool Jump;
     public bool LockOn;
+    public bool Interact;
 
     public void OnMove(InputValue inputValue)
     {
@@ -32,5 +33,10 @@ public class PlayerInputValue : MonoBehaviour
     public void OnLockOn(InputValue inputValue)
     {
         LockOn = inputValue.isPressed;
+    }
+
+    public void OnInteract(InputValue inputValue)
+    {
+        Interact = inputValue.isPressed;
     }
 }
