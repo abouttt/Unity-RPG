@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -23,6 +24,12 @@ public class PlayerController : MonoBehaviour
     private bool _isJumped;
     private bool _isJumpedWithInput;
 
+    // Input Value
+    private Vector2 _move;
+    private Vector2 _look;
+    private bool _isPressedSprint;
+    private bool _isPressedJump;
+
     // Animation blend
     private float _speedBlend;
     private float _posXBlend;
@@ -38,7 +45,6 @@ public class PlayerController : MonoBehaviour
     private readonly int _animIDLand = Animator.StringToHash("Land");
 
     private GameObject _mainCamera;
-    private PlayerInputValue _input;
     private Animator _animator;
     private GroundedCharacterController _movement;
     private CameraController _cameraController;
@@ -48,7 +54,6 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _mainCamera = Camera.main.gameObject;
-        _input = GetComponent<PlayerInputValue>();
         _animator = GetComponentInChildren<Animator>();
         _movement = GetComponent<GroundedCharacterController>();
         _cameraController = GetComponent<CameraController>();
@@ -59,8 +64,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         CheckJump();
-        CheckLockOn();
-        CheckInteract();
         UpdateMoveSpeed();
         Move();
         Rotate();
@@ -74,7 +77,7 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        var inputDirection = new Vector3(_input.Move.x, 0f, _input.Move.y);
+        var inputDirection = new Vector3(_move.x, 0f, _move.y);
 
         if (inputDirection != Vector3.zero)
         {
@@ -95,7 +98,7 @@ public class PlayerController : MonoBehaviour
 
     private void Rotate()
     {
-        var inputDirection = new Vector3(_input.Move.x, 0f, _input.Move.y);
+        var inputDirection = new Vector3(_move.x, 0f, _move.y);
 
         if (inputDirection != Vector3.zero)
         {
@@ -128,42 +131,18 @@ public class PlayerController : MonoBehaviour
                 _isJumped = false;
             }
 
-            _input.Jump = false;
+            _isPressedJump = false;
         }
         else
         {
-            if (_input.Jump)
+            if (_isPressedJump)
             {
                 _isJumped = true;
-                _isJumpedWithInput = _input.Move != Vector2.zero;
-                _input.Jump = false;
+                _isJumpedWithInput = _move != Vector2.zero;
+                _isPressedJump = false;
                 _movement.Jump(_jumpForce);
             }
         }
-    }
-
-    private void CheckLockOn()
-    {
-        if (!_input.LockOn)
-        {
-            return;
-        }
-
-        if (_lockOnFov.HasTarget)
-        {
-            _lockOnFov.Target = null;
-        }
-        else
-        {
-            _lockOnFov.FindTarget();
-        }
-
-        _input.LockOn = false;
-    }
-
-    private void CheckInteract()
-    {
-        _interactor.Interact = _input.Interact;
     }
 
     private void UpdateMoveSpeed()
@@ -171,7 +150,7 @@ public class PlayerController : MonoBehaviour
         if (_movement.IsGrounded)
         {
             _movement.MoveSpeed = _movement.IsLanding ? _landingSpeed
-                                : _input.Sprint ? _sprintSpeed
+                                : _isPressedSprint ? _sprintSpeed
                                 : _runSpeed;
         }
         else if (_isJumped)
@@ -196,13 +175,13 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            _cameraController.Rotate(_input.Look.y, _input.Look.x);
+            _cameraController.Rotate(_look.y, _look.x);
         }
     }
 
     private void UpdateAnimatorParameters()
     {
-        var inputDirection = new Vector3(_input.Move.x, 0f, _input.Move.y);
+        var inputDirection = new Vector3(_move.x, 0f, _move.y);
         float targetSpeed = inputDirection == Vector3.zero ? 0f : _movement.MoveSpeed;
         float speedChangeRate = _movement.SpeedChangeRate * Time.deltaTime;
         bool isLockOnOnlyRun = _lockOnFov.HasTarget && IsOnlyRun();
@@ -229,11 +208,50 @@ public class PlayerController : MonoBehaviour
 
     private bool IsOnlyRun()
     {
-        return !(_input.Sprint || _movement.IsJumping || _movement.IsFalling || _movement.IsLanding);
+        return !(_isPressedSprint || _movement.IsJumping || _movement.IsFalling || _movement.IsLanding);
     }
 
     private float GetYaw(Vector3 direction)
     {
         return Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+    }
+
+    // Input System Callbacks
+
+    public void OnMove(InputValue inputValue)
+    {
+        _move = inputValue.Get<Vector2>();
+    }
+
+    public void OnLook(InputValue inputValue)
+    {
+        _look = InputManager.CursorLocked ? inputValue.Get<Vector2>() : Vector2.zero;
+    }
+
+    public void OnSprint(InputValue inputValue)
+    {
+        _isPressedSprint = inputValue.isPressed;
+    }
+
+    public void OnJump(InputValue inputValue)
+    {
+        _isPressedJump = inputValue.isPressed;
+    }
+
+    public void OnLockOn(InputValue inputValue)
+    {
+        if (_lockOnFov.HasTarget)
+        {
+            _lockOnFov.Target = null;
+        }
+        else
+        {
+            _lockOnFov.FindTarget();
+        }
+    }
+
+    public void OnInteract(InputValue inputValue)
+    {
+        _interactor.Interact = inputValue.isPressed;
     }
 }
