@@ -5,39 +5,16 @@ public class Interactor : MonoBehaviour
 {
     public event Action<Interactable> TargetChanged;
 
-    public Interactable Target
-    {
-        get => _target;
-        private set
-        {
-            if (_target == value)
-            {
-                return;
-            }
-
-            if (_target != null)
-            {
-                _target.Undetected();
-            }
-
-            _target = value;
-            HasTarget = _target != null;
-            HoldingTime = 0f;
-            _isReadyToInteract = false;
-            _isTargetOutOfRange = false;
-
-            if (_target != null)
-            {
-                _target.Detected();
-            }
-
-            TargetChanged?.Invoke(_target);
-        }
-    }
-
+    public Interactable Target { get; private set; }
     public bool HasTarget { get; private set; }
     public float HoldingTime { get; private set; }
     public bool Interact { get; set; }
+
+    [SerializeField]
+    private Vector3 _center;
+
+    [SerializeField]
+    private float _radius;
 
     [SerializeField]
     private LayerMask _targetLayers;
@@ -45,71 +22,69 @@ public class Interactor : MonoBehaviour
     [SerializeField]
     private LayerMask _obstacleLayers;
 
-    private Interactable _target;
     private bool _isReadyToInteract;
-    private bool _isTargetOutOfRange;
-
-    private void Awake()
-    {
-        gameObject.AllIgnoreLayerCollision();
-        gameObject.SetLayerCollision(_targetLayers, false);
-    }
 
     private void Update()
     {
+        DetectTarget();
+
         if (CanInteract())
         {
             InteractTarget();
         }
     }
 
-    private bool CanInteract()
+    private void DetectTarget()
     {
-        if (_target == null)
+        if (HasTarget && Target.IsInteracted)
         {
-            if (HasTarget)
+            return;
+        }
+
+        Interactable finalTarget = null;
+        var spherePosition = transform.position + transform.rotation * _center;
+        var targets = Physics.OverlapSphere(spherePosition, _radius, _targetLayers);
+
+        Array.Sort(targets, (a, b) =>
+        {
+            float distA = Vector3.SqrMagnitude(a.transform.position - transform.position);
+            float distB = Vector3.SqrMagnitude(b.transform.position - transform.position);
+            return distA.CompareTo(distB); // 오름차순 정렬
+        });
+
+        foreach (var target in targets)
+        {
+            if (Physics.Linecast(transform.position, target.transform.position, _obstacleLayers))
             {
-                Target = null;
+                continue;
             }
 
-            return false;
+            finalTarget = target.GetComponent<Interactable>();
+            break;
         }
 
-        if (!_target.gameObject.activeSelf)
-        {
-            Target = null;
-            return false;
-        }
+        SetTarget(finalTarget);
+    }
 
-        if (_target.IsInteracted)
-        {
-            return false;
-        }
-
-        if (_isTargetOutOfRange)
-        {
-            Target = null;
-            return false;
-        }
-
-        return true;
+    private bool CanInteract()
+    {
+        return HasTarget && !Target.IsInteracted;
     }
 
     private void InteractTarget()
     {
         if (Interact)
         {
-            if (_isReadyToInteract && _target.CanInteract)
+            if (_isReadyToInteract && Target.CanInteract)
             {
-                if (HoldingTime <= _target.HoldTime)
+                if (HoldingTime <= Target.HoldTime)
                 {
                     HoldingTime += Time.deltaTime;
                 }
                 else
                 {
                     Interact = false;
-                    HoldingTime = 0f;
-                    _target.StartInteraction();
+                    Target.StartInteraction(this);
                 }
             }
         }
@@ -120,67 +95,35 @@ public class Interactor : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void SetTarget(Interactable target)
     {
-        DetectTarget(other.gameObject);
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        UndetectTarget(other.gameObject);
-    }
-
-    private void DetectTarget(GameObject other)
-    {
-        if (!other.TryGetComponent<Interactable>(out var interactable))
+        if (Target == target)
         {
             return;
         }
 
-        if (_target == null)
+        if (Target != null)
         {
-            Target = interactable;
+            Target.Undetected(this);
         }
-        else
+
+        Target = target;
+        HasTarget = target != null;
+        HoldingTime = 0f;
+        _isReadyToInteract = false;
+
+        if (target != null)
         {
-            if (_target.IsInteracted)
-            {
-                return;
-            }
-
-            if (_target.gameObject != gameObject)
-            {
-                float distanceToTarget = Vector3.Distance(transform.position, _target.transform.position);
-                float distanceToOther = Vector3.Distance(transform.position, other.transform.position);
-                if (distanceToTarget <= distanceToOther)
-                {
-                    return;
-                }
-
-                if (Physics.Linecast(transform.position, other.transform.position, _obstacleLayers))
-                {
-                    return;
-                }
-
-                Target = interactable;
-            }
+            target.Detected(this);
         }
+
+        TargetChanged?.Invoke(target);
     }
 
-    private void UndetectTarget(GameObject other)
+    private void OnDrawGizmosSelected()
     {
-        if (_target.gameObject != other)
-        {
-            return;
-        }
-
-        if (_target.IsInteracted)
-        {
-            _isTargetOutOfRange = true;
-        }
-        else
-        {
-            Target = null;
-        }
+        var spherePosition = transform.position + transform.rotation * _center;
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(spherePosition, _radius);
     }
 }

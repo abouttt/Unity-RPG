@@ -2,23 +2,23 @@ using UnityEngine;
 
 public class InteractableTest : Interactable
 {
-    public override void OnDetect()
+    public override void OnDetected(Interactor interactor)
     {
         Debug.Log("Detect");
     }
 
-    public override void OnUndetect()
+    public override void OnUndetected(Interactor interactor)
     {
         Debug.Log("Undetect");
     }
 
-    public override void OnInteract()
+    public override void OnInteracted(Interactor interactor)
     {
-        EndInteraction();
         Debug.Log("Interact");
+        EndInteraction(interactor);
     }
 
-    public override void OnUninteract()
+    public override void OnUninteracted(Interactor interactor)
     {
         Debug.Log("Uninteract");
     }
