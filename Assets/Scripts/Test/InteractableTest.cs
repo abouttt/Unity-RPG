@@ -12,13 +12,13 @@ public class InteractableTest : Interactable
         Debug.Log("Undetect");
     }
 
-    public override void OnInteracted(Interactor interactor)
+    public override void OnInteractionStarted(Interactor interactor)
     {
         Debug.Log("Interact");
         EndInteraction(interactor);
     }
 
-    public override void OnUninteracted(Interactor interactor)
+    public override void OnInteractionEnded(Interactor interactor)
     {
         Debug.Log("Uninteract");
     }

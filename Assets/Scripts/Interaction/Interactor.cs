@@ -104,7 +104,7 @@ public class Interactor : MonoBehaviour
 
         if (Target != null)
         {
-            Target.Undetected(this);
+            Target.Undetect(this);
         }
 
         Target = target;
@@ -114,7 +114,7 @@ public class Interactor : MonoBehaviour
 
         if (target != null)
         {
-            target.Detected(this);
+            target.Detect(this);
         }
 
         TargetChanged?.Invoke(target);

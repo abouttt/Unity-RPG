@@ -23,7 +23,7 @@ public abstract class Interactable : MonoBehaviour
     [field: SerializeField]
     public Vector3 UIOffset { get; protected set; }
 
-    public void Detected(Interactor interactor)
+    public void Detect(Interactor interactor)
     {
         if (!IsDetected)
         {
@@ -32,7 +32,7 @@ public abstract class Interactable : MonoBehaviour
         }
     }
 
-    public void Undetected(Interactor interactor)
+    public void Undetect(Interactor interactor)
     {
         if (IsDetected)
         {
@@ -46,7 +46,7 @@ public abstract class Interactable : MonoBehaviour
         if (!IsInteracted)
         {
             IsInteracted = true;
-            OnInteracted(interactor);
+            OnInteractionStarted(interactor);
         }
     }
 
@@ -55,14 +55,14 @@ public abstract class Interactable : MonoBehaviour
         if (IsInteracted)
         {
             IsInteracted = false;
-            OnUninteracted(interactor);
+            OnInteractionEnded(interactor);
         }
     }
 
     public abstract void OnDetected(Interactor interactor);
     public abstract void OnUndetected(Interactor interactor);
-    public abstract void OnInteracted(Interactor interactor);
-    public abstract void OnUninteracted(Interactor interactor);
+    public abstract void OnInteractionStarted(Interactor interactor);
+    public abstract void OnInteractionEnded(Interactor interactor);
 
     private void OnDrawGizmosSelected()
     {
