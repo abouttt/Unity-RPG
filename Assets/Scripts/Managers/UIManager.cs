@@ -39,7 +39,7 @@ public sealed class UIManager : MonoSingleton<UIManager>
 
         foreach (UIType uiType in Enum.GetValues(typeof(UIType)))
         {
-            foreach (var prefab in UISettings.Instance[uiType].Prefabs)
+            foreach (var prefab in Settings.UI[uiType].Prefabs)
             {
                 var go = Instantiate(prefab);
                 var view = go.GetComponent<UI_View>();

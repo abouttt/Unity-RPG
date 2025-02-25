@@ -8,7 +8,7 @@ using UnityEditor;
 #endif
 
 [CreateAssetMenu(fileName = "SceneSettings", menuName = "Settings/Scene Settings")]
-public class SceneSettings : ScriptableSingleton<SceneSettings>
+public class SceneSettings : ScriptableObject
 {
     [Serializable]
     public class Settings

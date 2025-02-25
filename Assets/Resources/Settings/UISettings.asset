@@ -21,6 +21,7 @@ MonoBehaviour:
     - Key: 1
       Value:
         <Prefabs>k__BackingField:
+        - {fileID: 1735810964377057066, guid: e6642cc787dea494ca872f7e46fd3094, type: 3}
         - {fileID: 2488424945595109474, guid: 938d014600e18bf409f7be4eb18f740c, type: 3}
     - Key: 2
       Value:

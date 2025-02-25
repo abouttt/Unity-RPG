@@ -9,7 +9,7 @@ public abstract class BaseScene : MonoBehaviour
         string sceneName = SceneManager.GetActiveScene().name;
 
         if (ResourceManager.Count == 0 &&
-            SceneSettings.Instance[sceneName].ReloadSceneWhenNoResources)
+            Settings.Scene[sceneName].ReloadSceneWhenNoResources)
         {
             SceneLoader.PrepareLoad(sceneName);
         }

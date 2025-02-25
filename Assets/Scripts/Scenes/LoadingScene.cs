@@ -11,6 +11,7 @@ public class LoadingScene : BaseScene
     {
         base.Init();
 
+        Settings.Init();
         ClearManagers();
         Resources.UnloadUnusedAssets();
         GC.Collect();
@@ -30,13 +31,13 @@ public class LoadingScene : BaseScene
 
     private IEnumerator SwitchLoadedScene()
     {
-        yield return YieldCache.WaitForSeconds(SceneSettings.Instance.FadeOutDuration);
+        yield return YieldCache.WaitForSeconds(Settings.Scene.FadeOutDuration);
         SceneLoader.SwitchLoadedScene();
     }
 
     private void LoadResourcesByLabels(Action callback = null)
     {
-        var loadResourceLabels = SceneSettings.Instance[SceneLoader.NextSceneName].AddressableLabels;
+        var loadResourceLabels = Settings.Scene[SceneLoader.NextSceneName].AddressableLabels;
         if (loadResourceLabels == null || loadResourceLabels.Length == 0)
         {
             callback?.Invoke();

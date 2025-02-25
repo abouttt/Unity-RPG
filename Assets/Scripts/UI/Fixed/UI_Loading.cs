@@ -10,7 +10,7 @@ public class UI_Loading : UI_View
         if (nextSceneName != null)
         {
             var bg = GetImage("BackgroundImage");
-            bg.sprite = SceneSettings.Instance[nextSceneName].LoadingBackground;
+            bg.sprite = Settings.Scene[nextSceneName].LoadingBackground;
             bg.color = bg.sprite != null ? Color.white : Color.black;
         }
         GetImage("BarImage").fillAmount = 0f;
