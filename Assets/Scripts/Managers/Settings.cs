@@ -30,20 +30,6 @@ public static class Settings
 
     private static SceneSettings _scene;
     private static UISettings _ui;
-    private static bool _isInitialized;
-
-    public static void Init()
-    {
-        if (_isInitialized)
-        {
-            return;
-        }
-
-        _scene = Load<SceneSettings>();
-        _ui = Load<UISettings>();
-
-        _isInitialized = true;
-    }
 
     private static T Load<T>() where T : ScriptableObject
     {

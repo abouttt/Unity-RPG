@@ -7,14 +7,13 @@ public class LoadingScene : BaseScene
     [SerializeField]
     private string _defaultSceneName;
 
+    private static bool _isInitialized;
+
     protected override void Init()
     {
         base.Init();
 
-        Settings.Init();
-        ClearManagers();
-        Resources.UnloadUnusedAssets();
-        GC.Collect();
+        InitOrCleanup();
 
         if (!SceneLoader.IsPrepare)
         {
@@ -59,12 +58,30 @@ public class LoadingScene : BaseScene
         }
     }
 
-    private void ClearManagers()
+    private void InitOrCleanup()
     {
-        InputManager.Clear();
-        PoolManager.Clear();
-        ResourceManager.Clear();
-        SoundManager.Clear();
-        UIManager.Clear();
+        if (_isInitialized)
+        {
+            InputManager.Clear();
+            PoolManager.Clear();
+            ResourceManager.Clear();
+            SoundManager.Clear();
+            UIManager.Clear();
+            Resources.UnloadUnusedAssets();
+            GC.Collect();
+        }
+        else
+        {
+            _ = Settings.Scene;
+            _ = Settings.UI;
+            _ = InputManager.Instance;
+            _ = PoolManager.Instance;
+            _ = ResourceManager.Instance;
+            _ = SceneLoader.Instance;
+            _ = SoundManager.Instance;
+            _ = UIManager.Instance;
+
+            _isInitialized = true;
+        }
     }
 }
