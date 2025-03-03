@@ -23,16 +23,19 @@ public class PlayerController : MonoBehaviour
 
     // Input Value
     private Vector2 _move;
+    private Vector2 _look;
     private bool _isPressedSprint;
     private bool _isPressedJump;
 
     private GameObject _mainCamera;
     private GroundedCharacterController _movement;
+    private CameraController _cameraController;
 
     private void Awake()
     {
         _mainCamera = Camera.main.gameObject;
         _movement = GetComponent<GroundedCharacterController>();
+        _cameraController = GetComponent<CameraController>();
     }
 
     private void Update()
@@ -41,6 +44,11 @@ public class PlayerController : MonoBehaviour
         UpdateMoveSpeed();
         Move();
         Rotate();
+    }
+
+    private void LateUpdate()
+    {
+        RotateCamera();
     }
 
     private void Move()
@@ -124,6 +132,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void RotateCamera()
+    {
+        _cameraController.Rotate(_look.y, _look.x);
+    }
+
     private float GetYaw(Vector3 direction)
     {
         return Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
@@ -134,6 +147,11 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputValue inputValue)
     {
         _move = inputValue.Get<Vector2>();
+    }
+
+    public void OnLook(InputValue inputValue)
+    {
+        _look = Managers.Input.CursorLocked ? inputValue.Get<Vector2>() : Vector2.zero;
     }
 
     public void OnSprint(InputValue inputValue)
