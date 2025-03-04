@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SceneSettings
   m_EditorClassIdentifier: 
   <LoadingSceneName>k__BackingField: LoadingScene
-  <LoadingDelay>k__BackingField: 0
+  <LoadingDelay>k__BackingField: 1
   <FadeInDuration>k__BackingField: 0
   <FadeOutDuration>k__BackingField: 0
   _settings:
