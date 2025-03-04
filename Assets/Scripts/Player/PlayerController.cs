@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _jumpForce;
 
+    [SerializeField]
+    private float _lockOnRotationSpeed;
+
     private bool _isJumped;
     private bool _isJumpedWithInput;
 
@@ -45,12 +48,14 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
     private GroundedCharacterController _movement;
     private CameraController _cameraController;
+    private FieldOfView _lockOnFov;
 
     private void Awake()
     {
         _mainCamera = Camera.main.gameObject;
         _animator = GetComponentInChildren<Animator>();
         _movement = GetComponent<GroundedCharacterController>();
+        _lockOnFov = _mainCamera.GetComponent<FieldOfView>();
         _cameraController = GetComponent<CameraController>();
     }
 
@@ -95,10 +100,20 @@ public class PlayerController : MonoBehaviour
 
         if (inputDirection != Vector3.zero)
         {
-            float cameraYaw = _mainCamera.transform.eulerAngles.y;
-            float yaw = GetYaw(inputDirection) + cameraYaw;
-            var rotationDirection = new Vector3(0f, yaw, 0f);
+            float yaw;
 
+            if (_lockOnFov.HasTarget && IsOnlyRun())
+            {
+                var directionToTarget = (_lockOnFov.Target.position - transform.position).normalized;
+                yaw = GetYaw(directionToTarget);
+            }
+            else
+            {
+                float cameraYaw = _mainCamera.transform.eulerAngles.y;
+                yaw = GetYaw(inputDirection) + cameraYaw;
+            }
+
+            var rotationDirection = new Vector3(0f, yaw, 0f);
             _movement.Rotate(rotationDirection);
         }
     }
@@ -151,7 +166,15 @@ public class PlayerController : MonoBehaviour
 
     private void RotateCamera()
     {
-        _cameraController.Rotate(_look.y, _look.x);
+        if (_lockOnFov.HasTarget)
+        {
+            var lookPosition = (_lockOnFov.Target.position + transform.position) / 2;
+            _cameraController.LookRotate(lookPosition, _lockOnRotationSpeed);
+        }
+        else
+        {
+            _cameraController.Rotate(_look.y, _look.x);
+        }
     }
 
     private void UpdateAnimatorParameters()
@@ -159,6 +182,7 @@ public class PlayerController : MonoBehaviour
         var inputDirection = new Vector3(_move.x, 0f, _move.y);
         float targetSpeed = inputDirection == Vector3.zero ? 0f : _movement.MoveSpeed;
         float speedChangeRate = _movement.SpeedChangeRate * Time.deltaTime;
+        bool isLockOnOnlyRun = _lockOnFov.HasTarget && IsOnlyRun();
 
         _speedBlend = Mathf.Lerp(_speedBlend, targetSpeed, speedChangeRate);
         _posXBlend = Mathf.Lerp(_posXBlend, inputDirection.x, speedChangeRate);
@@ -172,8 +196,8 @@ public class PlayerController : MonoBehaviour
         }
 
         _animator.SetFloat(_animIDSpeed, _speedBlend);
-        _animator.SetFloat(_animIDPosX, 0f);
-        _animator.SetFloat(_animIDPosY, 1f);
+        _animator.SetFloat(_animIDPosX, isLockOnOnlyRun ? _posXBlend : 0f);
+        _animator.SetFloat(_animIDPosY, isLockOnOnlyRun ? _posYBlend : 1f);
         _animator.SetBool(_animIDGrounded, _movement.IsGrounded);
         _animator.SetBool(_animIDJump, _movement.IsJumping);
         _animator.SetBool(_animIDFall, _movement.IsFalling);
@@ -183,6 +207,11 @@ public class PlayerController : MonoBehaviour
     private float GetYaw(Vector3 direction)
     {
         return Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+    }
+
+    private bool IsOnlyRun()
+    {
+        return !(_isPressedSprint || _movement.IsJumping || _movement.IsFalling || _movement.IsLanding);
     }
 
     // Input System Callbacks
@@ -205,5 +234,17 @@ public class PlayerController : MonoBehaviour
     public void OnJump(InputValue inputValue)
     {
         _isPressedJump = inputValue.isPressed;
+    }
+
+    public void OnLockOn(InputValue inputValue)
+    {
+        if (_lockOnFov.HasTarget)
+        {
+            _lockOnFov.Target = null;
+        }
+        else
+        {
+            _lockOnFov.FindTarget();
+        }
     }
 }
