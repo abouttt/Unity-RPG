@@ -10,6 +10,8 @@ public class CustomBindingEditor : DataBindingEditor
 
         var customBinding = (CustomBinding)target;
 
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("TypeName"));
+
         if (!string.IsNullOrEmpty(customBinding.TypeName))
         {
             customBinding.Target = customBinding.GetComponent(customBinding.TypeName);
