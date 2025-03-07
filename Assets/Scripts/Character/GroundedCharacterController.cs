@@ -121,7 +121,6 @@ public class GroundedCharacterController : MonoBehaviour
         IsJumping = true;
         IsFalling = false;
         IsLanding = false;
-        _jumpTimeoutDelta = JumpTimeout;
         _verticalVelocity = Mathf.Sqrt(force * -2f * Gravity * GravityMultiplier);
     }
 
@@ -227,8 +226,10 @@ public class GroundedCharacterController : MonoBehaviour
         }
         else
         {
+            _jumpTimeoutDelta = JumpTimeout;
             _groundedTrigger = true;
 
+            // 점프 최대 높이에서 추락하는 지점
             if (_verticalVelocity < 0f)
             {
                 if (_fallTimeoutDelta >= 0f)
