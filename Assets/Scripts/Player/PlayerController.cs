@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _mainCamera = Camera.main.gameObject;
-        _animator = GetComponentInChildren<Animator>();
+        _animator = GetComponent<Animator>();
         _movement = GetComponent<GroundedCharacterController>();
         _cameraController = GetComponent<CameraController>();
         _lockOnFov = _mainCamera.GetComponent<FieldOfView>();

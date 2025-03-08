@@ -229,10 +229,15 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 95509902755735526, guid: d6d06c887a1aae94f8c6e8cc2c0c557b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 95509902755735526, guid: d6d06c887a1aae94f8c6e8cc2c0c557b, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 22100000, guid: de757f0c7d967824dbeb5af5251585d3, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 95509902755735526, guid: d6d06c887a1aae94f8c6e8cc2c0c557b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -929,7 +934,7 @@ MonoBehaviour:
   <IsInteracted>k__BackingField: 0
   <ObjectName>k__BackingField: "\uB354\uBBF8"
   <ActionName>k__BackingField: "\uB300\uD654"
-  <HoldTime>k__BackingField: 0
+  <HoldTime>k__BackingField: 1
   <CanInteract>k__BackingField: 1
   <UIOffset>k__BackingField: {x: 0, y: 1.4, z: 0}
 --- !u!1001 &1798501663
@@ -1570,6 +1575,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2033586113}
+  - component: {fileID: 2033586121}
   - component: {fileID: 2033586117}
   - component: {fileID: 2033586116}
   - component: {fileID: 2033586115}
@@ -1613,7 +1619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 368ceccda46a9d24fb97988f6312884a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <IsGrounded>k__BackingField: 0
+  <IsGrounded>k__BackingField: 1
   <IsJumping>k__BackingField: 0
   <IsFalling>k__BackingField: 0
   <IsLanding>k__BackingField: 0
@@ -1625,8 +1631,8 @@ MonoBehaviour:
   <UseGravity>k__BackingField: 1
   <Gravity>k__BackingField: -9.81
   <GravityMultiplier>k__BackingField: 2
-  <GroundedOffset>k__BackingField: -0.08
-  <GroundedRadius>k__BackingField: 0.2
+  <GroundedOffset>k__BackingField: -0.14
+  <GroundedRadius>k__BackingField: 0.28
   <GroundLayers>k__BackingField:
     serializedVersion: 2
     m_Bits: 64
@@ -1700,10 +1706,10 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 1.8
-  m_Radius: 0.3
-  m_SlopeLimit: 50
+  m_Radius: 0.28
+  m_SlopeLimit: 45
   m_StepOffset: 0.25
-  m_SkinWidth: 0.03
+  m_SkinWidth: 0.02
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0.93, z: 0}
 --- !u!114 &2033586118
@@ -1755,6 +1761,28 @@ MonoBehaviour:
   _obstacleLayers:
     serializedVersion: 2
     m_Bits: 64
+--- !u!95 &2033586121
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033586112}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 5917c0e93d180a842b61d1ebc62a195c, type: 3}
+  m_Controller: {fileID: 22100000, guid: de757f0c7d967824dbeb5af5251585d3, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
