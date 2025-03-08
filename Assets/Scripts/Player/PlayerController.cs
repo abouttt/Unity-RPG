@@ -49,14 +49,16 @@ public class PlayerController : MonoBehaviour
     private GroundedCharacterController _movement;
     private CameraController _cameraController;
     private FieldOfView _lockOnFov;
+    private Interactor _interactor;
 
     private void Awake()
     {
         _mainCamera = Camera.main.gameObject;
         _animator = GetComponentInChildren<Animator>();
         _movement = GetComponent<GroundedCharacterController>();
-        _lockOnFov = _mainCamera.GetComponent<FieldOfView>();
         _cameraController = GetComponent<CameraController>();
+        _lockOnFov = _mainCamera.GetComponent<FieldOfView>();
+        _interactor = GetComponent<Interactor>();
     }
 
     private void Update()
@@ -246,5 +248,10 @@ public class PlayerController : MonoBehaviour
         {
             _lockOnFov.FindTarget();
         }
+    }
+
+    public void OnInteract(InputValue inputValue)
+    {
+        _interactor.Interact = inputValue.isPressed;
     }
 }
