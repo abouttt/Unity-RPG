@@ -16,7 +16,8 @@ MonoBehaviour:
     _serializedList:
     - Key: 0
       Value:
-        <Prefabs>k__BackingField: []
+        <Prefabs>k__BackingField:
+        - {fileID: 5814015045335485314, guid: ee6e0ed4faeeadf45981682723c0a581, type: 3}
     - Key: 1
       Value:
         <Prefabs>k__BackingField:
