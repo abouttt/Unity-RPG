@@ -50,7 +50,7 @@ public abstract class ItemData : ScriptableObject
             return true;
         }
 
-        return Id.Equals(other.Id);
+        return Id == other.Id;
     }
 
     protected abstract ItemType GetItemType();

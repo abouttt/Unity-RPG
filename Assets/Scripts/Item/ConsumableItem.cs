@@ -8,14 +8,14 @@ public abstract class ConsumableItem : StackableItem, IConsumable
         : base(data, quantity)
     { }
 
-    public bool Consume()
+    public bool Consume(GameObject gameObject)
     {
         if (!CanConsume())
         {
             return false;
         }
 
-        OnConsumed();
+        OnConsumed(gameObject);
         Quantity -= ConsumableData.ConsumptionQuantity;
 
         return true;
@@ -31,5 +31,5 @@ public abstract class ConsumableItem : StackableItem, IConsumable
         return true;
     }
 
-    protected abstract void OnConsumed();
+    protected abstract void OnConsumed(GameObject gameObject);
 }
