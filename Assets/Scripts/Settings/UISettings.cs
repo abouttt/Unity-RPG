@@ -23,8 +23,8 @@ public class UISettings : ScriptableObject
     private SerializedDictionary<UIType, Settings> _settings;
 
 #if UNITY_EDITOR
-    [ContextMenu("Refresh")]
-    private void RefreshUIPrefabs()
+    [ContextMenu("Find UI Prefabs")]
+    private void FindUIPrefabs()
     {
         _settings = new();
 
