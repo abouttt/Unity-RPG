@@ -33,7 +33,7 @@ public class LoadingScene : BaseScene
 
     private void LoadResourcesByLabels(Action callback = null)
     {
-        var loadResourceLabels = Settings.Scene[Managers.Scene.CurrentSceneName].AddressableLabels;
+        var loadResourceLabels = Settings.Scene[Managers.Scene.NextSceneName].AddressableLabels;
         if (loadResourceLabels == null || loadResourceLabels.Length == 0)
         {
             return;
