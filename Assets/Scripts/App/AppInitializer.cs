@@ -13,6 +13,7 @@ public static class AppInitializer
         }
 
         Settings.Initialize();
+        Databases.Initialize();
         Managers.Initialize();
 
         _isInitialized = true;
