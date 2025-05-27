@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98172da3aa98e7740baa74f2966bb187, type: 3}
+  m_Name: SceneSettings
+  m_EditorClassIdentifier: 
+  <LoadingSceneName>k__BackingField: LoadingScene
+  <LoadingDelay>k__BackingField: 1
+  <FadeInDuration>k__BackingField: 0
+  <FadeOutDuration>k__BackingField: 0
+  _settings:
+    _serializedList:
+    - Key: LoadingScene
+      Value:
+        <AddressableLabels>k__BackingField:
+        - m_LabelString: Default
+        <ReloadSceneWhenNoResources>k__BackingField: 0
+        <BGM>k__BackingField: {fileID: 0}
+        <LoadingBackground>k__BackingField: {fileID: 0}
+    - Key: DevScene
+      Value:
+        <AddressableLabels>k__BackingField:
+        - m_LabelString: Default
+        <ReloadSceneWhenNoResources>k__BackingField: 1
+        <BGM>k__BackingField: {fileID: 0}
+        <LoadingBackground>k__BackingField: {fileID: 0}
