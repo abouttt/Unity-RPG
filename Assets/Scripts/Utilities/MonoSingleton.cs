@@ -12,7 +12,7 @@ public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
         {
             if (_isApplicationQuitting)
             {
-                Debug.LogWarning($"[MonoSingleton] Instance of {typeof(T)} is already destroyed. Returning null.");
+                Debug.LogWarning($"Instance of {typeof(T).Name} is being accessed after application quit. Returning null.");
                 return null;
             }
 

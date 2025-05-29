@@ -13,23 +13,23 @@ MonoBehaviour:
   m_Name: Default Local Group
   m_EditorClassIdentifier: 
   m_GroupName: Default Local Group
-  m_GUID: 378d75fe57fc25a468ef42706cd11286
+  m_GUID: 609e5245a0db6fd409ea229f298b2225
   m_SerializeEntries:
-  - m_GUID: 2822fa43c62218a449b08c58231d0897
+  - m_GUID: 1de0f0d2c2dcd1940bf1dbd7b87a9adb
     m_Address: DDDSoundPlayer
     m_ReadOnly: 0
     m_SerializedLabels:
     - Default
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: da62ced641793694aaaaf6b1bd01896a
+  - m_GUID: 2e7d361b8a92e6945a1e9ccc287514bb
     m_Address: EventSystem
     m_ReadOnly: 0
     m_SerializedLabels:
     - Default
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
-  m_Settings: {fileID: 11400000, guid: ff3fb826e3245dd4194288f3d4761457, type: 2}
+  m_Settings: {fileID: 11400000, guid: 9f3952cbae24ec24286723852a7aa372, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: fb50b628f7a6589479019380421fbbeb, type: 2}
-    - {fileID: 11400000, guid: 119e6dfe3f2db08419649951d4d5f4cf, type: 2}
+    - {fileID: 11400000, guid: 9085df26c764b9347b3b05ecbafdd704, type: 2}
+    - {fileID: 11400000, guid: 137ca442e7fc8fa4bb0d8953fffe933c, type: 2}
