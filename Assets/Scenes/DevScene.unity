@@ -973,13 +973,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ddab8e2727129949b1bd6ad715e6dde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Sensitivity>k__BackingField: 2
-  _sensitivityMultiplier: 10
-  _cameraTarget: {fileID: 1042867578}
-  _invertX: 1
-  _invertY: 0
-  _topClamp: 50
-  _bottomClamp: -50
+  <Sensitivity>k__BackingField: 20
+  _smoothingSpeed: 10
+  _smoothingTime: 0.1
+  <InvertX>k__BackingField: 0
+  <InvertY>k__BackingField: 1
+  <UseLerp>k__BackingField: 1
+  <TopClamp>k__BackingField: 50
+  <BottomClamp>k__BackingField: -50
+  <CameraTarget>k__BackingField: {fileID: 1042867578}
 --- !u!114 &1536219134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1006,8 +1008,8 @@ MonoBehaviour:
   <GravityMultiplier>k__BackingField: 2
   <SlopeRayLength>k__BackingField: 0.2
   <SlopeVelocity>k__BackingField: -20
-  <GroundCheckSize>k__BackingField: {x: 0.3, y: 0.1, z: 0.25}
-  <GroundCheckOffset>k__BackingField: {x: 0, y: 0, z: 0}
+  <GroundCheckOffset>k__BackingField: -0.14
+  <GroundCheckRadius>k__BackingField: 0.28
   <GroundLayer>k__BackingField:
     serializedVersion: 2
     m_Bits: 64

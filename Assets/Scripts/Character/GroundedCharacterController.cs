@@ -50,12 +50,12 @@ public class GroundedCharacterController : MonoBehaviour
     [field: SerializeField]
     public float SlopeVelocity { get; set; }
 
-    [field: Header("Ground Check - Box")]
+    [field: Header("Ground Check")]
     [field: SerializeField]
-    public Vector3 GroundCheckSize { get; set; }
+    public float GroundCheckOffset { get; set; }
 
     [field: SerializeField]
-    public Vector3 GroundCheckOffset { get; set; }
+    public float GroundCheckRadius { get; set; }
 
     [field: SerializeField]
     public LayerMask GroundLayer { get; set; }
@@ -157,12 +157,8 @@ public class GroundedCharacterController : MonoBehaviour
 
     private void CheckGrounded()
     {
-        IsGrounded = Physics.CheckBox(
-            transform.position + GroundCheckOffset,
-            GroundCheckSize * 0.5f,
-            transform.rotation,
-            GroundLayer
-        );
+        var spherePosition = new Vector3(transform.position.x, transform.position.y - GroundCheckOffset, transform.position.z);
+        IsGrounded = Physics.CheckSphere(spherePosition, GroundCheckRadius, GroundLayer, QueryTriggerInteraction.Ignore);
     }
 
     private void UpdateGravity(float deltaTime)
@@ -254,16 +250,13 @@ public class GroundedCharacterController : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        // Check Grounded
+        // CheckGrounded
         var transparentGreen = new Color(0f, 1f, 0f, 0.35f);
         var transparentRed = new Color(1f, 0f, 0f, 0.35f);
         Gizmos.color = IsGrounded ? transparentGreen : transparentRed;
-        Gizmos.matrix = Matrix4x4.TRS(
-            transform.position + GroundCheckOffset,
-            transform.rotation,
-            Vector3.one
-        );
-        Gizmos.DrawCube(Vector3.zero, GroundCheckSize);
+
+        var spherePosition = new Vector3(transform.position.x, transform.position.y - GroundCheckOffset, transform.position.z);
+        Gizmos.DrawSphere(spherePosition, GroundCheckRadius);
 
         // Slope Ray
         Gizmos.color = Color.blue;
