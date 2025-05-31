@@ -864,8 +864,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1536219130}
   - component: {fileID: 1536219129}
+  - component: {fileID: 1536219135}
   - component: {fileID: 1536219132}
   - component: {fileID: 1536219131}
+  - component: {fileID: 1536219134}
   - component: {fileID: 1536219133}
   m_Layer: 3
   m_Name: Player
@@ -925,6 +927,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e74ca8cb162c04142ae7b9c41ad4563c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _runSpeed: 4
+  _sprintSpeed: 7
+  _inAirSpeed: 2
+  _landingSpeed: 2
 --- !u!114 &1536219132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -970,8 +976,69 @@ MonoBehaviour:
   <Sensitivity>k__BackingField: 2
   _sensitivityMultiplier: 10
   _cameraTarget: {fileID: 1042867578}
+  _invertX: 1
+  _invertY: 0
   _topClamp: 50
   _bottomClamp: -50
+--- !u!114 &1536219134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536219128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1be5b443414a1184582cdbf7885a6737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsGrounded>k__BackingField: 0
+  <IsJumping>k__BackingField: 0
+  <IsFalling>k__BackingField: 0
+  <IsLanding>k__BackingField: 0
+  <MoveSpeed>k__BackingField: 5
+  <Acceleration>k__BackingField: 10
+  <Deceleration>k__BackingField: 10
+  <RotationSpeed>k__BackingField: 15
+  <JumpHeight>k__BackingField: 1
+  <UseGravity>k__BackingField: 1
+  <Gravity>k__BackingField: -9.81
+  <GravityMultiplier>k__BackingField: 2
+  <SlopeRayLength>k__BackingField: 0.2
+  <SlopeVelocity>k__BackingField: -20
+  <GroundCheckSize>k__BackingField: {x: 0.3, y: 0.1, z: 0.25}
+  <GroundCheckOffset>k__BackingField: {x: 0, y: 0, z: 0}
+  <GroundLayer>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 64
+  <JumpTimeout>k__BackingField: 0.5
+  <FallTimeout>k__BackingField: 0.2
+  <LandTimeout>k__BackingField: 0.55
+--- !u!143 &1536219135
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536219128}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 1.8
+  m_Radius: 0.28
+  m_SlopeLimit: 45
+  m_StepOffset: 0.25
+  m_SkinWidth: 0.02
+  m_MinMoveDistance: 0
+  m_Center: {x: 0, y: 0.93, z: 0}
 --- !u!1 &1855891743
 GameObject:
   m_ObjectHideFlags: 0
