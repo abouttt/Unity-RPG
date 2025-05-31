@@ -967,7 +967,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ddab8e2727129949b1bd6ad715e6dde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Sensitivity>k__BackingField: 1
+  <Sensitivity>k__BackingField: 2
+  _sensitivityMultiplier: 10
   _cameraTarget: {fileID: 1042867578}
   _topClamp: 50
   _bottomClamp: -50

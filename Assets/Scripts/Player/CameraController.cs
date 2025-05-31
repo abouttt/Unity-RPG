@@ -32,8 +32,10 @@ public class CameraController : MonoBehaviour
     {
         if (Mathf.Abs(pitch) >= _threshold || Mathf.Abs(yaw) >= _threshold)
         {
-            _pitch -= pitch * Sensitivity * _sensitivityMultiplier * Time.deltaTime;
-            _yaw += yaw * Sensitivity * _sensitivityMultiplier * Time.deltaTime;
+            var targetSensitivity = Sensitivity * _sensitivityMultiplier * Time.deltaTime;
+            _pitch -= pitch * targetSensitivity;
+            _yaw += yaw * targetSensitivity;
+
             ApplyRotate();
         }
     }
