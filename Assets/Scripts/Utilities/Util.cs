@@ -60,10 +60,16 @@ public static class Util
         return (layerMask.value & (1 << gameObject.layer)) != 0;
     }
 
-    public static float ClampAngle(float angle, float min, float max)
+    public static float WrapAngle(float angle)
     {
-        angle = Mathf.Repeat(angle + 180f, 360f) - 180f;
-        return Mathf.Clamp(angle, min, max);
+        angle %= 360f;
+        return angle > 180f ? angle - 360f : angle;
+    }
+
+    public static float UnwrapAngle(float angle)
+    {
+        angle %= 360f;
+        return angle < 0f ? angle + 360f : angle;
     }
 
     public static string ToSnake(string str)
