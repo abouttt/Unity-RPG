@@ -24,8 +24,8 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         var angles = _cameraTarget.rotation.eulerAngles;
-        _pitch = Util.ClampAngle(angles.x, _bottomClamp, _topClamp);
-        _yaw = Util.ClampAngle(angles.y, float.MinValue, float.MaxValue);
+        _pitch = angles.x;
+        _yaw = angles.y;
     }
 
     public void Rotate(float pitch, float yaw)
@@ -35,9 +35,9 @@ public class CameraController : MonoBehaviour
             var targetSensitivity = Sensitivity * _sensitivityMultiplier * Time.deltaTime;
             _pitch -= pitch * targetSensitivity;
             _yaw += yaw * targetSensitivity;
-
-            ApplyRotate();
         }
+
+        ApplyRotate();
     }
 
     public void LookRotate(Vector3 lookPoint, float speed)
