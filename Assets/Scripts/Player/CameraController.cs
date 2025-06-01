@@ -2,65 +2,105 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    [field: Header("Settings")]
     [field: SerializeField]
     public float Sensitivity { get; set; } = 1f;
 
     [SerializeField]
-    private float _sensitivityMultiplier = 10f;
+    private float _smoothingSpeed = 10f;
 
     [SerializeField]
-    private Transform _cameraTarget;
+    private float _smoothingTime = 0.1f;
 
-    [SerializeField]
-    private float _topClamp;
+    [field: Header("Options")]
+    [field: SerializeField]
+    public bool InvertX { get; set; }
 
-    [SerializeField]
-    private float _bottomClamp;
+    [field: SerializeField]
+    public bool InvertY { get; set; }
 
-    private float _pitch;
-    private float _yaw;
-    private readonly float _threshold = 0.01f;
+    [field: SerializeField]
+    public bool UseLerp { get; set; } = true;
+
+    [field: Header("Clamping")]
+    [field: SerializeField]
+    public float TopClamp { get; set; } = 90f;
+
+    [field: SerializeField]
+    public float BottomClamp { get; set; } = -90f;
+
+    [field: Header("References")]
+    [field: SerializeField]
+    public Transform CameraTarget { get; set; }
+
+    private float _targetPitch;
+    private float _targetYaw;
+    private float _currentPitch;
+    private float _currentYaw;
+    private float _pitchVelocity;
+    private float _yawVelocity;
+    private const float _threshold = 0.01f;
 
     private void Start()
     {
-        var angles = _cameraTarget.rotation.eulerAngles;
-        _pitch = angles.x;
-        _yaw = angles.y;
+        var angles = CameraTarget.eulerAngles;
+        _targetPitch = _currentPitch = angles.x;
+        _targetYaw = _currentYaw = angles.y;
     }
 
-    public void Rotate(float pitch, float yaw)
+    private void LateUpdate()
     {
-        if (Mathf.Abs(pitch) >= _threshold || Mathf.Abs(yaw) >= _threshold)
+        UpdateRotation();
+    }
+
+    public void Rotate(Vector2 input)
+    {
+        if (input.magnitude < _threshold)
         {
-            var targetSensitivity = Sensitivity * _sensitivityMultiplier * Time.deltaTime;
-            _pitch -= pitch * targetSensitivity;
-            _yaw += yaw * targetSensitivity;
+            return;
         }
 
-        ApplyRotate();
+        float sensitivity = Sensitivity * Time.deltaTime;
+
+        _targetYaw += (InvertX ? -input.x : input.x) * sensitivity;
+        _targetPitch += (InvertY ? -input.y : input.y) * sensitivity;
+
+        _targetPitch = Mathf.Clamp(_targetPitch, BottomClamp, TopClamp);
     }
 
-    public void LookRotate(Vector3 lookPoint, float speed)
+    public void LookAt(Vector3 targetPoint, float speedMultiplier = 1f)
     {
-        var direction = lookPoint - _cameraTarget.position;
+        var direction = targetPoint - CameraTarget.position;
         if (direction.sqrMagnitude < 0.0001f)
         {
             return;
         }
 
-        var lookRotation = Quaternion.LookRotation(direction.normalized);
-        var smoothed = Quaternion.Slerp(_cameraTarget.rotation, lookRotation, speed * Time.deltaTime);
-        var angles = smoothed.eulerAngles;
-        _pitch = angles.x;
-        _yaw = angles.y;
+        var targetRot = Quaternion.LookRotation(direction);
+        var euler = targetRot.eulerAngles;
 
-        ApplyRotate();
+        _targetPitch = Mathf.Clamp(euler.x, BottomClamp, TopClamp);
+        _targetYaw = euler.y;
+
+        if (!UseLerp)
+        {
+            _smoothingTime = 0.1f / speedMultiplier;
+        }
     }
 
-    private void ApplyRotate()
+    private void UpdateRotation()
     {
-        _pitch = Util.ClampAngle(_pitch, _bottomClamp, _topClamp);
-        _yaw = Util.ClampAngle(_yaw, float.MinValue, float.MaxValue);
-        _cameraTarget.rotation = Quaternion.Euler(_pitch, _yaw, 0f);
+        if (UseLerp)
+        {
+            _currentPitch = Mathf.Lerp(_currentPitch, _targetPitch, _smoothingSpeed * Time.deltaTime);
+            _currentYaw = Mathf.Lerp(_currentYaw, _targetYaw, _smoothingSpeed * Time.deltaTime);
+        }
+        else
+        {
+            _currentPitch = Mathf.SmoothDamp(_currentPitch, _targetPitch, ref _pitchVelocity, _smoothingTime);
+            _currentYaw = Mathf.SmoothDamp(_currentYaw, _targetYaw, ref _yawVelocity, _smoothingTime);
+        }
+
+        CameraTarget.rotation = Quaternion.Euler(_currentPitch, _currentYaw, 0f);
     }
 }

@@ -43,10 +43,6 @@ public class PlayerController : MonoBehaviour
         UpdateMoveSpeed();
         Move();
         Rotate();
-    }
-
-    private void LateUpdate()
-    {
         RotateCamera();
     }
 
@@ -127,7 +123,7 @@ public class PlayerController : MonoBehaviour
 
     private void RotateCamera()
     {
-        _camera.Rotate(_look.y, _look.x);
+        _camera.Rotate(_look);
     }
 
     private float GetYaw(Vector3 direction)
