@@ -62,14 +62,23 @@ public static class Util
 
     public static float WrapAngle(float angle)
     {
-        angle %= 360f;
-        return angle > 180f ? angle - 360f : angle;
+        if (angle > 180f)
+        {
+            angle -= 360f;
+        }
+
+        if (angle < -180f)
+        {
+            angle += 360f;
+        }
+
+        return angle;
     }
 
-    public static float UnwrapAngle(float angle)
+    public static float ClampAngle(float angle, float min, float max)
     {
-        angle %= 360f;
-        return angle < 0f ? angle + 360f : angle;
+        angle = WrapAngle(angle);
+        return Mathf.Clamp(angle, min, max);
     }
 
     public static string ToSnake(string str)
