@@ -6,6 +6,9 @@ public class CameraController : MonoBehaviour
     [field: SerializeField]
     public float Sensitivity { get; set; } = 1f;
 
+    [field: SerializeField]
+    public float SensitivityMultiplier { get; set; } = 0.5f;
+
     [SerializeField]
     private float _smoothingSpeed = 10f;
 
@@ -50,6 +53,11 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (CameraTarget == null)
+        {
+            return;
+        }
+
         UpdateRotation();
     }
 
@@ -60,16 +68,18 @@ public class CameraController : MonoBehaviour
             return;
         }
 
-        float sensitivity = Sensitivity * Time.deltaTime;
-
-        _targetYaw += (InvertX ? -input.x : input.x) * sensitivity;
+        float sensitivity = Sensitivity * SensitivityMultiplier;
         _targetPitch += (InvertY ? -input.y : input.y) * sensitivity;
-
-        _targetPitch = Mathf.Clamp(_targetPitch, BottomClamp, TopClamp);
+        _targetYaw += (InvertX ? -input.x : input.x) * sensitivity;
     }
 
     public void LookAt(Vector3 targetPoint, float speedMultiplier = 1f)
     {
+        if (CameraTarget == null)
+        {
+            return;
+        }
+
         var direction = targetPoint - CameraTarget.position;
         if (direction.sqrMagnitude < 0.0001f)
         {
@@ -79,7 +89,7 @@ public class CameraController : MonoBehaviour
         var targetRot = Quaternion.LookRotation(direction);
         var euler = targetRot.eulerAngles;
 
-        _targetPitch = Mathf.Clamp(euler.x, BottomClamp, TopClamp);
+        _targetPitch = euler.x;
         _targetYaw = euler.y;
 
         if (!UseLerp)
@@ -90,15 +100,17 @@ public class CameraController : MonoBehaviour
 
     private void UpdateRotation()
     {
+        _targetPitch = Mathf.Clamp(_targetPitch, BottomClamp, TopClamp);
+
         if (UseLerp)
         {
-            _currentPitch = Mathf.Lerp(_currentPitch, _targetPitch, _smoothingSpeed * Time.deltaTime);
-            _currentYaw = Mathf.Lerp(_currentYaw, _targetYaw, _smoothingSpeed * Time.deltaTime);
+            _currentPitch = Mathf.LerpAngle(_currentPitch, _targetPitch, _smoothingSpeed * Time.deltaTime);
+            _currentYaw = Mathf.LerpAngle(_currentYaw, _targetYaw, _smoothingSpeed * Time.deltaTime);
         }
         else
         {
-            _currentPitch = Mathf.SmoothDamp(_currentPitch, _targetPitch, ref _pitchVelocity, _smoothingTime);
-            _currentYaw = Mathf.SmoothDamp(_currentYaw, _targetYaw, ref _yawVelocity, _smoothingTime);
+            _currentPitch = Mathf.SmoothDampAngle(_currentPitch, _targetPitch, ref _pitchVelocity, _smoothingTime);
+            _currentYaw = Mathf.SmoothDampAngle(_currentYaw, _targetYaw, ref _yawVelocity, _smoothingTime);
         }
 
         CameraTarget.rotation = Quaternion.Euler(_currentPitch, _currentYaw, 0f);

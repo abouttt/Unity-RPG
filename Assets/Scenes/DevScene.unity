@@ -973,7 +973,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ddab8e2727129949b1bd6ad715e6dde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Sensitivity>k__BackingField: 20
+  <Sensitivity>k__BackingField: 1
+  <SensitivityMultiplier>k__BackingField: 0.5
   _smoothingSpeed: 10
   _smoothingTime: 0.1
   <InvertX>k__BackingField: 0
