@@ -7,6 +7,7 @@ public class GameScene : BaseScene
     {
         base.Initialize();
         InstantiateUIFromSettings();
+        ConnectUI();
     }
 
     private void Start()
@@ -27,5 +28,12 @@ public class GameScene : BaseScene
                 Managers.UI.Add(view);
             }
         }
+    }
+
+    private void ConnectUI()
+    {
+        var player = GameObject.FindWithTag("Player");
+        var lockOnFov = Camera.main.GetComponent<FieldOfView>();
+        Managers.UI.Get<UI_LockOn>().Connect(lockOnFov);
     }
 }
