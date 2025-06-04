@@ -74,7 +74,7 @@ public class CameraController : MonoBehaviour
         _targetYaw += (InvertX ? -input.x : input.x) * sensitivity;
     }
 
-    public void LookAt(Vector3 targetPoint, float speedMultiplier = 1f)
+    public void LookAt(Vector3 targetPoint)
     {
         if (CameraTarget == null)
         {
@@ -92,11 +92,6 @@ public class CameraController : MonoBehaviour
 
         _targetPitch = Util.WrapAngle(euler.x);
         _targetYaw = euler.y;
-
-        if (!UseLerp)
-        {
-            _smoothingTime = 0.1f / speedMultiplier;
-        }
     }
 
     private void UpdateRotation()

@@ -15,9 +15,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _landingSpeed;
 
-    [SerializeField]
-    private float _lockOnRotationSpeed;
-
     private GameObject _mainCamera;
     private Animator _animator;
     private GroundedCharacterController _movement;
@@ -156,7 +153,7 @@ public class PlayerController : MonoBehaviour
         if (_lockOnFov.HasTarget)
         {
             var lookPosition = (_lockOnFov.Target.position + transform.position) / 2;
-            _camera.LookAt(lookPosition, _lockOnRotationSpeed);
+            _camera.LookAt(lookPosition);
         }
         else
         {
