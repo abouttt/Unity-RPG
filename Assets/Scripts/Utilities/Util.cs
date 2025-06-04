@@ -62,12 +62,13 @@ public static class Util
 
     public static float WrapAngle(float angle)
     {
+        angle %= 360f;
+
         if (angle > 180f)
         {
             angle -= 360f;
         }
-
-        if (angle < -180f)
+        else if (angle < -180f)
         {
             angle += 360f;
         }
