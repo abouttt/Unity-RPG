@@ -65,26 +65,26 @@ public class FieldOfViewTracker : MonoBehaviour
 
     private bool IsOutOfAngle()
     {
-        Transform origin = _fieldOfView.transform;
-        Vector3 toTarget = (_fieldOfView.Target.position - origin.position).normalized;
+        var origin = _fieldOfView.transform;
+        var toTarget = (_fieldOfView.Target.position - origin.position).normalized;
 
-        bool outOfHorizontal = false;
+        bool isOutOfHorizontal = false;
         if (_horizontal)
         {
-            Vector3 flatForward = new Vector3(origin.forward.x, 0f, origin.forward.z).normalized;
-            Vector3 flatToTarget = new Vector3(toTarget.x, 0f, toTarget.z).normalized;
+            var flatForward = new Vector3(origin.forward.x, 0f, origin.forward.z).normalized;
+            var flatToTarget = new Vector3(toTarget.x, 0f, toTarget.z).normalized;
 
             float horizontalAngle = Vector3.Angle(flatForward, flatToTarget);
-            outOfHorizontal = horizontalAngle > _horizontalClamp;
+            isOutOfHorizontal = horizontalAngle > _horizontalClamp;
         }
 
-        bool outOfVertical = false;
+        bool isOutOfVertical = false;
         if (_vertical)
         {
             float verticalAngle = Vector3.Angle(toTarget, new Vector3(toTarget.x, 0f, toTarget.z));
-            outOfVertical = verticalAngle > _verticalClamp;
+            isOutOfVertical = verticalAngle > _verticalClamp;
         }
 
-        return outOfHorizontal || outOfVertical;
+        return isOutOfHorizontal || isOutOfVertical;
     }
 }

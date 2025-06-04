@@ -16,12 +16,9 @@ public class FieldOfView : MonoBehaviour
             }
 
             _target = value;
-            HasTarget = _target != null;
             TargetChanged?.Invoke(_target);
         }
     }
-
-    public bool HasTarget { get; private set; }
 
     [field: SerializeField]
     public float ViewRadius { get; set; }
@@ -35,20 +32,24 @@ public class FieldOfView : MonoBehaviour
     [field: SerializeField]
     public LayerMask ObstacleLayer { get; set; }
 
+    public bool HasTarget => _target != null;
+
     private Transform _target;
 
     public void FindTarget()
     {
         Transform finalTarget = null;
+        var position = transform.position;
         float shortestAngle = Mathf.Infinity;
 
         var targets = Physics.OverlapSphere(transform.position, ViewRadius, TargetLayer);
         foreach (var target in targets)
         {
-            var directionToTarget = (target.transform.position - transform.position).normalized;
-            var angle = Vector3.Angle(transform.forward, directionToTarget);
+            var targetPosition = target.transform.position;
+            var direction = (targetPosition - position).normalized;
+            var angle = Vector3.Angle(transform.forward, direction);
 
-            if (angle > ViewAngle / 2)
+            if (angle > ViewAngle / 2f)
             {
                 continue;
             }
@@ -58,8 +59,8 @@ public class FieldOfView : MonoBehaviour
                 continue;
             }
 
-            var distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
-            if (Physics.Raycast(transform.position, directionToTarget, distanceToTarget, ObstacleLayer))
+            var distance = Vector3.Distance(position, targetPosition);
+            if (Physics.Raycast(position, direction, distance, ObstacleLayer))
             {
                 continue;
             }
