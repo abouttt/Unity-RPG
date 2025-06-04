@@ -1,5 +1,5 @@
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 [CustomEditor(typeof(FieldOfViewTracker))]
 public class FieldOfViewTrackerEditor : Editor
@@ -7,6 +7,10 @@ public class FieldOfViewTrackerEditor : Editor
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
+
+        GUI.enabled = false;
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("m_Script"));
+        GUI.enabled = true;
 
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_distance"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_obstacle"));
