@@ -1071,6 +1071,7 @@ GameObject:
   - component: {fileID: 1536219135}
   - component: {fileID: 1536219132}
   - component: {fileID: 1536219131}
+  - component: {fileID: 1536219136}
   - component: {fileID: 1536219134}
   - component: {fileID: 1536219133}
   m_Layer: 3
@@ -1090,7 +1091,7 @@ Animator:
   m_GameObject: {fileID: 1536219128}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 5917c0e93d180a842b61d1ebc62a195c, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: de757f0c7d967824dbeb5af5251585d3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1247,6 +1248,18 @@ CharacterController:
   m_SkinWidth: 0.02
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0.93, z: 0}
+--- !u!114 &1536219136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536219128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee9ef3aa628feb847873e1d599e8d705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1855891743
 GameObject:
   m_ObjectHideFlags: 0

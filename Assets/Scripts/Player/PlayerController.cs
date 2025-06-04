@@ -27,6 +27,20 @@ public class PlayerController : MonoBehaviour
     private bool _isJumped;
     private bool _isJumpedWithInput;
 
+    // Animation blend
+    private float _speedBlend;
+    private float _posXBlend;
+    private float _posYBlend;
+
+    // Animation ID
+    private readonly int _animIDSpeed = Animator.StringToHash("Speed");
+    private readonly int _animIDPosX = Animator.StringToHash("PosX");
+    private readonly int _animIDPosY = Animator.StringToHash("PosY");
+    private readonly int _animIDGrounded = Animator.StringToHash("Grounded");
+    private readonly int _animIDJump = Animator.StringToHash("Jump");
+    private readonly int _animIDFall = Animator.StringToHash("Fall");
+    private readonly int _animIDLand = Animator.StringToHash("Land");
+
     // Input Value
     private Vector2 _move;
     private Vector2 _look;
@@ -49,6 +63,7 @@ public class PlayerController : MonoBehaviour
         Move();
         Rotate();
         RotateCamera();
+        UpdateAnimatorParameters();
     }
 
     private void Move()
@@ -148,6 +163,34 @@ public class PlayerController : MonoBehaviour
             _camera.Rotate(_look);
         }
     }
+
+    private void UpdateAnimatorParameters()
+    {
+        var inputDirection = new Vector3(_move.x, 0f, _move.y);
+        float targetSpeed = inputDirection == Vector3.zero ? 0f : _movement.MoveSpeed;
+        float speedChangeRate = (targetSpeed > 0f ? _movement.Acceleration : _movement.Deceleration) * Time.deltaTime;
+        bool isLockOnOnlyRun = _lockOnFov.HasTarget && IsOnlyRun();
+
+        _speedBlend = Mathf.Lerp(_speedBlend, targetSpeed, speedChangeRate);
+        _posXBlend = Mathf.Lerp(_posXBlend, inputDirection.x, speedChangeRate);
+        _posYBlend = Mathf.Lerp(_posYBlend, inputDirection.z, speedChangeRate);
+
+        if (_speedBlend < 0.01f)
+        {
+            _speedBlend = 0f;
+            _posXBlend = 0f;
+            _posYBlend = 0f;
+        }
+
+        _animator.SetFloat(_animIDSpeed, _speedBlend);
+        _animator.SetFloat(_animIDPosX, isLockOnOnlyRun ? _posXBlend : 0f);
+        _animator.SetFloat(_animIDPosY, isLockOnOnlyRun ? _posYBlend : 1f);
+        _animator.SetBool(_animIDGrounded, _movement.IsGrounded);
+        _animator.SetBool(_animIDJump, _movement.IsJumping);
+        _animator.SetBool(_animIDFall, _movement.IsFalling);
+        _animator.SetBool(_animIDLand, _movement.IsLanding);
+    }
+
 
     private float GetYaw(Vector3 direction)
     {
