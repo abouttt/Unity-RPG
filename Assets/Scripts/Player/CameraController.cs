@@ -42,12 +42,13 @@ public class CameraController : MonoBehaviour
     private float _currentYaw;
     private float _pitchVelocity;
     private float _yawVelocity;
+
     private const float _threshold = 0.01f;
 
     private void Start()
     {
         var angles = CameraTarget.eulerAngles;
-        _targetPitch = _currentPitch = angles.x;
+        _targetPitch = _currentPitch = Util.WrapAngle(angles.x);
         _targetYaw = _currentYaw = angles.y;
     }
 
@@ -89,7 +90,7 @@ public class CameraController : MonoBehaviour
         var targetRot = Quaternion.LookRotation(direction);
         var euler = targetRot.eulerAngles;
 
-        _targetPitch = euler.x;
+        _targetPitch = Util.WrapAngle(euler.x);
         _targetYaw = euler.y;
 
         if (!UseLerp)
