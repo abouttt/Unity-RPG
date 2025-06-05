@@ -56,9 +56,9 @@ public class Interactor : MonoBehaviour
 
     private void Awake()
     {
-        Util.SetIgnoreCollision(_interactorLayer, true);
-        Util.SetIgnoreCollision(_targetLayer, true);
-        Util.SetIgnoreCollision(_interactorLayer, _targetLayer, false);
+        Utility.SetIgnoreCollision(_interactorLayer, true);
+        Utility.SetIgnoreCollision(_targetLayer, true);
+        Utility.SetIgnoreCollision(_interactorLayer, _targetLayer, false);
     }
 
     private void Update()

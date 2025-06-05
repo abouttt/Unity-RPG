@@ -46,7 +46,7 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         var angles = CameraTarget.eulerAngles;
-        _targetPitch = _currentPitch = Util.WrapAngle(angles.x);
+        _targetPitch = _currentPitch = Utility.WrapAngle(angles.x);
         _targetYaw = _currentYaw = angles.y;
     }
 
@@ -88,7 +88,7 @@ public class CameraController : MonoBehaviour
         var targetRot = Quaternion.LookRotation(direction);
         var euler = targetRot.eulerAngles;
 
-        _targetPitch = Util.WrapAngle(euler.x);
+        _targetPitch = Utility.WrapAngle(euler.x);
         _targetYaw = euler.y;
     }
 
