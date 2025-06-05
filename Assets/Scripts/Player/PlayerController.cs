@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private GroundedCharacterController _movement;
     private CameraController _camera;
     private FieldOfView _lockOnFov;
+    private Interactor _interactor;
 
     private bool _isJumped;
     private bool _isJumpedWithInput;
@@ -51,6 +52,7 @@ public class PlayerController : MonoBehaviour
         _movement = GetComponent<GroundedCharacterController>();
         _camera = GetComponent<CameraController>();
         _lockOnFov = _mainCamera.GetComponent<FieldOfView>();
+        _interactor = GetComponentInChildren<Interactor>();
     }
 
     private void Update()
@@ -230,5 +232,10 @@ public class PlayerController : MonoBehaviour
         {
             _lockOnFov.FindTarget();
         }
+    }
+
+    public void OnInteract(InputValue inputValue)
+    {
+        _interactor.Interact = inputValue.isPressed;
     }
 }
