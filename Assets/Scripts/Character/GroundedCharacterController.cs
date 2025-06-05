@@ -125,18 +125,9 @@ public class GroundedCharacterController : MonoBehaviour
 
     private void UpdateMove(float deltaTime)
     {
-        float targetSpeed;
-        float accelerationRate;
-        if (_moveDirection.sqrMagnitude > 0.01f)
-        {
-            targetSpeed = MoveSpeed;
-            accelerationRate = Acceleration;
-        }
-        else
-        {
-            targetSpeed = 0f;
-            accelerationRate = Deceleration;
-        }
+        bool isZeroDirection = _moveDirection.IsNearlyZero();
+        float targetSpeed = isZeroDirection ? 0f : MoveSpeed;
+        float accelerationRate = isZeroDirection ? Deceleration : Acceleration;
 
         _horizontalVelocity = Vector3.Lerp(
             new Vector3(_currentVelocity.x, 0f, _currentVelocity.z),

@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         var inputDirection = new Vector3(_move.x, 0f, _move.y);
-        if (inputDirection != Vector3.zero)
+        if (!inputDirection.IsNearlyZero())
         {
             float yaw = GetYaw(inputDirection) + _mainCamera.transform.eulerAngles.y;
             var direction = Quaternion.Euler(0f, yaw, 0f) * Vector3.forward;
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
     private void Rotate()
     {
         var inputDirection = new Vector3(_move.x, 0f, _move.y);
-        if (inputDirection != Vector3.zero)
+        if (!inputDirection.IsNearlyZero())
         {
             float yaw;
 
@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
             if (_isPressedJump)
             {
                 _isJumped = true;
-                _isJumpedWithInput = _move != Vector2.zero;
+                _isJumpedWithInput = !_move.IsNearlyZero();
                 _isPressedJump = false;
                 _movement.Jump();
             }
@@ -152,7 +152,7 @@ public class PlayerController : MonoBehaviour
     {
         if (_lockOnFov.HasTarget)
         {
-            var lookPosition = (_lockOnFov.Target.position + transform.position) / 2;
+            var lookPosition = (_lockOnFov.Target.position + transform.position) / 2f;
             _camera.LookAt(lookPosition);
         }
         else
@@ -164,7 +164,7 @@ public class PlayerController : MonoBehaviour
     private void UpdateAnimatorParameters()
     {
         var inputDirection = new Vector3(_move.x, 0f, _move.y);
-        float targetSpeed = inputDirection == Vector3.zero ? 0f : _movement.MoveSpeed;
+        float targetSpeed = inputDirection.IsNearlyZero() ? 0f : _movement.MoveSpeed;
         float speedChangeRate = (targetSpeed > 0f ? _movement.Acceleration : _movement.Deceleration) * Time.deltaTime;
         bool isLockOnOnlyRun = _lockOnFov.HasTarget && IsOnlyRun();
 
@@ -187,7 +187,6 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool(_animIDFall, _movement.IsFalling);
         _animator.SetBool(_animIDLand, _movement.IsLanding);
     }
-
 
     private float GetYaw(Vector3 direction)
     {

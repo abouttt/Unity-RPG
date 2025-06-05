@@ -43,8 +43,6 @@ public class CameraController : MonoBehaviour
     private float _pitchVelocity;
     private float _yawVelocity;
 
-    private const float _threshold = 0.01f;
-
     private void Start()
     {
         var angles = CameraTarget.eulerAngles;
@@ -64,7 +62,7 @@ public class CameraController : MonoBehaviour
 
     public void Rotate(Vector2 input)
     {
-        if (input.magnitude < _threshold)
+        if (input.IsNearlyZero())
         {
             return;
         }
@@ -82,7 +80,7 @@ public class CameraController : MonoBehaviour
         }
 
         var direction = targetPoint - CameraTarget.position;
-        if (direction.sqrMagnitude < 0.0001f)
+        if (direction.IsNearlyZero())
         {
             return;
         }
