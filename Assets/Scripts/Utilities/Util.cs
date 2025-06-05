@@ -60,6 +60,43 @@ public static class Util
         return (layerMask.value & (1 << gameObject.layer)) != 0;
     }
 
+    public static void SetIgnoreCollision(LayerMask layerMask, bool ignore)
+    {
+        for (int i = 0; i < 32; i++)
+        {
+            if ((layerMask.value & (1 << i)) == 0)
+            {
+                continue;
+            }
+
+            for (int j = 0; j < 32; j++)
+            {
+                Physics.IgnoreLayerCollision(i, j, ignore);
+            }
+        }
+    }
+
+    public static void SetIgnoreCollision(LayerMask layerMask1, LayerMask layerMask2, bool ignore)
+    {
+        for (int i = 0; i < 32; i++)
+        {
+            if ((layerMask1.value & (1 << i)) == 0)
+            {
+                continue;
+            }
+
+            for (int j = 0; j < 32; j++)
+            {
+                if ((layerMask2.value & (1 << j)) == 0)
+                {
+                    continue;
+                }
+
+                Physics.IgnoreLayerCollision(i, j, ignore);
+            }
+        }
+    }
+
     public static float WrapAngle(float angle)
     {
         angle %= 360f;
