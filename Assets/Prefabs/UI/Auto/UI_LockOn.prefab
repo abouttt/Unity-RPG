@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 1570924766326652668}
   - component: {fileID: 1836666660060095522}
   m_Layer: 5
-  m_Name: LockOn
+  m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {fileID: 1570924766326652668}
-  DataID: LockOn
+  DataID: Body
   AutoRefreshDataID: 1
   TypeName: UI_FollowWorldObject
 --- !u!1 &6722606704529028017

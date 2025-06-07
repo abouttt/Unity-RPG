@@ -351,7 +351,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6265357587170025956}
   m_Layer: 5
-  m_Name: Loading
+  m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
