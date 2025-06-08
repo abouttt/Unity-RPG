@@ -70,9 +70,9 @@ public class UI_Interactor : UI_View, IConnectable<Interactor>
             actionText.text = target.ActionName;
             actionText.gameObject.SetActive(canInteract);
 
-            var name = GetText("NameText");
-            name.text = target.ObjectName;
-            name.gameObject.SetActive(!string.IsNullOrEmpty(target.ObjectName));
+            var nameText = GetText("NameText");
+            nameText.text = target.ObjectName;
+            nameText.gameObject.SetActive(!string.IsNullOrEmpty(target.ObjectName));
 
             Get<UI_FollowWorldObject>("Body").Set(target.transform, target.UIOffset);
         }
