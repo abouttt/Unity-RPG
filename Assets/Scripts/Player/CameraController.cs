@@ -9,11 +9,11 @@ public class CameraController : MonoBehaviour
     [field: SerializeField]
     public float SensitivityMultiplier { get; set; } = 0.5f;
 
-    [SerializeField]
-    private float _smoothingSpeed = 10f;
+    [field: SerializeField]
+    public float SmoothingSpeed { get; set; } = 10f;
 
-    [SerializeField]
-    private float _smoothingTime = 0.1f;
+    [field: SerializeField]
+    public float SmoothingTime { get; set; } = 0.1f;
 
     [field: Header("Options")]
     [field: SerializeField]
@@ -98,13 +98,13 @@ public class CameraController : MonoBehaviour
 
         if (UseLerp)
         {
-            _currentPitch = Mathf.LerpAngle(_currentPitch, _targetPitch, _smoothingSpeed * Time.deltaTime);
-            _currentYaw = Mathf.LerpAngle(_currentYaw, _targetYaw, _smoothingSpeed * Time.deltaTime);
+            _currentPitch = Mathf.LerpAngle(_currentPitch, _targetPitch, SmoothingSpeed * Time.deltaTime);
+            _currentYaw = Mathf.LerpAngle(_currentYaw, _targetYaw, SmoothingSpeed * Time.deltaTime);
         }
         else
         {
-            _currentPitch = Mathf.SmoothDampAngle(_currentPitch, _targetPitch, ref _pitchVelocity, _smoothingTime);
-            _currentYaw = Mathf.SmoothDampAngle(_currentYaw, _targetYaw, ref _yawVelocity, _smoothingTime);
+            _currentPitch = Mathf.SmoothDampAngle(_currentPitch, _targetPitch, ref _pitchVelocity, SmoothingTime);
+            _currentYaw = Mathf.SmoothDampAngle(_currentYaw, _targetYaw, ref _yawVelocity, SmoothingTime);
         }
 
         CameraTarget.rotation = Quaternion.Euler(_currentPitch, _currentYaw, 0f);
