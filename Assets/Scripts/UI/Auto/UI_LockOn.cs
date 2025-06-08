@@ -9,7 +9,7 @@ public class UI_LockOn : UI_View, IConnectable<FieldOfView>
     protected override void Init()
     {
         base.Init();
-        Get<UI_FollowWorldObject>("Body").gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     private void OnDestroy()
@@ -36,8 +36,7 @@ public class UI_LockOn : UI_View, IConnectable<FieldOfView>
 
     private void SetTarget(Transform target)
     {
-        var fwo = Get<UI_FollowWorldObject>("Body");
-        fwo.Target = target;
-        fwo.gameObject.SetActive(target != null);
+        Get<UI_FollowWorldObject>("Body").Target = target;
+        gameObject.SetActive(target != null);
     }
 }
