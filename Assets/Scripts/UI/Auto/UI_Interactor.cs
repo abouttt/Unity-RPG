@@ -10,6 +10,10 @@ public class UI_Interactor : UI_View, IConnectable<Interactor>
     {
         base.Init();
         GetText("KeyText").text = Managers.Input.FindBindingPath("Interact");
+    }
+
+    private void Start()
+    {
         gameObject.SetActive(false);
     }
 
