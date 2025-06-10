@@ -6,6 +6,7 @@ public static class AppInitializer
     private static void Initialize()
     {
         Settings.Initialize();
+        Databases.Initialize();
         Managers.Initialize();
     }
 }
