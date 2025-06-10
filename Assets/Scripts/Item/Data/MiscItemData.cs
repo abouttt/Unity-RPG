@@ -7,4 +7,14 @@ public class MiscItemData : StackableItemData
     {
         SetItemType(ItemType.Misc);
     }
+
+    public override Item CreateItem()
+    {
+        return new MiscItem(this, 1);
+    }
+
+    public override StackableItem CreateItem(int quantity)
+    {
+        return new MiscItem(this, quantity);
+    }
 }

@@ -27,4 +27,9 @@ public class EquipmentItemData : ItemData, ILevelRequirement
     {
         SetItemType(ItemType.Equipment);
     }
+
+    public override Item CreateItem()
+    {
+        return new EquipmentItem(this);
+    }
 }
