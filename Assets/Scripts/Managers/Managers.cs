@@ -9,6 +9,8 @@ public static class Managers
     public static SoundManager Sound => SoundManager.Instance;
     public static UIManager UI => UIManager.Instance;
 
+    public static CooldownManager Cooldown => CooldownManager.Instance;
+
     public static void Initialize()
     {
         Input.Initialize();
@@ -17,6 +19,8 @@ public static class Managers
         Scene.Initialize();
         Sound.Initialize();
         UI.Initialize();
+
+        Cooldown.Initialize();
     }
 
     public static void Clear()
@@ -27,5 +31,7 @@ public static class Managers
         Scene.Clear();
         Sound.Clear();
         UI.Clear();
+
+        Cooldown.Clear();
     }
 }

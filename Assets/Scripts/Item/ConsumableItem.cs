@@ -18,6 +18,7 @@ public abstract class ConsumableItem : StackableItem, IConsumable
 
         OnConsumed(target);
         Quantity -= ConsumableData.ConsumptionQuantity;
+        Managers.Cooldown.ApplyCooldown(ConsumableData);
 
         return true;
     }
@@ -25,6 +26,11 @@ public abstract class ConsumableItem : StackableItem, IConsumable
     public virtual bool CanConsume()
     {
         if (Quantity < ConsumableData.ConsumptionQuantity)
+        {
+            return false;
+        }
+
+        if (Managers.Cooldown.IsOnCooldown(ConsumableData))
         {
             return false;
         }
