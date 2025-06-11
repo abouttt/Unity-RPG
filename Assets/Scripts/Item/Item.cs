@@ -12,12 +12,16 @@ public abstract class Item : IItem
         Data = data;
     }
 
-    public void Destroy()
+    public bool Destroy(bool coercion = false)
     {
-        if (Data.IsDestructible)
+        if (!Data.IsDestructible && !coercion)
         {
-            Destroyed?.Invoke(this);
-            Destroyed = null;
+            return false;
         }
+
+        Destroyed?.Invoke(this);
+        Destroyed = null;
+
+        return true;
     }
 }
