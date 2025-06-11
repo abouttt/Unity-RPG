@@ -1197,6 +1197,7 @@ GameObject:
   - component: {fileID: 1536219136}
   - component: {fileID: 1536219134}
   - component: {fileID: 1536219133}
+  - component: {fileID: 1536219137}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -1304,8 +1305,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Sensitivity>k__BackingField: 0.5
   <SensitivityMultiplier>k__BackingField: 0.5
-  _smoothingSpeed: 10
-  _smoothingTime: 0.1
+  <SmoothingSpeed>k__BackingField: 10
+  <SmoothingTime>k__BackingField: 0.1
   <InvertX>k__BackingField: 0
   <InvertY>k__BackingField: 1
   <UseLerp>k__BackingField: 1
@@ -1383,6 +1384,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee9ef3aa628feb847873e1d599e8d705, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1536219137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536219128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e33700f8a919914aa97a9e83aec16d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _capacity: 30
+  _count: 0
 --- !u!1 &1855891743
 GameObject:
   m_ObjectHideFlags: 0
