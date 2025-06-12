@@ -42,15 +42,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "CursorToggle",
-                    "type": "Button",
-                    "id": "1c92cd71-bfa9-4b97-819f-659e93ec157a",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "LockOn",
                     "type": "Button",
                     "id": "b1c35ffa-36d9-4176-8891-34dde230a66a",
@@ -63,6 +54,24 @@
                     "name": "Interact",
                     "type": "Button",
                     "id": "323b2ec4-71f8-4807-8ae9-4ce593d6d4b6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CursorToggle",
+                    "type": "Button",
+                    "id": "1c92cd71-bfa9-4b97-819f-659e93ec157a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Cancel",
+                    "type": "Button",
+                    "id": "66c27c0e-9504-4888-b863-2a2c04e148d4",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -188,6 +197,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ecbef083-0720-48f1-b2d3-5858994bf041",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Cancel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
