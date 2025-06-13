@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItemInventory : MonoBehaviour
 {
-    public event Action<Item, int> InventoryChanged;
+    public event Action<Item, int> Changed;
 
     public int Capacity => _capacity;
     public int Count => _count;
@@ -41,11 +41,16 @@ public class ItemInventory : MonoBehaviour
         // 같은 아이템에 개수 더하기 시도
         if (itemData is StackableItemData)
         {
-            for (int i = 0; i < _capacity; i++)
+            foreach (var item in _items)
             {
-                if (_items[i] is StackableItem otherItem && otherItem.Data.Equals(itemData))
+                if (item == null)
                 {
-                    quantity = otherItem.StackAndGetExcess(quantity);
+                    continue;
+                }
+
+                if (item.Data.Equals(itemData))
+                {
+                    quantity = (item as StackableItem).StackAndGetExcess(quantity);
                     if (quantity <= 0)
                     {
                         break;
@@ -67,10 +72,22 @@ public class ItemInventory : MonoBehaviour
                 continue;
             }
 
-            Set(itemData, i, quantity);
-            quantity = itemData is StackableItemData stackableData
-                     ? Mathf.Max(0, quantity - stackableData.MaxQuantity)
-                     : quantity - 1;
+            Item newItem;
+
+            if (itemData is StackableItemData stackableData)
+            {
+                newItem = stackableData.CreateItem(quantity);
+                quantity = Mathf.Max(0, quantity - stackableData.MaxQuantity);
+            }
+            else
+            {
+                newItem = itemData.CreateItem();
+                quantity--;
+            }
+
+            _items[i] = newItem;
+            _count++;
+            Changed?.Invoke(newItem, i);
 
             if (quantity <= 0)
             {
@@ -95,7 +112,7 @@ public class ItemInventory : MonoBehaviour
 
         _items[index] = null;
         _count--;
-        InventoryChanged?.Invoke(null, index);
+        Changed?.Invoke(null, index);
 
         return true;
     }
@@ -112,7 +129,7 @@ public class ItemInventory : MonoBehaviour
             return false;
         }
 
-        if (quantity < 1)
+        if (quantity <= 0)
         {
             return false;
         }
@@ -128,7 +145,7 @@ public class ItemInventory : MonoBehaviour
 
         _items[index] = newItem;
         _count++;
-        InventoryChanged?.Invoke(newItem, index);
+        Changed?.Invoke(newItem, index);
 
         return true;
     }
@@ -260,7 +277,7 @@ public class ItemInventory : MonoBehaviour
         }
 
         (_items[fromIndex], _items[toIndex]) = (_items[toIndex], _items[fromIndex]);
-        InventoryChanged?.Invoke(_items[fromIndex], fromIndex);
-        InventoryChanged?.Invoke(_items[toIndex], toIndex);
+        Changed?.Invoke(_items[fromIndex], fromIndex);
+        Changed?.Invoke(_items[toIndex], toIndex);
     }
 }
