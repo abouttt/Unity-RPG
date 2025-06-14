@@ -33,7 +33,7 @@ public class FieldOfViewTracker : MonoBehaviour
         TrackingTarget();
     }
 
-    public void TrackingTarget()
+    private void TrackingTarget()
     {
         if (_fieldOfView == null)
         {
