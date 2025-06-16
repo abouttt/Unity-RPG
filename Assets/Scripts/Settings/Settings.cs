@@ -2,11 +2,13 @@ using UnityEngine;
 
 public static class Settings
 {
+    public static GuideSettings Guide { get; private set; }
     public static SceneSettings Scene { get; private set; }
     public static UISettings UI { get; private set; }
 
     public static void Initialize()
     {
+        Guide = Load<GuideSettings>();
         Scene = Load<SceneSettings>();
         UI = Load<UISettings>();
     }
