@@ -193,7 +193,10 @@ public class ItemInventory : MonoBehaviour
         else
         {
             fromItem.Quantity = remaining;
-            Set(fromItem.StackableData, toIndex, quantity);
+            var newItem = fromItem.StackableData.CreateItem(quantity);
+            _items[toIndex] = newItem;
+            _count++;
+            Changed?.Invoke(newItem, toIndex);
         }
 
         return true;
