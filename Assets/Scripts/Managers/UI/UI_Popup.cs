@@ -18,7 +18,7 @@ public abstract class UI_Popup : UI_View, IPointerDownHandler
     public bool IgnoreSelfish { get; private set; }
 
     [field: SerializeField]
-    public RectTransform Body { get; private set; }
+    public RectTransform Root { get; private set; }
 
     [field: SerializeField]
     public Vector3 DefaultPosition { get; private set; }
@@ -29,12 +29,12 @@ public abstract class UI_Popup : UI_View, IPointerDownHandler
 
         UIType = UIType.Popup;
 
-        if (Body == null)
+        if (Root == null)
         {
-            Body = transform.GetChild(0) as RectTransform;
+            Root = transform.GetChild(0) as RectTransform;
         }
 
-        Body.anchoredPosition = DefaultPosition;
+        Root.anchoredPosition = DefaultPosition;
     }
 
     protected virtual void Start()
