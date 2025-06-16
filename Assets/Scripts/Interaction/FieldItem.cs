@@ -70,7 +70,8 @@ public class FieldItem : Interactable
 
     public override void OnInteractionStarted(Interactor interactor)
     {
-
+        var loot = Managers.UI.Show<UI_Loot>();
+        loot.SetFieldItem(this);
     }
 
     public override void OnUndetected(Interactor interactor)

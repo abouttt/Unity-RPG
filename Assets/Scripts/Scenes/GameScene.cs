@@ -40,5 +40,6 @@ public class GameScene : BaseScene
         Managers.UI.Get<UI_LockOn>().Connect(lockOnFov);
         Managers.UI.Get<UI_Interactor>().Connect(interactor);
         Managers.UI.Get<UI_ItemInventory>().Connect(itemInventory);
+        Managers.UI.Get<UI_Loot>().Connect(itemInventory);
     }
 }

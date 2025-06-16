@@ -30,6 +30,7 @@ MonoBehaviour:
       Value:
         <Prefabs>k__BackingField:
         - {fileID: 3272700341907867096, guid: 71c6b8ae3c8613b4b92892b153261cbb, type: 3}
+        - {fileID: 4616641716220403622, guid: ce9c1e08c649b10488b90a2502473303, type: 3}
         - {fileID: 1321147339838728157, guid: cab4dbc9bc336e64e90cc7e83fc0a4c1, type: 3}
         - {fileID: 3457455003003098326, guid: 8684b989781c49e4a8ae7c4e03c8dd2d, type: 3}
     - Key: 1000
