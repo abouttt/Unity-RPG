@@ -59,10 +59,10 @@ public abstract class Interactable : MonoBehaviour
         }
     }
 
-    public abstract void OnDetected(Interactor interactor);
-    public abstract void OnUndetected(Interactor interactor);
-    public abstract void OnInteractionStarted(Interactor interactor);
-    public abstract void OnInteractionEnded(Interactor interactor);
+    protected abstract void OnDetected(Interactor interactor);
+    protected abstract void OnUndetected(Interactor interactor);
+    protected abstract void OnInteractionStarted(Interactor interactor);
+    protected abstract void OnInteractionEnded(Interactor interactor);
 
     private void OnDrawGizmosSelected()
     {

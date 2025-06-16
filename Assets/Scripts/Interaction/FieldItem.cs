@@ -58,23 +58,23 @@ public class FieldItem : Interactable
         }
     }
 
-    public override void OnDetected(Interactor interactor)
+    protected override void OnDetected(Interactor interactor)
     {
 
     }
 
-    public override void OnInteractionEnded(Interactor interactor)
+    protected override void OnUndetected(Interactor interactor)
     {
 
     }
 
-    public override void OnInteractionStarted(Interactor interactor)
+    protected override void OnInteractionStarted(Interactor interactor)
     {
         var loot = Managers.UI.Show<UI_Loot>();
         loot.SetFieldItem(this);
     }
 
-    public override void OnUndetected(Interactor interactor)
+    protected override void OnInteractionEnded(Interactor interactor)
     {
 
     }
