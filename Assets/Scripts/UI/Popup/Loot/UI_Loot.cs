@@ -44,6 +44,11 @@ public class UI_Loot : UI_Popup, IConnectable<ItemInventory>
             Managers.UI.Hide<UI_Loot>();
             return;
         }
+
+        if (!_fieldItemRef.IsInteracted)
+        {
+            Managers.UI.Hide<UI_Loot>();
+        }
     }
 
     public void SetFieldItem(FieldItem fieldItem)
@@ -134,8 +139,13 @@ public class UI_Loot : UI_Popup, IConnectable<ItemInventory>
             Managers.Resource.Destroy(kvp.Key.gameObject);
         }
 
-        _fieldItemRef = null;
         _subitems.Clear();
+
+        if (_fieldItemRef != null)
+        {
+            _fieldItemRef.EndInteraction(null);
+            _fieldItemRef = null;
+        }
     }
 
     private void AddAllItemToItemInventoryInputAction(InputAction.CallbackContext context)
