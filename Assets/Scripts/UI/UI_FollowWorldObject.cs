@@ -17,6 +17,11 @@ public class UI_FollowWorldObject : MonoBehaviour
         _rt = GetComponent<RectTransform>();
     }
 
+    private void OnEnable()
+    {
+        UpdatePosition();
+    }
+
     private void LateUpdate()
     {
         UpdatePosition();
