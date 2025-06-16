@@ -75,7 +75,19 @@ public class UI_ItemInventory : UI_Popup, IConnectable<ItemInventory>
 
     private void DropItemSlot(UI_ItemSlot itemSlot, UI_ItemSlot droppedItemSlot, PointerEventData eventData)
     {
-        _itemInventoryRef.Move(droppedItemSlot.Index, itemSlot.Index);
+        if (itemSlot.ItemRef == null && droppedItemSlot.ItemRef is IStackable otherStackable && otherStackable.Quantity > 1)
+        {
+            var splitPopup = Managers.UI.Show<UI_ItemSplit>();
+            splitPopup.SetEvent(() =>
+            {
+                _itemInventoryRef.Split(droppedItemSlot.Index, itemSlot.Index, splitPopup.Quantity);
+            },
+            $"[{droppedItemSlot.ItemRef.Data.Name}] {Settings.Guide.ItemSpliteText}", 1, otherStackable.Quantity);
+        }
+        else
+        {
+            _itemInventoryRef.Move(droppedItemSlot.Index, itemSlot.Index);
+        }
     }
 
     private void InstantiateSlots(int count, Transform parent)
