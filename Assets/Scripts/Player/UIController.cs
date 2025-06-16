@@ -14,6 +14,11 @@ public class UIController : MonoBehaviour
         Managers.UI.HideTopPopup();
     }
 
+    public void OnItemInventory()
+    {
+        ShowOrHidePopup<UI_ItemInventory>();
+    }
+
     private void ShowOrHidePopup<T>() where T : UI_Popup
     {
         if (Managers.UI.IsActiveHelperPopup)
