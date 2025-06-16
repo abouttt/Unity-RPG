@@ -12,11 +12,6 @@ public class UI_LockOn : UI_View, IConnectable<FieldOfView>
         gameObject.SetActive(false);
     }
 
-    private void OnDestroy()
-    {
-        Disconnect();
-    }
-
     public void Connect(FieldOfView lockOnFov)
     {
         Disconnect();
@@ -36,7 +31,12 @@ public class UI_LockOn : UI_View, IConnectable<FieldOfView>
 
     private void SetTarget(Transform target)
     {
-        Get<UI_FollowWorldObject>("Body").Target = target;
+        Get<UI_FollowWorldObject>("Root").Target = target;
         gameObject.SetActive(target != null);
+    }
+
+    private void OnDestroy()
+    {
+        Disconnect();
     }
 }

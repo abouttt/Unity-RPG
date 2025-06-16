@@ -19,17 +19,17 @@ public class UI_Interactor : UI_View, IConnectable<Interactor>
 
     private void LateUpdate()
     {
-        var body = GetObject("Body");
+        var root = GetObject("Root");
 
         if (_interactorRef.Target.IsInteracted)
         {
-            body.SetActive(false);
+            root.SetActive(false);
             return;
         }
 
-        if (!body.activeSelf)
+        if (!root.activeSelf)
         {
-            body.SetActive(true);
+            root.SetActive(true);
         }
 
         var holdingTimeBarImage = GetImage("HoldingTimeBarImage");
@@ -78,9 +78,14 @@ public class UI_Interactor : UI_View, IConnectable<Interactor>
             nameText.text = target.ObjectName;
             nameText.gameObject.SetActive(!string.IsNullOrEmpty(target.ObjectName));
 
-            Get<UI_FollowWorldObject>("Body").Set(target.transform, target.UIOffset);
+            Get<UI_FollowWorldObject>("Root").Set(target.transform, target.UIOffset);
         }
 
         gameObject.SetActive(isNotNull);
+    }
+
+    private void OnDestroy()
+    {
+        Disconnect();
     }
 }
