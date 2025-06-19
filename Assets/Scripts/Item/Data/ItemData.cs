@@ -40,16 +40,6 @@ public abstract class ItemData : ScriptableObject
     [field: SerializeField]
     public bool IsDestructible { get; private set; } = true;
 
-    private void Awake()
-    {
-        Init();
-
-        if (string.IsNullOrEmpty(Id))
-        {
-            ResetId();
-        }
-    }
-
     public abstract Item CreateItem();
 
     public bool Equals(ItemData other)
@@ -88,5 +78,11 @@ public abstract class ItemData : ScriptableObject
     private void ResetId()
     {
         Id = GetIdConvention();
+    }
+
+    private void Reset()
+    {
+        Init();
+        ResetId();
     }
 }
