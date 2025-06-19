@@ -65,7 +65,7 @@ public class Interactor : MonoBehaviour
     {
         if (CanInteract())
         {
-            InteractTaret();
+            InteractTarget();
         }
     }
 
@@ -116,7 +116,7 @@ public class Interactor : MonoBehaviour
         Target = null;
     }
 
-    private void InteractTaret()
+    private void InteractTarget()
     {
         if (Interact)
         {
