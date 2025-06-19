@@ -38,8 +38,10 @@ public class ItemInventory : MonoBehaviour
             return -1;
         }
 
+        var stackableData = itemData as StackableItemData;
+
         // 같은 아이템에 개수 더하기 시도
-        if (itemData is StackableItemData)
+        if (stackableData != null)
         {
             foreach (var item in _items)
             {
@@ -72,10 +74,22 @@ public class ItemInventory : MonoBehaviour
                 continue;
             }
 
-            Set(itemData, i, quantity);
-            quantity = itemData is StackableItemData stackableData
-                     ? Mathf.Max(0, quantity - stackableData.MaxQuantity)
-                     : quantity - 1;
+            Item newItem;
+
+            if (stackableData != null)
+            {
+                newItem = stackableData.CreateItem(quantity);
+                quantity = Mathf.Max(0, quantity - stackableData.MaxQuantity);
+            }
+            else
+            {
+                newItem = itemData.CreateItem();
+                quantity--;
+            }
+
+            _items[i] = newItem;
+            _count++;
+            Changed?.Invoke(newItem, i);
 
             if (quantity <= 0)
             {
@@ -122,21 +136,21 @@ public class ItemInventory : MonoBehaviour
             return false;
         }
 
-        Remove(index);
-
-        if (Has(index))
+        if (_items[index] != null)
         {
-            return false;
+            if (!_items[index].Destroy())
+            {
+                return false;
+            }
+            else
+            {
+                _count--;
+            }
         }
 
         var newItem = itemData is StackableItemData stackableData
                     ? stackableData.CreateItem(quantity)
                     : itemData.CreateItem();
-
-        if (newItem == null)
-        {
-            return false;
-        }
 
         _items[index] = newItem;
         _count++;
@@ -148,6 +162,11 @@ public class ItemInventory : MonoBehaviour
     public void Move(int fromIndex, int toIndex)
     {
         if (fromIndex == toIndex)
+        {
+            return;
+        }
+
+        if (!IsValidIndex(fromIndex) || !IsValidIndex(toIndex))
         {
             return;
         }
@@ -165,12 +184,17 @@ public class ItemInventory : MonoBehaviour
             return false;
         }
 
+        if (!IsValidIndex(fromIndex) || !IsValidIndex(toIndex))
+        {
+            return false;
+        }
+
         if (quantity <= 0)
         {
             return false;
         }
 
-        if (!Has(fromIndex) || Has(toIndex))
+        if (_items[fromIndex] == null || _items[toIndex] != null)
         {
             return false;
         }
@@ -197,6 +221,27 @@ public class ItemInventory : MonoBehaviour
         return true;
     }
 
+    public bool SubtractQuantity(int index, int quantity)
+    {
+        if (!Has(index))
+        {
+            return false;
+        }
+
+        if (_items[index] is not StackableItem stackableItem)
+        {
+            return false;
+        }
+
+        stackableItem.Quantity -= quantity;
+        if (stackableItem.IsEmpty)
+        {
+            DestroyCoercion(index);
+        }
+
+        return true;
+    }
+
     public bool Consume(int index)
     {
         if (!Has(index))
@@ -212,7 +257,7 @@ public class ItemInventory : MonoBehaviour
         bool succeeded = consumableItem.Consume(gameObject);
         if (succeeded && consumableItem.IsEmpty)
         {
-            Remove(index);
+            DestroyCoercion(index);
         }
 
         return succeeded;
@@ -240,10 +285,7 @@ public class ItemInventory : MonoBehaviour
 
     private bool TryMerge(int fromIndex, int toIndex)
     {
-        var fromItem = Get<StackableItem>(fromIndex);
-        var toItem = Get<StackableItem>(toIndex);
-
-        if (fromItem == null || toItem == null)
+        if (_items[fromIndex] is not StackableItem fromItem || _items[toIndex] is not StackableItem toItem)
         {
             return false;
         }
@@ -261,7 +303,7 @@ public class ItemInventory : MonoBehaviour
         fromItem.Quantity = toItem.StackAndGetExcess(fromItem.Quantity);
         if (fromItem.IsEmpty)
         {
-            Remove(fromIndex);
+            DestroyCoercion(fromIndex);
         }
 
         return true;
@@ -269,13 +311,16 @@ public class ItemInventory : MonoBehaviour
 
     private void Swap(int fromIndex, int toIndex)
     {
-        if (!IsValidIndex(fromIndex) || !IsValidIndex(toIndex))
-        {
-            return;
-        }
-
         (_items[fromIndex], _items[toIndex]) = (_items[toIndex], _items[fromIndex]);
         Changed?.Invoke(_items[fromIndex], fromIndex);
         Changed?.Invoke(_items[toIndex], toIndex);
+    }
+
+    private void DestroyCoercion(int index)
+    {
+        _items[index].Destroy(true);
+        _items[index] = null;
+        _count--;
+        Changed?.Invoke(null, index);
     }
 }
