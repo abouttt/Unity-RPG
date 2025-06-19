@@ -72,22 +72,10 @@ public class ItemInventory : MonoBehaviour
                 continue;
             }
 
-            Item newItem;
-
-            if (itemData is StackableItemData stackableData)
-            {
-                newItem = stackableData.CreateItem(quantity);
-                quantity = Mathf.Max(0, quantity - stackableData.MaxQuantity);
-            }
-            else
-            {
-                newItem = itemData.CreateItem();
-                quantity--;
-            }
-
-            _items[i] = newItem;
-            _count++;
-            Changed?.Invoke(newItem, i);
+            Set(itemData, i, quantity);
+            quantity = itemData is StackableItemData stackableData
+                     ? Mathf.Max(0, quantity - stackableData.MaxQuantity)
+                     : quantity - 1;
 
             if (quantity <= 0)
             {
@@ -134,7 +122,9 @@ public class ItemInventory : MonoBehaviour
             return false;
         }
 
-        if (!Remove(index))
+        Remove(index);
+
+        if (Has(index))
         {
             return false;
         }
@@ -142,6 +132,11 @@ public class ItemInventory : MonoBehaviour
         var newItem = itemData is StackableItemData stackableData
                     ? stackableData.CreateItem(quantity)
                     : itemData.CreateItem();
+
+        if (newItem == null)
+        {
+            return false;
+        }
 
         _items[index] = newItem;
         _count++;
