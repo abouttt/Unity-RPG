@@ -76,44 +76,33 @@ public class Interactor : MonoBehaviour
             return;
         }
 
-        if (!HasTarget)
-        {
-            Target = other.GetComponent<Interactable>();
-        }
-        else
-        {
-            if (_target.gameObject != other.gameObject)
-            {
-                var targetDistance = Vector3.SqrMagnitude(transform.position - _target.transform.position);
-                var otherDistance = Vector3.SqrMagnitude(transform.position - other.transform.position);
-                if (otherDistance > targetDistance)
-                {
-                    return;
-                }
-
-                if (Physics.Linecast(transform.position, other.transform.position, _obstacleLayer))
-                {
-                    return;
-                }
-
-                Target = other.GetComponent<Interactable>();
-            }
-        }
+        FindTarget(other.gameObject);
     }
 
     private void OnTriggerExit(Collider other)
     {
+        OutTheTarget(other.gameObject);
+    }
+
+    private bool CanInteract()
+    {
         if (!HasTarget)
         {
-            return;
+            return false;
         }
 
-        if (_target.gameObject != other.gameObject)
+        if (!_target.gameObject.activeSelf)
         {
-            return;
+            Target = null;
+            return false;
         }
 
-        Target = null;
+        if (_target.IsInteracted)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     private void InteractTarget()
@@ -150,24 +139,45 @@ public class Interactor : MonoBehaviour
         return true;
     }
 
-    private bool CanInteract()
+    private void FindTarget(GameObject other)
     {
         if (!HasTarget)
         {
-            return false;
+            Target = other.GetComponent<Interactable>();
         }
-
-        if (!_target.gameObject.activeSelf)
+        else
         {
-            Target = null;
-            return false;
-        }
+            if (_target.gameObject != other)
+            {
+                var targetDistance = Vector3.SqrMagnitude(transform.position - _target.transform.position);
+                var otherDistance = Vector3.SqrMagnitude(transform.position - other.transform.position);
+                if (otherDistance > targetDistance)
+                {
+                    return;
+                }
 
-        if (_target.IsInteracted)
+                if (Physics.Linecast(transform.position, other.transform.position, _obstacleLayer))
+                {
+                    return;
+                }
+
+                Target = other.GetComponent<Interactable>();
+            }
+        }
+    }
+
+    public void OutTheTarget(GameObject target)
+    {
+        if (!HasTarget)
         {
-            return false;
+            return;
         }
 
-        return true;
+        if (_target.gameObject != target)
+        {
+            return;
+        }
+
+        Target = null;
     }
 }
