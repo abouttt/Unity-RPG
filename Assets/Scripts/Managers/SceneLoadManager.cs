@@ -75,7 +75,6 @@ public class SceneLoadManager : MonoSingleton<SceneLoadManager>, IManager
 
     public void Clear()
     {
-
     }
 
     private async Awaitable LoadSceneAsync()

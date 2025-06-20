@@ -114,11 +114,15 @@ public class PoolManager : MonoSingleton<PoolManager>, IManager
 
     public void Initialize()
     {
-
     }
 
     public void CreatePool(GameObject prefab, int count = 5)
     {
+        if (prefab == null)
+        {
+            return;
+        }
+
         var name = prefab.name;
 
         if (_pools.ContainsKey(name))
@@ -134,6 +138,11 @@ public class PoolManager : MonoSingleton<PoolManager>, IManager
 
     public GameObject Get(GameObject gameObject, Transform parent = null)
     {
+        if (gameObject == null)
+        {
+            return null;
+        }
+
         if (!_pools.TryGetValue(gameObject.name, out var pool))
         {
             CreatePool(gameObject);
@@ -155,6 +164,11 @@ public class PoolManager : MonoSingleton<PoolManager>, IManager
 
     public bool Return(GameObject gameObject)
     {
+        if (gameObject == null)
+        {
+            return false;
+        }
+
         if (_pools.TryGetValue(gameObject.name, out var pool))
         {
             if (pool.Return(gameObject))

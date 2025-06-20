@@ -26,9 +26,9 @@ public class SoundManager : MonoSingleton<SoundManager>, IManager
         CreateAudioSources();
     }
 
-    public void Play2D(string key, SoundType soundType)
+    public void Play2D(string key, SoundType type)
     {
-        ResourceManager.Instance.LoadAsync<AudioClip>(key, clip => Play2D(clip, soundType));
+        ResourceManager.Instance.LoadAsync<AudioClip>(key, clip => Play2D(clip, type));
     }
 
     public void Play2D(AudioClip clip, SoundType type)
@@ -56,9 +56,9 @@ public class SoundManager : MonoSingleton<SoundManager>, IManager
         }
     }
 
-    public void Stop2D(SoundType soundType)
+    public void Stop2D(SoundType type)
     {
-        var audioSource = _audioSources[(int)soundType];
+        var audioSource = _audioSources[(int)type];
         if (audioSource.isPlaying)
         {
             audioSource.Stop();

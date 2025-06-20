@@ -12,20 +12,7 @@ public class CooldownManager : MonoSingleton<CooldownManager>, IManager
 
     private void LateUpdate()
     {
-        Tick(Time.deltaTime);
-    }
-
-    public void Tick(float deltaTime)
-    {
-        var keys = _cooldowns.Keys.ToList();
-        foreach (var key in keys)
-        {
-            _cooldowns[key] -= deltaTime;
-            if (_cooldowns[key] <= 0f)
-            {
-                _cooldowns.Remove(key);
-            }
-        }
+        Cooling();
     }
 
     public void ApplyCooldown(ICooldownable cooldown)
@@ -47,5 +34,18 @@ public class CooldownManager : MonoSingleton<CooldownManager>, IManager
     public void Clear()
     {
         _cooldowns.Clear();
+    }
+
+    private void Cooling()
+    {
+        var keys = _cooldowns.Keys.ToList();
+        foreach (var key in keys)
+        {
+            _cooldowns[key] -= Time.deltaTime;
+            if (_cooldowns[key] <= 0f)
+            {
+                _cooldowns.Remove(key);
+            }
+        }
     }
 }
