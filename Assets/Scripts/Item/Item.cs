@@ -12,9 +12,9 @@ public abstract class Item : IItem
         Data = data;
     }
 
-    public bool Destroy(bool coercion = false)
+    public bool Destroy(bool force = false)
     {
-        if (!Data.IsDestructible && !coercion)
+        if (!Data.IsDestructible && !force)
         {
             return false;
         }

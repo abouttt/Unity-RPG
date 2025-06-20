@@ -100,14 +100,14 @@ public class ItemInventory : MonoBehaviour
         return quantity;
     }
 
-    public bool Remove(int index, bool coercion = false)
+    public bool Remove(int index, bool force = false)
     {
         if (!Has(index))
         {
             return false;
         }
 
-        if (!_items[index].Destroy(coercion))
+        if (!_items[index].Destroy(force))
         {
             return false;
         }
@@ -228,6 +228,11 @@ public class ItemInventory : MonoBehaviour
             return false;
         }
 
+        if (quantity <= 0)
+        {
+            return false;
+        }
+
         if (_items[index] is not StackableItem stackableItem)
         {
             return false;
@@ -236,7 +241,7 @@ public class ItemInventory : MonoBehaviour
         stackableItem.Quantity -= quantity;
         if (stackableItem.IsEmpty)
         {
-            DestroyCoercion(index);
+            DestroyByForce(index);
         }
 
         return true;
@@ -257,7 +262,7 @@ public class ItemInventory : MonoBehaviour
         bool succeeded = consumableItem.Consume(gameObject);
         if (succeeded && consumableItem.IsEmpty)
         {
-            DestroyCoercion(index);
+            DestroyByForce(index);
         }
 
         return succeeded;
@@ -303,7 +308,7 @@ public class ItemInventory : MonoBehaviour
         fromItem.Quantity = toItem.StackAndGetExcess(fromItem.Quantity);
         if (fromItem.IsEmpty)
         {
-            DestroyCoercion(fromIndex);
+            DestroyByForce(fromIndex);
         }
 
         return true;
@@ -316,7 +321,7 @@ public class ItemInventory : MonoBehaviour
         Changed?.Invoke(_items[toIndex], toIndex);
     }
 
-    private void DestroyCoercion(int index)
+    private void DestroyByForce(int index)
     {
         _items[index].Destroy(true);
         _items[index] = null;
