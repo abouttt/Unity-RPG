@@ -2,15 +2,9 @@ using UnityEngine;
 
 public class UI_Interactor : UI_View, IConnectable<Interactor>
 {
-    public Interactor Context => _interactorRef;
+    public Interactor Context => _interactor;
 
-    private Interactor _interactorRef;
-
-    protected override void Init()
-    {
-        base.Init();
-        GetText("KeyText").text = Managers.Input.FindBindingPath("Interact");
-    }
+    private Interactor _interactor;
 
     private void Start()
     {
@@ -19,56 +13,58 @@ public class UI_Interactor : UI_View, IConnectable<Interactor>
 
     private void LateUpdate()
     {
-        var root = GetObject("Root");
-
-        if (_interactorRef.Target.IsInteracted)
-        {
-            root.SetActive(false);
-            return;
-        }
-
-        if (!root.activeSelf)
-        {
-            root.SetActive(true);
-        }
-
-        var holdingTimeBarImage = GetImage("HoldingTimeBarImage");
-        if (holdingTimeBarImage.IsActive())
-        {
-            holdingTimeBarImage.fillAmount = _interactorRef.HoldingTime / _interactorRef.Target.HoldTime;
-        }
+        UpdateInteractorInfo();
     }
 
     public void Connect(Interactor interactor)
     {
         Disconnect();
 
-        _interactorRef = interactor;
+        _interactor = interactor;
         interactor.TargetChanged += SetTarget;
     }
 
     public void Disconnect()
     {
-        if (_interactorRef != null)
+        if (_interactor != null)
         {
-            _interactorRef.TargetChanged -= SetTarget;
-            _interactorRef = null;
+            _interactor.TargetChanged -= SetTarget;
+            _interactor = null;
+        }
+    }
+
+    private void UpdateInteractorInfo()
+    {
+        if (_interactor.Target.IsInteracted)
+        {
+            GetObject("Root").SetActive(false);
+        }
+        else
+        {
+            GetObject("Root").SetActive(true);
+
+            var holdingTimeBarImage = GetImage("HoldingTimeBarImage");
+            if (holdingTimeBarImage.IsActive())
+            {
+                holdingTimeBarImage.fillAmount = _interactor.HoldingTime / _interactor.Target.HoldTime;
+            }
         }
     }
 
     private void SetTarget(Interactable target)
     {
-        bool isNotNull = target != null;
-
-        if (isNotNull)
+        if (target != null)
         {
             bool canInteract = target.CanInteract;
             GetImage("BackgroundImage").gameObject.SetActive(canInteract);
-            GetText("KeyText").gameObject.SetActive(canInteract);
 
             bool hasHoldTime = canInteract && target.HoldTime > 0f;
             GetImage("HoldingTimeBarImage").gameObject.SetActive(hasHoldTime);
             GetImage("HoldingTimeFrameImage").gameObject.SetActive(hasHoldTime);
+
+            var keyText = GetText("KeyText");
+            keyText.gameObject.SetActive(canInteract);
+            keyText.text = Managers.Input.FindBindingPath("Interact");
 
             var actionText = GetText("ActionText");
             actionText.text = target.ActionName;
@@ -80,8 +76,12 @@ public class UI_Interactor : UI_View, IConnectable<Interactor>
 
             Get<UI_FollowWorldObject>("Root").Set(target.transform, target.UIOffset);
         }
+        else
+        {
+            Get<UI_FollowWorldObject>("Root").Target = null;
+        }
 
-        gameObject.SetActive(isNotNull);
+        gameObject.SetActive(target != null);
     }
 
     private void OnDestroy()
