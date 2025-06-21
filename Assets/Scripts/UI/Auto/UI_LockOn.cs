@@ -2,13 +2,12 @@ using UnityEngine;
 
 public class UI_LockOn : UI_View, IConnectable<FieldOfView>
 {
-    public FieldOfView Context => _lockOnFovRef;
+    public FieldOfView Context => _lockOnFov;
 
-    private FieldOfView _lockOnFovRef;
+    private FieldOfView _lockOnFov;
 
-    protected override void Init()
+    private void Start()
     {
-        base.Init();
         gameObject.SetActive(false);
     }
 
@@ -16,16 +15,16 @@ public class UI_LockOn : UI_View, IConnectable<FieldOfView>
     {
         Disconnect();
 
-        _lockOnFovRef = lockOnFov;
+        _lockOnFov = lockOnFov;
         lockOnFov.TargetChanged += SetTarget;
     }
 
     public void Disconnect()
     {
-        if (_lockOnFovRef != null)
+        if (_lockOnFov != null)
         {
-            _lockOnFovRef.TargetChanged -= SetTarget;
-            _lockOnFovRef = null;
+            _lockOnFov.TargetChanged -= SetTarget;
+            _lockOnFov = null;
         }
     }
 
