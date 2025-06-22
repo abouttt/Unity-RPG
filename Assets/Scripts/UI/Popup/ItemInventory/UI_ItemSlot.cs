@@ -10,7 +10,7 @@ public class UI_ItemSlot : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHan
     public event Action<UI_ItemSlot, UI_ItemSlot, PointerEventData> Dropped;
 
     public int Index { get; set; } = -1;
-    public Item ItemRef { get; private set; }
+    public Item Item { get; private set; }
     public bool IsDragging { get; private set; }
 
     protected override void Init()
@@ -20,11 +20,11 @@ public class UI_ItemSlot : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHan
 
     public void Refresh(Item item)
     {
-        if (ItemRef == item)
+        if (Item == item)
         {
             return;
         }
-        else if (ItemRef != null)
+        else if (Item != null)
         {
             Clear();
         }
@@ -43,7 +43,7 @@ public class UI_ItemSlot : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHan
             RefreshQuantityText(stackable);
         }
 
-        ItemRef = item;
+        Item = item;
     }
 
     public void CancelDrag()
@@ -60,13 +60,13 @@ public class UI_ItemSlot : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHan
     {
         SetItemImage(null);
 
-        if (ItemRef is IStackable stackable)
+        if (Item is IStackable stackable)
         {
             stackable.StackChanged -= RefreshQuantityText;
         }
 
         GetText("QuantityText").gameObject.SetActive(false);
-        ItemRef = null;
+        Item = null;
     }
 
     private void SetItemImage(Sprite image)
@@ -96,7 +96,7 @@ public class UI_ItemSlot : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHan
             return;
         }
 
-        if (ItemRef == null)
+        if (Item == null)
         {
             eventData.pointerDrag = null;
             return;

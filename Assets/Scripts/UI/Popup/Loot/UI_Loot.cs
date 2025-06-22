@@ -5,10 +5,10 @@ using UnityEngine.InputSystem;
 
 public class UI_Loot : UI_Popup, IConnectable<ItemInventory>
 {
-    public ItemInventory Context => _itemInventoryRef;
+    public ItemInventory Context => _itemInventory;
 
-    private ItemInventory _itemInventoryRef;
-    private FieldItem _fieldItemRef;
+    private ItemInventory _itemInventory;
+    private FieldItem _fieldItem;
     private InputAction _interact;
     private readonly Dictionary<UI_LootSubitem, ItemData> _subitems = new();
 
@@ -33,19 +33,19 @@ public class UI_Loot : UI_Popup, IConnectable<ItemInventory>
 
     private void Update()
     {
-        if (_fieldItemRef == null)
+        if (_fieldItem == null)
         {
             Managers.UI.Hide<UI_Loot>();
             return;
         }
 
-        if (!_fieldItemRef.gameObject.activeSelf)
+        if (!_fieldItem.gameObject.activeSelf)
         {
             Managers.UI.Hide<UI_Loot>();
             return;
         }
 
-        if (!_fieldItemRef.IsInteracted)
+        if (!_fieldItem.IsInteracted)
         {
             Managers.UI.Hide<UI_Loot>();
         }
@@ -73,13 +73,13 @@ public class UI_Loot : UI_Popup, IConnectable<ItemInventory>
             }
         }
 
-        _fieldItemRef = fieldItem;
+        _fieldItem = fieldItem;
     }
 
     public void AddItemToItemInventory(UI_LootSubitem subitem)
     {
-        _fieldItemRef.RemoveItem(subitem.ItemData, subitem.Quantity);
-        int quantity = _itemInventoryRef.Add(subitem.ItemData, subitem.Quantity);
+        _fieldItem.RemoveItem(subitem.ItemData, subitem.Quantity);
+        int quantity = _itemInventory.Add(subitem.ItemData, subitem.Quantity);
         if (quantity > 0)
         {
             subitem.SetItemData(subitem.ItemData, quantity);
@@ -94,13 +94,13 @@ public class UI_Loot : UI_Popup, IConnectable<ItemInventory>
     {
         if (itemInventory != null)
         {
-            _itemInventoryRef = itemInventory;
+            _itemInventory = itemInventory;
         }
     }
 
     public void Disconnect()
     {
-        _itemInventoryRef = null;
+        _itemInventory = null;
     }
 
     private void CreateSubitem(ItemData itemData, int quantity)
@@ -141,10 +141,10 @@ public class UI_Loot : UI_Popup, IConnectable<ItemInventory>
 
         _subitems.Clear();
 
-        if (_fieldItemRef != null)
+        if (_fieldItem != null)
         {
-            _fieldItemRef.EndInteraction(null);
-            _fieldItemRef = null;
+            _fieldItem.EndInteraction(null);
+            _fieldItem = null;
         }
     }
 
