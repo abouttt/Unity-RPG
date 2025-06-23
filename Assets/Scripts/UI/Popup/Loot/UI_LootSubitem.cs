@@ -23,7 +23,7 @@ public class UI_LootSubitem : UI_Base
         RefreshQuantityText();
     }
 
-    public void SetButtonAction(Action callback)
+    public void SetOnButtonClickEvent(Action callback)
     {
         var lootButton = GetButton("LootButton");
         lootButton.onClick.RemoveAllListeners();

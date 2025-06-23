@@ -18,37 +18,25 @@ public class UI_Loot : UI_Popup, IConnectable<ItemInventory>
 
         _interact = Managers.Input.FindAction("Interact");
 
-        GetText("LootAllText").text = $"[{Managers.Input.FindBindingPath("Interact")}] ¸ðµÎ È¹µæ";
-        GetButton("LootAllButton").onClick.AddListener(AddAllItemToItemInventory);
+        GetButton("LootAllButton").onClick.AddListener(AddAllItem);
         GetButton("CloseButton").onClick.AddListener(Managers.UI.Hide<UI_Loot>);
 
-        Showed += () => _interact.performed += AddAllItemToItemInventoryInputAction;
+        Showed += () =>
+        {
+            GetText("LootAllText").text = $"[{Managers.Input.FindBindingPath("Interact")}] ¸ðµÎ È¹µæ";
+            _interact.performed += AddAllItemInputAction;
+        };
 
         Hided += () =>
         {
             Clear();
-            _interact.performed -= AddAllItemToItemInventoryInputAction;
+            _interact.performed -= AddAllItemInputAction;
         };
     }
 
-    private void Update()
+    private void LateUpdate()
     {
-        if (_fieldItem == null)
-        {
-            Managers.UI.Hide<UI_Loot>();
-            return;
-        }
-
-        if (!_fieldItem.gameObject.activeSelf)
-        {
-            Managers.UI.Hide<UI_Loot>();
-            return;
-        }
-
-        if (!_fieldItem.IsInteracted)
-        {
-            Managers.UI.Hide<UI_Loot>();
-        }
+        CheckFieldItem();
     }
 
     public void SetFieldItem(FieldItem fieldItem)
@@ -60,7 +48,7 @@ public class UI_Loot : UI_Popup, IConnectable<ItemInventory>
                 int quantity = kvp.Value;
                 while (quantity > 0)
                 {
-                    CreateSubitem(kvp.Key, Mathf.Clamp(quantity, quantity, stackableData.MaxQuantity));
+                    CreateSubitem(kvp.Key, Mathf.Min(quantity, stackableData.MaxQuantity));
                     quantity -= stackableData.MaxQuantity;
                 }
             }
@@ -76,9 +64,26 @@ public class UI_Loot : UI_Popup, IConnectable<ItemInventory>
         _fieldItem = fieldItem;
     }
 
-    public void AddItemToItemInventory(UI_LootSubitem subitem)
+    public void Connect(ItemInventory itemInventory)
+    {
+        if (itemInventory == null)
+        {
+            return;
+        }
+
+        Disconnect();
+        _itemInventory = itemInventory;
+    }
+
+    public void Disconnect()
+    {
+        _itemInventory = null;
+    }
+
+    private void AddItem(UI_LootSubitem subitem)
     {
         _fieldItem.RemoveItem(subitem.ItemData, subitem.Quantity);
+
         int quantity = _itemInventory.Add(subitem.ItemData, subitem.Quantity);
         if (quantity > 0)
         {
@@ -90,25 +95,12 @@ public class UI_Loot : UI_Popup, IConnectable<ItemInventory>
         }
     }
 
-    public void Connect(ItemInventory itemInventory)
-    {
-        if (itemInventory != null)
-        {
-            _itemInventory = itemInventory;
-        }
-    }
-
-    public void Disconnect()
-    {
-        _itemInventory = null;
-    }
-
     private void CreateSubitem(ItemData itemData, int quantity)
     {
         Managers.Resource.InstantiateAsync<UI_LootSubitem>("UI_LootSubitem", subitem =>
         {
             subitem.SetItemData(itemData, quantity);
-            subitem.SetButtonAction(() => AddItemToItemInventory(subitem));
+            subitem.SetOnButtonClickEvent(() => AddItem(subitem));
             _subitems.Add(subitem, itemData);
         }
         , GetRectTransform("LootSubitems"), true);
@@ -118,17 +110,23 @@ public class UI_Loot : UI_Popup, IConnectable<ItemInventory>
     {
         _subitems.Remove(subitem);
         Managers.Resource.Destroy(subitem.gameObject);
-        if (_subitems.Count == 0)
-        {
-            Managers.UI.Hide<UI_Loot>();
-        }
     }
 
-    private void AddAllItemToItemInventory()
+    private void AddAllItem()
     {
         for (int i = _subitems.Count - 1; i >= 0; i--)
         {
-            AddItemToItemInventory(_subitems.ElementAt(i).Key);
+            AddItem(_subitems.ElementAt(i).Key);
+        }
+    }
+
+    private void CheckFieldItem()
+    {
+        if (_fieldItem == null ||
+            !_fieldItem.gameObject.activeSelf ||
+            !_fieldItem.IsInteracted)
+        {
+            Managers.UI.Hide<UI_Loot>();
         }
     }
 
@@ -148,16 +146,17 @@ public class UI_Loot : UI_Popup, IConnectable<ItemInventory>
         }
     }
 
-    private void AddAllItemToItemInventoryInputAction(InputAction.CallbackContext context)
+    private void AddAllItemInputAction(InputAction.CallbackContext context)
     {
         if (context.ReadValueAsButton())
         {
-            AddAllItemToItemInventory();
+            AddAllItem();
         }
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
         Disconnect();
     }
 }
