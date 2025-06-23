@@ -14,7 +14,7 @@ public class UI_ItemInventory : UI_Popup, IConnectable<ItemInventory>
         base.Init();
 
         GetButton("CloseButton").onClick.AddListener(Managers.UI.Hide<UI_ItemInventory>);
-        GetImage("DraggedItemImage").gameObject.SetActive(false);
+        GetImage("DraggedItemIconImage").gameObject.SetActive(false);
 
         Hided += () =>
         {
@@ -56,37 +56,37 @@ public class UI_ItemInventory : UI_Popup, IConnectable<ItemInventory>
 
     private void BeginDragItemSlot(UI_ItemSlot itemSlot, PointerEventData eventData)
     {
-        var draggedItemImage = GetImage("DraggedItemImage");
-        draggedItemImage.gameObject.SetActive(true);
+        var draggedItemImage = GetImage("DraggedItemIconImage");
         draggedItemImage.sprite = itemSlot.Item.Data.Icon;
+        draggedItemImage.gameObject.SetActive(true);
         _draggedItemSlot = itemSlot;
     }
 
     private void DragItemSlot(UI_ItemSlot itemSlot, PointerEventData eventData)
     {
-        GetImage("DraggedItemImage").rectTransform.position = eventData.position;
+        GetImage("DraggedItemIconImage").rectTransform.position = eventData.position;
     }
 
     private void EndDragItemSlot(UI_ItemSlot itemSlot, PointerEventData eventData)
     {
-        GetImage("DraggedItemImage").gameObject.SetActive(false);
+        GetImage("DraggedItemIconImage").gameObject.SetActive(false);
         _draggedItemSlot = null;
     }
 
-    private void DropItemSlot(UI_ItemSlot itemSlot, UI_ItemSlot droppedItemSlot, PointerEventData eventData)
+    private void DropItemSlot(UI_ItemSlot fromSlot, UI_ItemSlot toSlot, PointerEventData eventData)
     {
-        if (itemSlot.Item == null && droppedItemSlot.Item is IStackable otherStackable && otherStackable.Quantity > 1)
+        if (fromSlot.Item == null && toSlot.Item is IStackable otherStackable && otherStackable.Quantity > 1)
         {
             var splitPopup = Managers.UI.Show<UI_ItemSplit>();
             splitPopup.SetEvent(() =>
             {
-                _itemInventory.Split(droppedItemSlot.Index, itemSlot.Index, splitPopup.Quantity);
+                _itemInventory.Split(toSlot.Index, fromSlot.Index, splitPopup.Quantity);
             },
-            $"[{droppedItemSlot.Item.Data.Name}] {Settings.Guide.ItemSpliteText}", 1, otherStackable.Quantity);
+            $"[{toSlot.Item.Data.Name}] {Settings.Guide.ItemSpliteText}", 1, otherStackable.Quantity);
         }
         else
         {
-            _itemInventory.Move(droppedItemSlot.Index, itemSlot.Index);
+            _itemInventory.Move(fromSlot.Index, toSlot.Index);
         }
     }
 

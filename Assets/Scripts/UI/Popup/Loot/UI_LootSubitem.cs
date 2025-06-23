@@ -15,7 +15,7 @@ public class UI_LootSubitem : UI_Base
         if (ItemData == null || !ItemData.Equals(itemData))
         {
             ItemData = itemData;
-            GetImage("ItemImage").sprite = itemData.Icon;
+            GetImage("ItemIconImage").sprite = itemData.Icon;
             GetText("ItemNameText").text = itemData.Name;
         }
 

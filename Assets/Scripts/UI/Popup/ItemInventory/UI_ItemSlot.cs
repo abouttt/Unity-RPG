@@ -34,7 +34,7 @@ public class UI_ItemSlot : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHan
             return;
         }
 
-        SetItemImage(item.Data.Icon);
+        SetItemIconImage(item.Data.Icon);
 
         if (item is IStackable stackable)
         {
@@ -50,15 +50,15 @@ public class UI_ItemSlot : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHan
     {
         if (IsDragging)
         {
+            GetImage("ItemIconImage").color = Color.white;
             IsDragging = false;
-            GetImage("ItemImage").color = Color.white;
             EndDraged?.Invoke(this, null);
         }
     }
 
     private void Clear()
     {
-        SetItemImage(null);
+        SetItemIconImage(null);
 
         if (Item is IStackable stackable)
         {
@@ -69,9 +69,9 @@ public class UI_ItemSlot : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHan
         Item = null;
     }
 
-    private void SetItemImage(Sprite image)
+    private void SetItemIconImage(Sprite image)
     {
-        var itemImage = GetImage("ItemImage");
+        var itemImage = GetImage("ItemIconImage");
         itemImage.sprite = image;
         itemImage.gameObject.SetActive(image != null);
     }
@@ -102,8 +102,8 @@ public class UI_ItemSlot : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHan
             return;
         }
 
+        GetImage("ItemIconImage").color = new Color(1f, 1f, 1f, 0.3f);
         IsDragging = true;
-        GetImage("ItemImage").color = new Color(1f, 1f, 1f, 0.3f);
         BeginDraged?.Invoke(this, eventData);
     }
 
@@ -136,15 +136,15 @@ public class UI_ItemSlot : UI_Base, IBeginDragHandler, IDragHandler, IEndDragHan
             return;
         }
 
-        if (eventData.pointerDrag.TryGetComponent<UI_ItemSlot>(out var droppedItemSlot))
+        if (eventData.pointerDrag.TryGetComponent<UI_ItemSlot>(out var draggedSlot))
         {
-            if (!droppedItemSlot.IsDragging)
+            if (!draggedSlot.IsDragging)
             {
                 eventData.pointerDrag = null;
                 return;
             }
 
-            Dropped?.Invoke(this, droppedItemSlot, eventData);
+            Dropped?.Invoke(draggedSlot, this, eventData);
         }
     }
 }

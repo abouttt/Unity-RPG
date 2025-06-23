@@ -1146,7 +1146,7 @@ GameObject:
   - component: {fileID: 3525677148698975960}
   - component: {fileID: 2603205888789047935}
   m_Layer: 5
-  m_Name: DraggedItemImage
+  m_Name: DraggedItemIconImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1222,7 +1222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {fileID: 3525677148698975960}
-  DataID: DraggedItemImage
+  DataID: DraggedItemIconImage
   AutoRefreshDataID: 1
 --- !u!1 &9003538007121795346
 GameObject:
