@@ -52,7 +52,7 @@ public abstract class UI_Popup : UI_View, IPointerDownHandler
         Hided?.Invoke();
     }
 
-    private void OnDestroy()
+    protected virtual void OnDestroy()
     {
         ClearCallbacks();
     }

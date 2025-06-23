@@ -125,8 +125,9 @@ public class UI_ItemInventory : UI_Popup, IConnectable<ItemInventory>
         _itemSlots = null;
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
         Disconnect();
     }
 }
